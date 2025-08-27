@@ -1,8 +1,8 @@
-﻿using Recruit.Shared.Web.ViewModels;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Recruit.Shared.Web.ViewModels;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Shared.Web.ViewModels;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.ViewModels;
 
 public class PagerViewModelTests
 {

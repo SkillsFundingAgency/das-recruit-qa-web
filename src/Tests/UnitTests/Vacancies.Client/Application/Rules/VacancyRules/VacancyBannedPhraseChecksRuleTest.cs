@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using AutoFixture;
 using Esfa.Recruit.Vacancies.Client.Application.Providers;
 using Esfa.Recruit.Vacancies.Client.Application.Rules.BaseRules;
 using Esfa.Recruit.Vacancies.Client.Application.Rules.VacancyRules;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Application.Rules.VacancyRules;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Rules.VacancyRules;
 
 public class VacancyBannedPhraseChecksRuleTest
 {

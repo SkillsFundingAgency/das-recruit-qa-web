@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using FluentAssertions;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Domain.Entities;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Domain.Entities;
 
 public class VacancyTests
 {

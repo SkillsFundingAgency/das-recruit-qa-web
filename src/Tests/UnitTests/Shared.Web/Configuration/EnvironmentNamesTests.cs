@@ -1,9 +1,8 @@
-﻿using FluentAssertions;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 using Recruit.Shared.Web.Configuration;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Configuration;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Configuration;
 
 public class EnvironmentNamesTests
 {

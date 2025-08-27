@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Services.AlertViewModelServiceTests;
+﻿namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Services.AlertViewModelServiceTests;
 
 public abstract class AlertViewModelServiceTestBase
 {

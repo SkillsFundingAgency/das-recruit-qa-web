@@ -1,9 +1,8 @@
 ﻿using Esfa.Recruit.Vacancies.Client.Application.Services;
 using Microsoft.Extensions.Logging;
-using Moq;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.Services;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Services;
 
 public class HtmlSanitizerServiceTests
 {

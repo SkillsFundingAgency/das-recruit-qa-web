@@ -5,7 +5,7 @@ using NUnit.Framework;
 using Recruit.Shared.Web.Domain;
 using Recruit.Shared.Web.ViewModels.TaskList;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Domain.EmployerTaskListViewTests;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Domain.EmployerTaskListViewTests;
 
 public class WhenGettingSectionFourState
 {

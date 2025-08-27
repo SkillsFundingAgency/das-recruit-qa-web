@@ -1,8 +1,8 @@
-﻿using NUnit.Framework;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using NUnit.Framework;
 using Recruit.Shared.Web.TagHelpers;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.TagHelpers;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.TagHelpers;
 
 public class AddressTagHelperTests: TagHelperTestsBase
 {

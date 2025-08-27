@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application;
 
 public static class TestData
 {

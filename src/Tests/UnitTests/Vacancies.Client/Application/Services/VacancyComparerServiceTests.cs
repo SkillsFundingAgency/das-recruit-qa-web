@@ -5,7 +5,7 @@ using Esfa.Recruit.Vacancies.Client.Application.Services.VacancyComparer;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Application.Services;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Services;
 
 public class VacancyComparerServiceTests
 {

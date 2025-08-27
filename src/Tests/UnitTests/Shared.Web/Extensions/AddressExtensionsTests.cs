@@ -5,7 +5,7 @@ using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
 using NUnit.Framework;
 using Recruit.Shared.Web.Extensions;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Extensions;
 
 public class AddressExtensionsTests
 {

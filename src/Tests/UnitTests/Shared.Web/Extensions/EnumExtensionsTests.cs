@@ -1,9 +1,8 @@
-﻿using Xunit;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using FluentAssertions;
+﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Shared.Web.Extensions;
+using Xunit;
 
-namespace Esfa.Recruit.Shared.Web.UnitTests.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Extensions;
 
 public class EnumExtensionsTests
 {

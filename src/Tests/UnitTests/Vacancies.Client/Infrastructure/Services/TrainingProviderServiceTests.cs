@@ -14,7 +14,7 @@ using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using TrainingProvider = Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProvider;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
 
 [TestFixture]
 public class TrainingProviderServiceTests

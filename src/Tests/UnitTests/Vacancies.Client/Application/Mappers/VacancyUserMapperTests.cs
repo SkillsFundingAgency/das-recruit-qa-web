@@ -1,10 +1,8 @@
-using System;
 using Esfa.Recruit.Vacancies.Client.Application.Mappers;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using FluentAssertions;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.Mappers;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Mappers;
 
 public class VacancyUserMapperTests
 {

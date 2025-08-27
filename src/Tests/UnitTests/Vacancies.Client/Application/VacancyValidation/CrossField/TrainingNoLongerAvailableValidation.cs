@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.UnitTests.Vacancies.Client.Application.VacancyValidation.CrossField;
 using Esfa.Recruit.Vacancies.Client.Application.Providers;
 using Esfa.Recruit.Vacancies.Client.Application.Validation;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation.CrossField;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation.CrossField;
 
 public class TrainingNoLongerAvailableValidation : VacancyValidationTestsBase
 {

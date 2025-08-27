@@ -1,8 +1,7 @@
-﻿using Xunit;
-using FluentAssertions;
-using Recruit.Shared.Web.Extensions;
+﻿using Recruit.Shared.Web.Extensions;
+using Xunit;
 
-namespace Esfa.Recruit.Shared.Web.UnitTests.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Extensions;
 
 public class StringExtensionsTests
 {

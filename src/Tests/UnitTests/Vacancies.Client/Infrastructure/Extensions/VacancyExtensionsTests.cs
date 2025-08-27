@@ -6,7 +6,7 @@ using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacanc
 using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Extensions;
 
 public class VacancyExtensionsTests
 {

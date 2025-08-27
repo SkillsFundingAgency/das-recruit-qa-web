@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Microsoft.Extensions.WebEncoders.Testing;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.TagHelpers;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.TagHelpers;
 
 public static class TagHelperOutputExtensions
 {

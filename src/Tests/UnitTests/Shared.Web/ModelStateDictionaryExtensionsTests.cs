@@ -1,10 +1,10 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Validation;
+﻿using System.Collections.Generic;
+using Esfa.Recruit.Vacancies.Client.Application.Validation;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NUnit.Framework;
 using Recruit.Shared.Web;
-using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web;
 
 public class ModelStateDictionaryExtensionsTests
 {

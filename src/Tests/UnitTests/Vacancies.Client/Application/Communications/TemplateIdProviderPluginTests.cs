@@ -1,11 +1,9 @@
-using System.Threading.Tasks;
 using Communication.Types;
 using Esfa.Recruit.Vacancies.Client.Application.Communications;
-using FluentAssertions;
 using Xunit;
 using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.Communications;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Communications;
 
 public class TemplateIdProviderPluginTests
 {

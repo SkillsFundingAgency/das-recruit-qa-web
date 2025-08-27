@@ -1,15 +1,11 @@
 using System.Linq;
-using System.Threading.Tasks;
-using AutoFixture;
 using Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using FluentAssertions;
-using Moq;
 using Xunit;
 using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.Communications;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Communications;
 
 public class VacancyDataEntityPluginTests
 {

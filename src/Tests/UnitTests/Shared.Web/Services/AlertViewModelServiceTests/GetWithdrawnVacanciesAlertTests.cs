@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using FluentAssertions;
 using Recruit.Shared.Web.Services;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Services.AlertViewModelServiceTests;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Services.AlertViewModelServiceTests;
 
 public class GetWithdrawnVacanciesAlertTests : AlertViewModelServiceTestBase
 {

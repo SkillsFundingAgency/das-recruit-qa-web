@@ -1,9 +1,8 @@
 ﻿using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using FluentAssertions;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.VacancyValidation;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation;
 
 public class VacancyReviewTests
 {
@@ -40,7 +39,7 @@ public class VacancyReviewTests
     [Fact]
     public void ShouldNotRequireCandiateFeedbackIfSuccessful()
     {
-        var m = new Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
+        var m = new Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
         {
             Status = ApplicationReviewStatus.Successful,
             CandidateFeedback = "should not specify feedback if successful"

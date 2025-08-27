@@ -6,7 +6,7 @@ using Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ApplicationReview;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ApplicationReview;
 
 [TestFixture]
 internal class ApplicationReviewServiceTests
@@ -41,7 +41,7 @@ internal class ApplicationReviewServiceTests
                     HasEverBeenEmployerInterviewing = false,
                     AdditionalQuestion1 = "Q1",
                     AdditionalQuestion2 = "Q2",
-                    Application = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
+                    Application = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
                     {
                         Id = Guid.NewGuid(),
                         CandidateId = Guid.NewGuid(),
@@ -144,7 +144,7 @@ internal class ApplicationReviewServiceTests
                     HasEverBeenEmployerInterviewing = false,
                     AdditionalQuestion1 = "Q1",
                     AdditionalQuestion2 = "Q2",
-                    Application = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
+                    Application = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
                     {
                         Id = Guid.NewGuid(),
                         CandidateId = Guid.NewGuid(),
@@ -312,7 +312,7 @@ internal class ApplicationReviewServiceTests
         // Arrange
         var apiResponse = new GetApplicationReviewByIdApiResponse
         {
-            ApplicationReview = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.ApplicationReview()
+            ApplicationReview = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.ApplicationReview()
             {
                 WithdrawnDate = DateTime.Now
             }

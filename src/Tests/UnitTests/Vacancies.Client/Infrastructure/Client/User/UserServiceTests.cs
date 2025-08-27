@@ -4,13 +4,13 @@ using Esfa.Recruit.Vacancies.Client.Infrastructure.User;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.User.Requests;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.User;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.User;
 
 public class UserServiceTests
 {
     [Test, MoqAutoData]
     public async Task When_Calling_UpsertUserAsync_The_Outer_Api_Is_Called(
-        Recruit.Vacancies.Client.Domain.Entities.User user,
+        Esfa.Recruit.Vacancies.Client.Domain.Entities.User user,
         [Frozen] Mock<IOuterApiClient> outerApiClient,
         UserService userService)
     {

@@ -1,14 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
-using FluentAssertions;
-using Moq;
 using Recruit.Shared.Web.Services;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Services;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Services;
 
 public class LegalEntityAgreementServiceTests
 {

@@ -13,8 +13,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruit.Vacancies.Client", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication.UnitTests", "Tests\Communication.UnitTests\Communication.UnitTests.csproj", "{829F579F-28FB-44A7-CD1F-23E014BF690C}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{203FF640-E62E-5B6B-98A1-94CECD1F460F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication.Core", "Recruit.Communication\Communication.Core\Communication.Core.csproj", "{95ABF146-3219-6CB5-32C2-3BF29476BE44}"
@@ -41,10 +39,6 @@ Global
 		{8D25FEBE-30FB-8DCF-0311-8221127B2D78}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8D25FEBE-30FB-8DCF-0311-8221127B2D78}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8D25FEBE-30FB-8DCF-0311-8221127B2D78}.Release|Any CPU.Build.0 = Release|Any CPU
-		{829F579F-28FB-44A7-CD1F-23E014BF690C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{829F579F-28FB-44A7-CD1F-23E014BF690C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{829F579F-28FB-44A7-CD1F-23E014BF690C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{829F579F-28FB-44A7-CD1F-23E014BF690C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -58,7 +52,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{829F579F-28FB-44A7-CD1F-23E014BF690C} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

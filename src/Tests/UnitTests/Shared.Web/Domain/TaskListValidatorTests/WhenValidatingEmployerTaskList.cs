@@ -5,7 +5,7 @@ using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using NUnit.Framework;
 using Recruit.Shared.Web.Domain;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Domain.TaskListValidatorTests;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Domain.TaskListValidatorTests;
 
 public class WhenValidatingEmployerTaskList
 {

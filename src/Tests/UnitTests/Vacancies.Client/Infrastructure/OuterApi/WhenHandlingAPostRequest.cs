@@ -2,15 +2,13 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using System.Threading.Tasks;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Microsoft.Extensions.Options;
-using Moq;
 using Moq.Protected;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi;
 
 public class WhenHandlingAPostRequest
 {

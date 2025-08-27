@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Xunit;
 using Projections = Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.EventHandlers;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.EventHandlers;
 
 public class VacancyClosedEventHandlerTests
 {

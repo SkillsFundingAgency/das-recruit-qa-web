@@ -1,15 +1,10 @@
-using System;
-using System.Threading.Tasks;
-using AutoFixture;
 using Esfa.Recruit.Vacancies.Client.Application.Providers;
 using Esfa.Recruit.Vacancies.Client.Application.Services;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using FluentAssertions;
-using Moq;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.Services;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Services;
 
 public class VacancyTransferServiceTests
 {

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using AutoFixture;
 using AutoFixture.NUnit3;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
@@ -10,7 +9,7 @@ using Newtonsoft.Json;
 using NUnit.Framework;
 using SFA.DAS.Encoding;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.VacancyReview;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.VacancyReview;
 
 public class VacancyReviewServiceTests
 {
@@ -76,7 +75,7 @@ public class VacancyReviewServiceTests
         var actual = await service.GetAsync(reviewId);
         
         actual.Should()
-            .BeEquivalentTo((Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto, options => 
+            .BeEquivalentTo((Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto, options => 
                 options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
     }
@@ -119,7 +118,7 @@ public class VacancyReviewServiceTests
         var actual = await service.GetLatestReviewByReferenceAsync(vacancyReference);
         
         actual.Should()
-            .BeEquivalentTo((Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto, options => 
+            .BeEquivalentTo((Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto, options => 
                 options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
     }
@@ -168,10 +167,10 @@ public class VacancyReviewServiceTests
         var actual = await service.GetForVacancyAsync(vacancyReference);
         
         actual.Should()
-            .BeEquivalentTo(new List<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
+            .BeEquivalentTo(new List<Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
                 {
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
                 }, options => 
                 options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
@@ -203,10 +202,10 @@ public class VacancyReviewServiceTests
         var actual = await service.GetByStatusAsync(reviewStatus);
         
         actual.Should()
-            .BeEquivalentTo(new List<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
+            .BeEquivalentTo(new List<Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
                 {
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
                 }, options => 
                     options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
@@ -238,10 +237,10 @@ public class VacancyReviewServiceTests
         var actual = await service.GetVacancyReviewsInProgressAsync(expiredAssignationDateTime);
         
         actual.Should()
-            .BeEquivalentTo(new List<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
+            .BeEquivalentTo(new List<Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
                 {
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
                 }, options => 
                     options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
@@ -267,7 +266,7 @@ public class VacancyReviewServiceTests
         var actual = await service.GetCurrentReferredVacancyReviewAsync(vacancyReference);
         
         actual.Should()
-            .BeEquivalentTo((Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto, options => 
+            .BeEquivalentTo((Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto, options => 
                 options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
     }
@@ -371,10 +370,10 @@ public class VacancyReviewServiceTests
         var actual = await service.GetAssignedForUserAsync(userId, assignationExpiryDateTime);
         
         actual.Should()
-            .BeEquivalentTo(new List<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
+            .BeEquivalentTo(new List<Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview>
                 {
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
-                    (Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto,
+                    (Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview)vacancyDto2
                 }, options => 
                     options.Excluding(c=>c.AutomatedQaOutcomeIndicators)
             );
@@ -410,11 +409,11 @@ public class VacancyReviewServiceTests
         vacancyDto.AutomatedQaOutcome = "Approve";
     }
 
-    private Recruit.Vacancies.Client.Domain.Entities.VacancyReview BuildVacancyReviewEntity()
+    private Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview BuildVacancyReviewEntity()
     {
         var fixture = new Fixture();
         return fixture
-            .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
+            .Build<Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
             .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
             .Create();
     }

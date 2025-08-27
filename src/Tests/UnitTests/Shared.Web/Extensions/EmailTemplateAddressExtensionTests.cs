@@ -2,7 +2,7 @@
 using Esfa.Recruit.Vacancies.Client.Extensions;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Extensions;
 
 public class EmailTemplateAddressExtensionTests
 {

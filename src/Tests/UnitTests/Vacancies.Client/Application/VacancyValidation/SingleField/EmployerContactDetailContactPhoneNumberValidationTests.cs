@@ -2,7 +2,7 @@
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation.SingleField;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation.SingleField;
 
 public partial class EmployerContactDetailValidationTests : VacancyValidationTestsBase
 {

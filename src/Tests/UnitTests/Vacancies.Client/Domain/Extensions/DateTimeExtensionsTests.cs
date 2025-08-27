@@ -1,7 +1,7 @@
 using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Domain.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Domain.Extensions;
 
 public class DateTimeExtensionsTests
 {

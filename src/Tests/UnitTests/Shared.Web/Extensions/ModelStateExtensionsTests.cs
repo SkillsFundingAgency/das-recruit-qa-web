@@ -3,7 +3,7 @@ using NUnit.Framework;
 using Recruit.Shared.Web.Exceptions;
 using Recruit.Shared.Web.Extensions;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Extensions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Extensions;
 
 public class ModelStateExtensionsTests
 {

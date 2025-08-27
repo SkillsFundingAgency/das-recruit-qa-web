@@ -1,10 +1,8 @@
-using System;
 using AutoFixture.NUnit3;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using FluentAssertions;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public class WhenConstructingPostApplicationStatusRequest
 {

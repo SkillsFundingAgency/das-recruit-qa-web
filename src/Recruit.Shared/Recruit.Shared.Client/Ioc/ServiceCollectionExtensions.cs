@@ -288,7 +288,7 @@ public static class ServiceCollectionExtensions
 
     private static void RegisterMediatR(IServiceCollection services)
     {
-        services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(CreateEmployerOwnedVacancyCommandHandler).Assembly));
+        services.AddMediatR(configuration => configuration.RegisterServicesFromAssembly(typeof(ApproveVacancyReviewCommandHandler).Assembly));
         services
             .AddTransient<IMessaging, MediatrMessaging>()
             .AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestPerformanceBehaviour<,>));

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 using NUnit.Framework;
 using Recruit.Shared.Web.TagHelpers;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.TagHelpers;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.TagHelpers;
 
 public abstract class TagHelperTestsBase
 {

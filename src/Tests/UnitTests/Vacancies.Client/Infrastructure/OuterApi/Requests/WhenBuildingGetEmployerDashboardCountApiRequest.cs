@@ -2,7 +2,7 @@
 using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using NUnit.Framework;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 [TestFixture]
 public class WhenBuildingGetEmployerDashboardCountApiRequest

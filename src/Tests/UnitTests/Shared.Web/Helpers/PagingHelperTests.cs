@@ -1,8 +1,7 @@
-using FluentAssertions;
 using Recruit.Shared.Web.Helpers;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Shared.Web.Helpers;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Helpers;
 
 public class PagingHelperTests
 {

@@ -8,7 +8,7 @@ using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 using NUnit.Framework;
 using SFA.DAS.Encoding;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services.EmployerAccount;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 
 [TestFixture]
 public class EmployerAccountProviderTests

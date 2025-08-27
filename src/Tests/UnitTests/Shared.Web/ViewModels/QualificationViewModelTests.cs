@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using Recruit.Shared.Web.ViewModels.ApplicationReview;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.ViewModels;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.ViewModels;
 
 public class QualificationViewModelTests
 {

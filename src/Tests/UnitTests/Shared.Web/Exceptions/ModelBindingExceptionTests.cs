@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using Recruit.Shared.Web.Exceptions;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Shared.Web.Exceptions;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Exceptions;
 
 public class ModelBindingExceptionTests
 {

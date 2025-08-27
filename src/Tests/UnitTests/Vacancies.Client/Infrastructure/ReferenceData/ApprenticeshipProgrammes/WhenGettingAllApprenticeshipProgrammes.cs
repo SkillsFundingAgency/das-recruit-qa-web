@@ -1,6 +1,5 @@
 using System.Linq;
 using AutoFixture.NUnit3;
-using Esfa.Recruit.UnitTests.TestHelpers;
 using Esfa.Recruit.Vacancies.Client.Application.Cache;
 using Esfa.Recruit.Vacancies.Client.Application.FeatureToggle;
 using Esfa.Recruit.Vacancies.Client.Application.Providers;
@@ -11,7 +10,7 @@ using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipP
 using NUnit.Framework;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
 public class WhenGettingAllApprenticeshipProgrammes
 {
@@ -26,7 +25,7 @@ public class WhenGettingAllApprenticeshipProgrammes
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
         mockConfiguration.Setup(x=>x["ResourceEnvironmentName"]).Returns("LOCAL");
-        var cache = new TestCache();
+        var cache = new TestHelpers.TestCache();
         var provider = new ApprenticeshipProgrammeProvider(cache, mockTimeProvider.Object, outerApiClient.Object, Mock.Of<IFeature>(), mockConfiguration.Object);
         
         var actual = await provider.GetApprenticeshipProgrammesAsync(true);
@@ -36,7 +35,7 @@ public class WhenGettingAllApprenticeshipProgrammes
     
     [Test, MoqAutoData]
     public async Task Then_If_The_Courses_Are_Cached_Api_Not_Called_And_Retrieved_From_The_Cached(
-        Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes response,
+        Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes response,
         [Frozen] Mock<ICache> cache,
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
         [Frozen] Mock<IOuterApiClient> outerApiClient,
@@ -46,7 +45,7 @@ public class WhenGettingAllApprenticeshipProgrammes
         mockTimeProvider.Setup(x => x.NextDay6am).Returns(dateTime);
         mockConfiguration.Setup(x=>x["ResourceEnvironmentName"]).Returns("LOCAL");
         cache
-            .Setup(x => x.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes, dateTime, It.IsAny<Func<Task<Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes>>>()))
+            .Setup(x => x.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes, dateTime, It.IsAny<Func<Task<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes>>>()))
             .ReturnsAsync(response);
         var provider = new ApprenticeshipProgrammeProvider(cache.Object, mockTimeProvider.Object, outerApiClient.Object, Mock.Of<IFeature>(), mockConfiguration.Object);
         

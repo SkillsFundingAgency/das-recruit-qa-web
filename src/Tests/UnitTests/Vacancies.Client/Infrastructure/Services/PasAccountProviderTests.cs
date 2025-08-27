@@ -1,12 +1,9 @@
-﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Configuration;
+﻿using Esfa.Recruit.Vacancies.Client.Application.Configuration;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
-using FluentAssertions;
 using Microsoft.Extensions.Options;
-using Moq;
 using Xunit;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
 
 public class PasAccountProviderTests
 {

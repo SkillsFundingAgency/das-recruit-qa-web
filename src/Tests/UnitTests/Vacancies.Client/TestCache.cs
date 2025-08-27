@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Cache;
+﻿using Esfa.Recruit.Vacancies.Client.Application.Cache;
 
-namespace Esfa.Recruit.Vacancies.Client.UnitTests.Vacancies.Client;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client;
 
 public class TestCache : ICache
 {

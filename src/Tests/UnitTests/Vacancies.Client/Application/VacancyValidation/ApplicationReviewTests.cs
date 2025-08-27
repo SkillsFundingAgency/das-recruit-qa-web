@@ -1,10 +1,9 @@
 ﻿using System.Linq;
 using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using FluentAssertions;
 using Xunit;
 
-namespace Esfa.Recruit.UnitTests.Vacancies.Client.Application.VacancyValidation;
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation;
 
 public class ApplicationReviewTests
 {
@@ -26,7 +25,7 @@ public class ApplicationReviewTests
     [ClassData(typeof(ShouldRequireCandiateFeedbackIfUnsuccessfulTestData))]
     public void ShouldRequireCandiateFeedbackIfUnsuccessful(string candidateFeedback, string expectedErrorMessage)
     {
-        var m = new Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
+        var m = new Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
         {
             Status = ApplicationReviewStatus.Unsuccessful,
             CandidateFeedback = candidateFeedback
@@ -44,7 +43,7 @@ public class ApplicationReviewTests
     [Fact]
     public void ShouldNotRequireCandiateFeedbackIfSuccessful()
     {
-        var m = new Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
+        var m = new Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
         {
             Status = ApplicationReviewStatus.Successful,
             CandidateFeedback = "should not specify feedback if successful"
@@ -116,7 +115,7 @@ public class ApplicationReviewTests
     [InlineData(ApplicationReviewStatus.Unsuccessful, "Some candidate feedback")]
     public void ApplicationReviewShouldBeValid(ApplicationReviewStatus status, string feedback)
     {
-        var m = new Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
+        var m = new Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationReview
         {
             Status = status,
             CandidateFeedback = feedback
