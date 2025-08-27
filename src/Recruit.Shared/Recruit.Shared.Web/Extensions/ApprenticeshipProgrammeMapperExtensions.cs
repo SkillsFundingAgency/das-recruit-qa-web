@@ -1,0 +1,33 @@
+﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Shared.Web.Helpers;
+using Recruit.Shared.Web.ViewModels;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace Recruit.Shared.Web.Extensions;
+
+public static class ApprenticeshipProgrammeMapperExtensions
+{
+    public static IEnumerable<ApprenticeshipProgrammeViewModel> ToViewModel(
+        this IEnumerable<IApprenticeshipProgramme> programmes)
+    {
+        if (programmes == null)
+        {
+            return Enumerable.Empty<ApprenticeshipProgrammeViewModel>();
+        }
+
+        return programmes.Select(ToViewModel).OrderBy(p => p.Name);
+    }
+
+    public static ApprenticeshipProgrammeViewModel ToViewModel(this IApprenticeshipProgramme programme)
+    {
+        string educationLevelName =
+            EducationLevelNumberHelper.GetEducationLevelNameOrDefault(programme.EducationLevelNumber, programme.ApprenticeshipLevel);
+
+        return new ApprenticeshipProgrammeViewModel
+        {
+            Id = programme.Id,
+            Name = $"{programme.Title}, {educationLevelName}"
+        };
+    }
+}

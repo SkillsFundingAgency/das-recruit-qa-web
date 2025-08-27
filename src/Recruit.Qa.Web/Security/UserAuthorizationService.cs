@@ -1,0 +1,23 @@
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+
+namespace Recruit.Qa.Web.Security;
+
+public class UserAuthorizationService 
+{
+    private readonly IAuthorizationService _authorizationService;
+
+    public UserAuthorizationService(IAuthorizationService authorizationService)
+    {
+        _authorizationService = authorizationService;
+    }
+
+    public async Task<bool> IsTeamLeadAsync(ClaimsPrincipal user)
+    {
+        var authResult =
+            await _authorizationService.AuthorizeAsync(user, AuthorizationPolicyNames.TeamLeadUserPolicyName);
+
+        return authResult.Succeeded;
+    }
+}
