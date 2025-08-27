@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Communication.Types;
+using Recruit.Communication.Types;
 
 namespace Communication.Core;
 

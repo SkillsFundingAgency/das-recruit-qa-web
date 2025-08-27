@@ -1,4 +1,4 @@
-﻿namespace Communication.Types;
+﻿namespace Recruit.Communication.Types;
 
 public class CommunicationUserPreference
 {

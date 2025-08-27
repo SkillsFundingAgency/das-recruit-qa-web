@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Communication.Types;
+namespace Recruit.Communication.Types;
 
 public class AggregateCommunicationRequest
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace Communication.Types.Extensions;
+namespace Recruit.Communication.Types.Extensions;
 
 public static class DeliveryChannelPreferencesExtensions
 {

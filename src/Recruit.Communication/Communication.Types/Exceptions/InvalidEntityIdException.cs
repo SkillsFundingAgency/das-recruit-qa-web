@@ -1,6 +1,6 @@
 using System;
 
-namespace Communication.Types.Exceptions;
+namespace Recruit.Communication.Types.Exceptions;
 
 public class InvalidEntityIdException: Exception
 {

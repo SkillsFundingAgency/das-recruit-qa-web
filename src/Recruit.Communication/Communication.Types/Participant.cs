@@ -1,4 +1,4 @@
-﻿namespace Communication.Types;
+﻿namespace Recruit.Communication.Types;
 
 /// <summary>
 /// an end user that may receive a communication message

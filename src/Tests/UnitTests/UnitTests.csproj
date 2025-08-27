@@ -20,7 +20,7 @@
     <PackageReference Include="SFA.DAS.Testing.AutoFixture" Version="17.1.103" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Recruit.Communication\Communication.Core\Communication.Core.csproj" />
+    <ProjectReference Include="..\..\Recruit.Communication\Communication.Core\Recruit.Communication.Core.csproj" />
     <ProjectReference Include="..\..\Recruit.Shared\Recruit.Shared.Client\Recruit.Vacancies.Client.csproj" />
     <ProjectReference Include="..\..\Recruit.Shared\Recruit.Shared.Web\Recruit.Shared.Web.csproj" />
   </ItemGroup>

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Communication.Types;
-using Communication.Types.Exceptions;
-using Communication.Types.Interfaces;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Communication.Types;
+using Recruit.Communication.Types.Exceptions;
+using Recruit.Communication.Types.Interfaces;
 using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
 namespace Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;

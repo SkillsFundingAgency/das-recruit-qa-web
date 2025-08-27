@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-using Communication.Types;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Communication.Types;
 
 namespace Esfa.Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
 

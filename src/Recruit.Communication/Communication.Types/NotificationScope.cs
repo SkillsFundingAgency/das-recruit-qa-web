@@ -1,4 +1,4 @@
-﻿namespace Communication.Types;
+﻿namespace Recruit.Communication.Types;
 
 /// <summary>
 /// used to indicate whether a user is interested in communications that relate directly

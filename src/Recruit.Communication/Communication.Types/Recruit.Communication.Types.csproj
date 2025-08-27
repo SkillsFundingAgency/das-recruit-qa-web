@@ -4,12 +4,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
-    <PackageId>Esfa.Communication.Types</PackageId>
-    <Authors>ESFA</Authors>
+    <PackageId>DfE.Communication.Types</PackageId>
+    <Authors>DfE</Authors>
     <Company>Education &amp; Skill Funding Agency</Company>
-    <Title>Esfa DAS Communication Types</Title>
-    <Description>Types for interacting with the Esfa DAS Communication service</Description>
-    <PackageTags>Esfa;Das;</PackageTags>
+    <Title>DfE DAS Communication Types</Title>
+    <Description>Types for interacting with the DfE DAS Communication service</Description>
+    <PackageTags>DfE;Das;</PackageTags>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>

@@ -11,9 +11,9 @@ using Esfa.Recruit.Vacancies.Client.Infrastructure.Extensions;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Communication.Types;
 using Esfa.Recruit.Vacancies.Client.Application.Communications;
 using Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+using Recruit.Communication.Types;
 
 namespace Esfa.Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 

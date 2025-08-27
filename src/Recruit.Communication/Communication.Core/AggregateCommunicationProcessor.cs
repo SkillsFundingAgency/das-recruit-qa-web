@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Communication.Types.Exceptions;
-using Communication.Types;
-using Communication.Types.Interfaces;
 using System.Linq;
+using Recruit.Communication.Types;
+using Recruit.Communication.Types.Exceptions;
+using Recruit.Communication.Types.Interfaces;
 
 namespace Communication.Core;
 

@@ -4,12 +4,12 @@
     <TargetFramework>net8.0</TargetFramework>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
-    <PackageId>Esfa.Communication</PackageId>
-    <Authors>ESFA</Authors>
+    <PackageId>Recruit.Communication</PackageId>
+    <Authors>DfE</Authors>
     <Company>Education &amp; Skill Funding Agency</Company>
-    <Title>Esfa DAS Communication Service</Title>
-    <Description>Esfa DAS Communication service and processor</Description>
-    <PackageTags>Esfa;Das;</PackageTags>
+    <Title>DfE DAS Communication Service</Title>
+    <Description>DfE DAS Communication service and processor</Description>
+    <PackageTags>DfE;Das;</PackageTags>
     <EmbedUntrackedSources>false</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -30,7 +30,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
 
-    <ProjectReference Include="..\Communication.Types\Communication.Types.csproj" />
+    <ProjectReference Include="..\Communication.Types\Recruit.Communication.Types.csproj" />
   </ItemGroup>
 
 </Project>

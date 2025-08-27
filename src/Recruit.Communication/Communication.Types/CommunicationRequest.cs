@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Communication.Types;
+namespace Recruit.Communication.Types;
 
 public class CommunicationRequest
 {

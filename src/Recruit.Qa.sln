@@ -5,7 +5,7 @@ VisualStudioVersion = 17.14.36310.24
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruit.QA.Web", "Recruit.Qa.Web\Recruit.QA.Web.csproj", "{16DCAFB4-28C2-0325-D8AE-82203DE6F699}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication.Types", "Recruit.Communication\Communication.Types\Communication.Types.csproj", "{0D8B92F5-D7F5-698B-F9F3-1C6B25B19F81}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruit.Communication.Types", "Recruit.Communication\Communication.Types\Recruit.Communication.Types.csproj", "{0D8B92F5-D7F5-698B-F9F3-1C6B25B19F81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruit.Shared.Web", "Recruit.Shared\Recruit.Shared.Web\Recruit.Shared.Web.csproj", "{A66C2AA1-4EBC-26F4-AAC5-9D508C9C0C1F}"
 EndProject
@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{203FF640-E62E-5B6B-98A1-94CECD1F460F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communication.Core", "Recruit.Communication\Communication.Core\Communication.Core.csproj", "{95ABF146-3219-6CB5-32C2-3BF29476BE44}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruit.Communication.Core", "Recruit.Communication\Communication.Core\Recruit.Communication.Core.csproj", "{95ABF146-3219-6CB5-32C2-3BF29476BE44}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

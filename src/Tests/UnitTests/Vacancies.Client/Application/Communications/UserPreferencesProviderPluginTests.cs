@@ -1,7 +1,7 @@
-using Communication.Types;
 using Esfa.Recruit.Vacancies.Client.Application.Communications;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Communication.Types;
 using Xunit;
 using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
@@ -71,7 +71,7 @@ public class UserPreferencesProviderPluginTests
 
         pref.Channels.Should().Be(DeliveryChannelPreferences.EmailOnly);
         pref.Frequency.Should().Be(DeliveryFrequency.Immediate);
-        pref.Scope.Should().Be(global::Communication.Types.NotificationScope.Organisation);
+        pref.Scope.Should().Be(global::Recruit.Communication.Types.NotificationScope.Organisation);
     }
         
     [Fact]
@@ -96,7 +96,7 @@ public class UserPreferencesProviderPluginTests
 
         pref.Channels.Should().Be(DeliveryChannelPreferences.EmailOnly);
         pref.Frequency.Should().Be(DeliveryFrequency.Immediate);
-        pref.Scope.Should().Be(global::Communication.Types.NotificationScope.Organisation);
+        pref.Scope.Should().Be(global::Recruit.Communication.Types.NotificationScope.Organisation);
     }
 
     [Fact]
@@ -120,7 +120,7 @@ public class UserPreferencesProviderPluginTests
 
         pref.Channels.Should().Be(DeliveryChannelPreferences.EmailOnly);
         pref.Frequency.Should().Be(DeliveryFrequency.Immediate);
-        pref.Scope.Should().Be(global::Communication.Types.NotificationScope.Organisation);
+        pref.Scope.Should().Be(global::Recruit.Communication.Types.NotificationScope.Organisation);
     }
 
     [Fact]
@@ -144,7 +144,7 @@ public class UserPreferencesProviderPluginTests
 
         pref.Channels.Should().Be(DeliveryChannelPreferences.EmailOnly);
         pref.Frequency.Should().Be(DeliveryFrequency.Immediate);
-        pref.Scope.Should().Be(global::Communication.Types.NotificationScope.Individual);
+        pref.Scope.Should().Be(global::Recruit.Communication.Types.NotificationScope.Individual);
     }
 
     [Fact]
@@ -168,7 +168,7 @@ public class UserPreferencesProviderPluginTests
 
         pref.Channels.Should().Be(DeliveryChannelPreferences.EmailOnly);
         pref.Frequency.Should().Be(DeliveryFrequency.Immediate);
-        pref.Scope.Should().Be(global::Communication.Types.NotificationScope.Organisation);
+        pref.Scope.Should().Be(global::Recruit.Communication.Types.NotificationScope.Organisation);
     }
 
     [Theory]

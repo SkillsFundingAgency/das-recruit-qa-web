@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Communication.Types;
-using Communication.Types.Interfaces;
+using Recruit.Communication.Types;
+using Recruit.Communication.Types.Interfaces;
 
 namespace Communication.Core;
 

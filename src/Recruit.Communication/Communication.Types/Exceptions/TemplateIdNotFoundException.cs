@@ -1,7 +1,7 @@
 using System;
 using System.Text;
 
-namespace Communication.Types.Exceptions;
+namespace Recruit.Communication.Types.Exceptions;
 
 public class TemplateIdNotFoundException : Exception
 {

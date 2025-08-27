@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Communication.Types.Interfaces;
+namespace Recruit.Communication.Types.Interfaces;
 
 public interface IUserPreferencesProvider
 {

@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Communication.Types;
 using Microsoft.WindowsAzure.Storage;
+using Recruit.Communication.Types;
 
 namespace Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 

@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Communication.Types;
-using Communication.Types.Interfaces;
 using Esfa.Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
 using Esfa.Recruit.Vacancies.Client.Domain.Entities;
 using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using NotificationScope = Communication.Types.NotificationScope;
+using Recruit.Communication.Types;
+using Recruit.Communication.Types.Interfaces;
+using NotificationScope = Recruit.Communication.Types.NotificationScope;
 
 namespace Esfa.Recruit.Vacancies.Client.Application.Communications;
 

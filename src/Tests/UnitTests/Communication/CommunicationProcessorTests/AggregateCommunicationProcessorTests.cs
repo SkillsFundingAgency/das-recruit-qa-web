@@ -1,8 +1,8 @@
 using System.Linq;
 using Communication.Core;
-using Communication.Types;
-using Communication.Types.Interfaces;
 using Esfa.Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Communication.Types;
+using Recruit.Communication.Types.Interfaces;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Communication.CommunicationProcessorTests;

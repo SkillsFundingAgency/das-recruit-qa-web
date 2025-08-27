@@ -50,6 +50,6 @@
     <PackageReference Include="TimeZoneConverter" Version="7.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Recruit.Communication\Communication.Types\Communication.Types.csproj" />
+    <ProjectReference Include="..\..\Recruit.Communication\Communication.Types\Recruit.Communication.Types.csproj" />
   </ItemGroup>
 </Project>

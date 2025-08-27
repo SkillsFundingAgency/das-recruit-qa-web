@@ -1,5 +1,5 @@
-using Communication.Types;
 using Humanizer;
+using Recruit.Communication.Types;
 
 namespace Esfa.Recruit.Vacancies.Client.Application.Communications;
 

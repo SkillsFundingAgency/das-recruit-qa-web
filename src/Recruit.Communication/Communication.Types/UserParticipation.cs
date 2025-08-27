@@ -1,4 +1,4 @@
-﻿namespace Communication.Types;
+﻿namespace Recruit.Communication.Types;
 
 /// <summary>
 /// for a particular communication message, this differentiates between a message that

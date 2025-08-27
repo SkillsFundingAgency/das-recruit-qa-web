@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Communication.Types;
+namespace Recruit.Communication.Types;
 
 public interface ICommunicationRepository
 {

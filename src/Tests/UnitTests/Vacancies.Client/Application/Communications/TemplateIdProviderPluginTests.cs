@@ -1,5 +1,5 @@
-using Communication.Types;
 using Esfa.Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Communication.Types;
 using Xunit;
 using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
