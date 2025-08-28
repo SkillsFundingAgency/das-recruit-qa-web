@@ -1,17 +1,16 @@
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Recruit.Qa.Web.ViewModels.ManageProvider;
+using Recruit.Shared.Web.Extensions;
 using Recruit.Vacancies.Client.Application.Commands;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
-using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Domain.Extensions;
-using Recruit.Qa.Web.ViewModels.ManageProvider;
-using Recruit.Shared.Web.Extensions;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Recruit.Qa.Web.Orchestrators;
 

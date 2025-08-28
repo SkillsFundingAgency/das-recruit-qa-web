@@ -15,7 +15,6 @@ public class ReviewViewModel : ReviewEditModel
     public string Title { get; internal set; }
     public string EmployerName { get; internal set; }
     public string ClosingDate { get; internal set; }
-    public string ApplicationInstructions { get; internal set; }
     public ApplicationMethod ApplicationMethod { get; internal set; }
     public string ApplicationUrl { get; internal set; }
     public string EducationLevelName { get; internal set; }

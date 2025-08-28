@@ -32,27 +32,4 @@ public static class VacancyExtensions
             ? [vacancy.EmployerLocation.PostcodeAsOutcode()]
             : MapAddress(vacancy.EmployerLocation);
     }
-
-    public static ApprenticeshipTypes GetApprenticeshipType(this Vacancy vacancy)
-    {
-        return vacancy.ApprenticeshipType ?? ApprenticeshipTypes.Standard;
-    }
-        
-    public static bool IsChangingApprenticeshipType(this Vacancy vacancy,
-        IEnumerable<IApprenticeshipProgramme> programmes,
-        IApprenticeshipProgramme newProgramme)
-    {
-        ArgumentNullException.ThrowIfNull(vacancy);
-        ArgumentNullException.ThrowIfNull(programmes);
-        ArgumentNullException.ThrowIfNull(newProgramme);
-            
-        if (string.IsNullOrWhiteSpace(vacancy.ProgrammeId))
-        {
-            return false;
-        }
-
-        var currentProgramme = programmes.SingleOrDefault(p => p.Id == vacancy.ProgrammeId);
-        return currentProgramme?.ApprenticeshipType != newProgramme.ApprenticeshipType;
-    }
-        
 }
