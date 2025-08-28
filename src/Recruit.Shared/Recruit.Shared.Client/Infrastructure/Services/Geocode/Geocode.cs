@@ -1,6 +1,6 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
 
 public class Geocode
 {

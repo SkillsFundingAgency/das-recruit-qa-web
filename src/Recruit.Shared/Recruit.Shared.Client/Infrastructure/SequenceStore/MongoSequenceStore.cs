@@ -1,13 +1,13 @@
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+using Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Polly;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.SequenceStore;
+namespace Recruit.Vacancies.Client.Infrastructure.SequenceStore;
 
 internal sealed class MongoSequenceStore : MongoDbCollectionBase, IGenerateVacancyNumbers
 {

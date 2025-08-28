@@ -1,6 +1,6 @@
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 
 internal class VacancyApplicationsDashboardResponseDto
 {

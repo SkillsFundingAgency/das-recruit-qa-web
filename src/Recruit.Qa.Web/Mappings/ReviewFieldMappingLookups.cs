@@ -1,4 +1,4 @@
-using Esfa.Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Application.Services;
 using Recruit.Shared.Web.Mappers;
 using Recruit.Shared.Web.ViewModels;
 using System.Collections.Generic;

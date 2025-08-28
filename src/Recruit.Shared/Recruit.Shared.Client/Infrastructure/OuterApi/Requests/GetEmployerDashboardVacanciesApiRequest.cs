@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public record GetEmployerDashboardVacanciesApiRequest(long AccountId,int PageNumber, List<ApplicationReviewStatus> ApplicationReviewStatuses) : IGetApiRequest
 {

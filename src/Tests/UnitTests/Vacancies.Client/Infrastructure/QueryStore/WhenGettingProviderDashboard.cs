@@ -1,6 +1,6 @@
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.QueryStore;

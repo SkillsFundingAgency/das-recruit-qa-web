@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 public interface IQueryStore
 {

@@ -1,11 +1,11 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
+﻿using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Domain.Messaging;
 using MediatR;
 using System.Threading; 
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;  
+using Recruit.Vacancies.Client.Domain.Events;  
 
-namespace Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
+namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class SetupProviderCommandHandler : IRequestHandler<SetupProviderCommand, Unit>
 {

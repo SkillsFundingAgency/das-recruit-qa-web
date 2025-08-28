@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.Client;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Repositories;
+namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
 // TODO: Proxies calls to the new outer api endpoints - this class should go once we have migrated vacancies over to SQL
 public class SqlVacancyRepository(IOuterApiVacancyClient outerApiVacancyClient): IVacancyRepository

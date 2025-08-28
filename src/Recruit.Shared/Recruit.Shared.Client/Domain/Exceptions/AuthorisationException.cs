@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Exceptions;
+namespace Recruit.Vacancies.Client.Domain.Exceptions;
 
 [Serializable]
 public class AuthorisationException : RecruitException

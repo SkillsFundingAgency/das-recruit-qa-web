@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Domain.Entities;

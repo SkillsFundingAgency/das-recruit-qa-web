@@ -1,7 +1,7 @@
 using System.Web;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 
 public class GetVacancyReviewCountByUserFilterRequest(string userId, bool approvedFirstTime = false) : IGetApiRequest
 {

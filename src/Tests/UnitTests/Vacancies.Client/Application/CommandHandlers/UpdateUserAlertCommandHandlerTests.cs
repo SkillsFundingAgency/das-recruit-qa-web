@@ -1,9 +1,9 @@
 ﻿using System.Threading;
-using Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.User;
+using Recruit.Vacancies.Client.Application.CommandHandlers;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Infrastructure.User;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.CommandHandlers;

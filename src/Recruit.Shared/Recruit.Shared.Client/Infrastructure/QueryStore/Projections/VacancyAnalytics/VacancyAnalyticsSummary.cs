@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
 
 public class VacancyAnalyticsSummary : QueryProjectionBase
 {

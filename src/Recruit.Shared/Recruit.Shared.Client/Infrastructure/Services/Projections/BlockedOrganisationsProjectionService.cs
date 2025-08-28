@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Projections;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.Projections;
 
 public class BlockedOrganisationsProjectionService : IBlockedOrganisationsProjectionService
 {

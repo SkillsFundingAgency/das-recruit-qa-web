@@ -2,18 +2,18 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
+namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class ReferVacancyReviewCommandHandler : IRequestHandler<ReferVacancyReviewCommand, Unit>
 {

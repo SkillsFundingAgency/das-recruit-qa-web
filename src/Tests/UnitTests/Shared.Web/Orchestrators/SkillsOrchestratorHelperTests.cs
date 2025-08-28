@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Shared.Web.Orchestrators;
 using Recruit.Shared.Web.ViewModels.Skills;
 using Xunit;

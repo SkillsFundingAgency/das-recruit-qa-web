@@ -1,6 +1,6 @@
 using System;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public class GetListOfVacanciesWithMetricsRequest : IGetApiRequest
 {

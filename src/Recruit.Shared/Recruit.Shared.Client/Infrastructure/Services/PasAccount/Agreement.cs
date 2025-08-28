@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
 
 public class Agreement
 {

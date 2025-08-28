@@ -1,12 +1,12 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Events;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
+﻿using Recruit.Vacancies.Client.Application.Events;
+using Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Domain.Messaging;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.EventHandlers;
+namespace Recruit.Vacancies.Client.Application.EventHandlers;
 
 public class RePublishEventToEventStoreEventHandler :
     INotificationHandler<DraftVacancyUpdatedEvent>,

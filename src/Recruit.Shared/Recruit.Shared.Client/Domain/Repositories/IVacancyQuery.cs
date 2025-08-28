@@ -1,11 +1,11 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Domain.Models;
 using MongoDB.Driver;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+namespace Recruit.Vacancies.Client.Domain.Repositories;
 
 public interface IVacancyQuery
 {

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
+namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
 public class EmployerDataEntityPlugin : IEntityDataItemProvider
 {

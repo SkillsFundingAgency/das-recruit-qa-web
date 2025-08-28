@@ -1,6 +1,6 @@
 using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
 
 namespace Recruit.Shared.Web.ViewModels;
 

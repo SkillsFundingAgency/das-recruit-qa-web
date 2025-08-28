@@ -1,10 +1,10 @@
-using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
+using Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
 using FluentValidation;
 using System;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Services;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent;
 
 public static class FluentExtensions
 {

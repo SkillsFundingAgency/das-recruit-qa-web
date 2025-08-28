@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
 
 public class LegalEntity
 {

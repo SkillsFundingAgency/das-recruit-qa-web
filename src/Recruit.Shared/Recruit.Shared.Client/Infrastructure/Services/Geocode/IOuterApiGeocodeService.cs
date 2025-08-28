@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
 
 public interface IOuterApiGeocodeService
 {

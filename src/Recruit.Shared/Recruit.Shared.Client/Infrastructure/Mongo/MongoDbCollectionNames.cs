@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+namespace Recruit.Vacancies.Client.Infrastructure.Mongo;
 
 internal static class MongoDbCollectionNames
 {

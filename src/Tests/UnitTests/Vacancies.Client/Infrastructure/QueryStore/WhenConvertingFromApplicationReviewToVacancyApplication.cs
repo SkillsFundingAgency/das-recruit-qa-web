@@ -1,6 +1,6 @@
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyApplications;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyApplications;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.QueryStore;
@@ -8,7 +8,7 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 public class WhenConvertingFromApplicationReviewToVacancyApplication
 {
     [Test, AutoData]
-    public void Then_The_Fields_Are_Mapped(Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationReview source)
+    public void Then_The_Fields_Are_Mapped(Recruit.Vacancies.Client.Domain.Entities.ApplicationReview source)
     {
         //Arrange
         source.IsWithdrawn = false;
@@ -32,7 +32,7 @@ public class WhenConvertingFromApplicationReviewToVacancyApplication
     }
 
     [Test, AutoData]
-    public void Then_If_Withdrawn_Then_Name_And_Dob_Not_Populated(Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationReview source)
+    public void Then_If_Withdrawn_Then_Name_And_Dob_Not_Populated(Recruit.Vacancies.Client.Domain.Entities.ApplicationReview source)
     {
         //Arrange
         source.IsWithdrawn = true;

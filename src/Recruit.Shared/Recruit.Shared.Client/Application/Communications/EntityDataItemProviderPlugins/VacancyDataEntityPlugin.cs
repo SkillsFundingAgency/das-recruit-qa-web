@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Exceptions;
 using Recruit.Communication.Types.Interfaces;
-using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
+using static Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
+namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
 public class VacancyDataEntityPlugin : IEntityDataItemProvider
 {

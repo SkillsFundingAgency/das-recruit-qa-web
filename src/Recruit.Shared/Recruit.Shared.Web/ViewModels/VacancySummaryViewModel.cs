@@ -1,5 +1,5 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Shared.Web.ViewModels;
 
@@ -29,7 +29,7 @@ public class VacancySummaryViewModel
     public bool HasVacancyReference => VacancyReference.HasValue;
     public bool HasNoVacancyReference => !HasVacancyReference;
     public bool CanShowVacancyApplicationsCount => (Status== VacancyStatus.Live || Status == VacancyStatus.Closed) 
-                                                   && (ApplicationMethod == Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationMethod.ThroughFindAnApprenticeship || ApplicationMethod == Esfa.Recruit.Vacancies.Client.Domain.Entities.ApplicationMethod.ThroughFindATraineeship);
+                                                   && (ApplicationMethod == Vacancies.Client.Domain.Entities.ApplicationMethod.ThroughFindAnApprenticeship || ApplicationMethod == Vacancies.Client.Domain.Entities.ApplicationMethod.ThroughFindATraineeship);
 
     public bool HasApplications => NoOfApplications > 0;
     public bool HasNoApplications => !HasApplications;

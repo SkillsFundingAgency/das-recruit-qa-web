@@ -1,11 +1,11 @@
 using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Exceptions;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Exceptions;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services;
+namespace Recruit.Vacancies.Client.Application.Services;
 
 public class VacancyTransferService : IVacancyTransferService
 {

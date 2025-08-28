@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Cache;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Providers;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
 
 public class ProfanityListProvider : IProfanityListProvider
 {

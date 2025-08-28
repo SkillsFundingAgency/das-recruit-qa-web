@@ -1,4 +1,4 @@
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation;
 
 namespace Recruit.Shared.Web.Orchestrators;
 

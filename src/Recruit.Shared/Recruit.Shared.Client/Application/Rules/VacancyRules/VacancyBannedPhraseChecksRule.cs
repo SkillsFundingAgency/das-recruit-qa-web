@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.BaseRules;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Engine;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Rules.BaseRules;
+using Recruit.Vacancies.Client.Application.Rules.Engine;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Rules.VacancyRules;
+namespace Recruit.Vacancies.Client.Application.Rules.VacancyRules;
 
 public sealed class VacancyBannedPhraseChecksRule : BaseBannedPhraseChecksRule, IRule<Vacancy>
 {

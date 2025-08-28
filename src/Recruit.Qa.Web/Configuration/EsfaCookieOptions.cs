@@ -1,5 +1,5 @@
 using System;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Providers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Hosting;

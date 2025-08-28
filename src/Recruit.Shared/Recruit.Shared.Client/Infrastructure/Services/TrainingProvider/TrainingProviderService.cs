@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Cache;
-using Esfa.Recruit.Vacancies.Client.Application.Configuration;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 
 public class TrainingProviderService(
     ILogger<TrainingProviderService> logger,

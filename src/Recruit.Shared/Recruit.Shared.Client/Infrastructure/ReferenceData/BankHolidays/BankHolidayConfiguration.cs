@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
 
 public static class BankHolidayConfiguration
 {

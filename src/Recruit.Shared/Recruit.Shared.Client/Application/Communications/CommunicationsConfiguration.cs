@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Client.Application.Communications;
+namespace Recruit.Client.Application.Communications;
 
 public class CommunicationsConfiguration
 {

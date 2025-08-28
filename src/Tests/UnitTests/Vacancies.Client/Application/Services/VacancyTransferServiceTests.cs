@@ -1,7 +1,7 @@
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Services;

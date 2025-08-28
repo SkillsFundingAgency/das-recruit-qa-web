@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Repositories;
+namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
 // TODO: Delegates interface calls to the correct implementation(s) - this class should go once we have migrated vacancies over to SQL
 public class MigrationVacancyRepository(

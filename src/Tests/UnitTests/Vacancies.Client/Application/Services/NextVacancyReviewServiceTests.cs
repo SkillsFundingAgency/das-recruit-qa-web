@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using Xunit;
 

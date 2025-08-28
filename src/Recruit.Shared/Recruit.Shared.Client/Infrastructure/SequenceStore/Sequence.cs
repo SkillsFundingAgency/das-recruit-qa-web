@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.SequenceStore;
+namespace Recruit.Vacancies.Client.Infrastructure.SequenceStore;
 
 internal class Sequence
 {

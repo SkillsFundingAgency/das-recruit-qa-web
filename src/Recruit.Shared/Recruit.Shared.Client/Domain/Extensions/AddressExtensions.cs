@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+namespace Recruit.Vacancies.Client.Domain.Extensions;
 
 public static class AddressExtensions
 {

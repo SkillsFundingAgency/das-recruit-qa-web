@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Reports;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.Reports;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;

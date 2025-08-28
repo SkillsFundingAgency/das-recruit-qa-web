@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
 using FluentValidation;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent;
 
 /// <summary>
 /// Unconditionally validates a <see cref="Qualification"/>.

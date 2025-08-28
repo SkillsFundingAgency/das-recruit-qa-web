@@ -8,7 +8,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 using Polly.Retry;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+namespace Recruit.Vacancies.Client.Infrastructure.Mongo;
 
 public abstract class MongoDbCollectionBase
 {

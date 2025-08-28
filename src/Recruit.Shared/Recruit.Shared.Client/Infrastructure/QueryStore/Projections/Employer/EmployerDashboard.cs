@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
 
 public class EmployerDashboard : QueryProjectionBase
 {

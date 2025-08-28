@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Rules.Engine;
+namespace Recruit.Vacancies.Client.Application.Rules.Engine;
 
 /// <summary>
 /// encapsulates a set of rules that will be applied to a particular entity.

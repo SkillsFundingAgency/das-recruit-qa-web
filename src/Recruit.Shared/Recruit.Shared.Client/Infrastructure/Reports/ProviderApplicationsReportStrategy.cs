@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Bson;
@@ -13,7 +13,7 @@ using MongoDB.Driver;
 using Polly;
 using JsonConvert = Newtonsoft.Json.JsonConvert;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Reports;
+namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
 internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IReportStrategy
 {

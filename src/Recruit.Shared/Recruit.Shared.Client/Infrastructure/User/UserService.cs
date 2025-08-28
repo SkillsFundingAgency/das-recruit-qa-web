@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.User.Requests;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.User.Requests;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.User;
+namespace Recruit.Vacancies.Client.Infrastructure.User;
 
 public interface IUserRepositoryRunner
 {

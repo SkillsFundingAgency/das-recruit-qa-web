@@ -1,7 +1,7 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Domain.Extensions;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Entities;
+namespace Recruit.Vacancies.Client.Domain.Entities;
 
 public class Address : IAddress, IEquatable<Address>
 {

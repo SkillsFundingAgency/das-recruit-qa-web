@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+﻿using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi.Requests;

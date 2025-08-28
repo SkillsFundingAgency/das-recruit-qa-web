@@ -1,10 +1,10 @@
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Models;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+using Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using Microsoft.Extensions.Logging;
 using Xunit;
 
@@ -41,10 +41,10 @@ public class TrainingProviderUpdateServiceTests
             .Setup(x => x.Get<GetProvidersResponse>(It.IsAny<GetProvidersRequest>()))
             .ReturnsAsync(providerResponse);
 
-        Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders trainingProviders = null;
+        Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders trainingProviders = null;
 
-        _mockReferenceDataWriter.Setup(x => x.UpsertReferenceData(It.IsAny<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>()))
-            .Callback<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>(arg => trainingProviders = arg)
+        _mockReferenceDataWriter.Setup(x => x.UpsertReferenceData(It.IsAny<Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>()))
+            .Callback<Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>(arg => trainingProviders = arg)
             .Returns(Task.CompletedTask);
 
         //Act
@@ -69,10 +69,10 @@ public class TrainingProviderUpdateServiceTests
             .Setup(x => x.Get<GetProvidersResponse>(It.IsAny<GetProvidersRequest>()))
             .ReturnsAsync(providerResponse);
 
-        Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders trainingProviders = null;
+        Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders trainingProviders = null;
 
-        _mockReferenceDataWriter.Setup(x => x.UpsertReferenceData(It.IsAny<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>()))
-            .Callback<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>(arg => trainingProviders = arg)
+        _mockReferenceDataWriter.Setup(x => x.UpsertReferenceData(It.IsAny<Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>()))
+            .Callback<Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>(arg => trainingProviders = arg)
             .Returns(Task.CompletedTask);
 
         //Act
@@ -98,10 +98,10 @@ public class TrainingProviderUpdateServiceTests
             .Setup(x => x.Get<GetProvidersResponse>(It.IsAny<GetProvidersRequest>()))
             .ReturnsAsync(providerResponse);
 
-        Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders trainingProviders = null;
+        Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders trainingProviders = null;
 
-        _mockReferenceDataWriter.Setup(x => x.UpsertReferenceData(It.IsAny<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>()))
-            .Callback<Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>(arg => trainingProviders = arg)
+        _mockReferenceDataWriter.Setup(x => x.UpsertReferenceData(It.IsAny<Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>()))
+            .Callback<Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProviders>(arg => trainingProviders = arg)
             .Returns(Task.CompletedTask);
 
         //Act

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage;
 using Recruit.Communication.Types;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 
 internal class CommunicationStorageQueueService : StorageQueueServiceBase, ICommunicationQueueService
 {

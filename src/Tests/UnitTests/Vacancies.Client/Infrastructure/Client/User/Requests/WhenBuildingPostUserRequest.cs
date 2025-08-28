@@ -1,6 +1,6 @@
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.User;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.User.Requests;
+using Recruit.Vacancies.Client.Infrastructure.User;
+using Recruit.Vacancies.Client.Infrastructure.User.Requests;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.User.Requests;
@@ -8,7 +8,7 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 public class WhenBuildingPostUserRequest
 {
     [Test, AutoData]
-    public void Then_The_Request_Is_Correctly_Built_And_Data_Populated(Esfa.Recruit.Vacancies.Client.Domain.Entities.User user)
+    public void Then_The_Request_Is_Correctly_Built_And_Data_Populated(Recruit.Vacancies.Client.Domain.Entities.User user)
     {
         var actual = new PostUserRequest(user.Id, (UserDto)user);
 

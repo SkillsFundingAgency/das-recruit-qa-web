@@ -1,7 +1,7 @@
 using System;
 using TimeZoneConverter;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+namespace Recruit.Vacancies.Client.Domain.Extensions;
 
 public static class DateTimeExtensions
 {

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using SFA.DAS.Encoding;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public class PostVacancyRequest(Guid id, VacancyDto vacancy) : IPostApiRequest
 {

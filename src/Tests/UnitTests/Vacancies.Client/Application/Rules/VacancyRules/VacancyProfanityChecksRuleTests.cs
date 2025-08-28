@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Rules;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.BaseRules;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.VacancyRules;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Rules;
+using Recruit.Vacancies.Client.Application.Rules.BaseRules;
+using Recruit.Vacancies.Client.Application.Rules.VacancyRules;
+using Recruit.Vacancies.Client.Domain.Entities;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Rules.VacancyRules;

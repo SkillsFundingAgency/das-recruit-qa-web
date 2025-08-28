@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Exceptions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Exceptions;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
 using Microsoft.Extensions.Logging;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;

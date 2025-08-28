@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
+namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 
 public class GetVacancyReviewListResponse
 {

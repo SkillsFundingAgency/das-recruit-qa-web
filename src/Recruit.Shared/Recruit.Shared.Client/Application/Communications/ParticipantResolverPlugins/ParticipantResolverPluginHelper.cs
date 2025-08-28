@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Communication.Types;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
+namespace Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
 
 public static class ParticipantResolverPluginHelper
 {

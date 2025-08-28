@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Dashboard;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.Dashboard;
 
 public record DashboardApplicationReviewStats
 {

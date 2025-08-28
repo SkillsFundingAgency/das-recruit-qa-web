@@ -2,18 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Extensions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Requests;
+using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
+using Recruit.Vacancies.Client.Infrastructure.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Address = Esfa.Recruit.Vacancies.Client.Domain.Entities.Address;
+using Address = Recruit.Vacancies.Client.Domain.Entities.Address;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
+namespace Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
 
 public interface IApplicationReviewRepositoryRunner
 {

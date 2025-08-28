@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Cache;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Providers;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
 
 public class BankHolidayProvider : IBankHolidayProvider
 {

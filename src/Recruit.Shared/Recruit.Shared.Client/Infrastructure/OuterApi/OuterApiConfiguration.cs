@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
 public class OuterApiConfiguration
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Application.Services;
 
 namespace Recruit.Shared.Web.Mappers;
 

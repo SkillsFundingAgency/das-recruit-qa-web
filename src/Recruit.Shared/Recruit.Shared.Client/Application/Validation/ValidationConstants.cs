@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation;
+namespace Recruit.Vacancies.Client.Application.Validation;
 
 public static class ValidationConstants
 {

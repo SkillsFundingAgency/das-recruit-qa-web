@@ -3,18 +3,18 @@ using System.Threading.Tasks;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.Exceptions;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+using Recruit.Vacancies.Client.Application.Exceptions;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Polly;
-using Esfa.Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Domain.Models;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Repositories;
+namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
 internal class MongoDbVacancyRepository : MongoDbCollectionBase, IVacancyRepository, IVacancyQuery
 {

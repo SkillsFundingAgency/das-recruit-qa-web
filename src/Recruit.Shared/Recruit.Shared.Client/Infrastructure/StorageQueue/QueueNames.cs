@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 
 public static class QueueNames
 {

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Esfa.QA.Core.Extensions;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Engine;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Rules.Engine;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Newtonsoft.Json;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Rules.BaseRules;
+namespace Recruit.Vacancies.Client.Application.Rules.BaseRules;
 
 public class BaseBannedPhraseChecksRule : Rule
 {

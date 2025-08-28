@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using SFA.DAS.VacancyServices.Wage;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services;
+namespace Recruit.Vacancies.Client.Infrastructure.Services;
 
 public class NationalMinimumWageProvider : IMinimumWageProvider
 {

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.IO;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
-using Esfa.Recruit.Vacancies.Client.Ioc;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Razor;
@@ -19,10 +17,12 @@ using Recruit.Shared.Web.Extensions;
 using Recruit.Shared.Web.Mappers;
 using Recruit.Shared.Web.RuleTemplates;
 using Recruit.Shared.Web.Services;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
+using Recruit.Vacancies.Client.Ioc;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.DfESignIn.Auth.Configuration;
 
-namespace Esfa.Recruit.Qa.Web;
+namespace Recruit.Qa.Web;
 
 public partial class Startup
 {

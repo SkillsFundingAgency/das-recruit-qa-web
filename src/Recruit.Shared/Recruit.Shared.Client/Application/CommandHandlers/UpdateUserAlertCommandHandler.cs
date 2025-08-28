@@ -1,13 +1,13 @@
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.User;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Infrastructure.User;
 using MediatR;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
+namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class UpdateUserAlertCommandHandler : IRequestHandler<UpdateUserAlertCommand, Unit>
 {

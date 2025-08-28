@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Exceptions;
+﻿using Recruit.Vacancies.Client.Domain.Exceptions;
 
 namespace Recruit.Qa.Web.Exceptions;
 

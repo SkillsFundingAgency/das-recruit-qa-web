@@ -1,21 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Address = Esfa.Recruit.Vacancies.Client.Domain.Entities.Address;
-using ProjectionAddress = Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.Address;
-using ProjectionQualification = Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.Qualification;
-using ProjectionTrainingProvider = Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.TrainingProvider;
-using ProjectionWage = Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.Wage;
-using Qualification = Esfa.Recruit.Vacancies.Client.Domain.Entities.Qualification;
-using TrainingProvider = Esfa.Recruit.Vacancies.Client.Domain.Entities.TrainingProvider;
-using Wage = Esfa.Recruit.Vacancies.Client.Domain.Entities.Wage;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
+using Address = Recruit.Vacancies.Client.Domain.Entities.Address;
+using ProjectionAddress = Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.Address;
+using ProjectionQualification = Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.Qualification;
+using ProjectionTrainingProvider = Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.TrainingProvider;
+using ProjectionWage = Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy.Wage;
+using Qualification = Recruit.Vacancies.Client.Domain.Entities.Qualification;
+using TrainingProvider = Recruit.Vacancies.Client.Domain.Entities.TrainingProvider;
+using Wage = Recruit.Vacancies.Client.Domain.Entities.Wage;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Extensions;
+namespace Recruit.Vacancies.Client.Infrastructure.Extensions;
 
 public static class VacancyExtensions
 {

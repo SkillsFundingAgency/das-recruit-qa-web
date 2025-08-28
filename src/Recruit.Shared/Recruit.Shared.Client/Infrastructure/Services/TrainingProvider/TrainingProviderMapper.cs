@@ -1,7 +1,7 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 
 public static class TrainingProviderMapper
 {

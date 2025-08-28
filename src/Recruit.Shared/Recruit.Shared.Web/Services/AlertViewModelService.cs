@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 using Recruit.Shared.Web.ViewModels.Alerts;
 
 namespace Recruit.Shared.Web.Services;

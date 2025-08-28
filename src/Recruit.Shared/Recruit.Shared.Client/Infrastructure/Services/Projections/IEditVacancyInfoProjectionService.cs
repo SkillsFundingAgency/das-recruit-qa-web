@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Projections;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.Projections;
 
 public interface IEditVacancyInfoProjectionService
 {

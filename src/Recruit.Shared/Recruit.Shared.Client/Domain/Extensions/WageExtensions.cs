@@ -1,9 +1,9 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using SFA.DAS.VacancyServices.Wage;
-using WageType = Esfa.Recruit.Vacancies.Client.Domain.Entities.WageType;
+using WageType = Recruit.Vacancies.Client.Domain.Entities.WageType;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+namespace Recruit.Vacancies.Client.Domain.Extensions;
 
 public static class WageExtensions
 {

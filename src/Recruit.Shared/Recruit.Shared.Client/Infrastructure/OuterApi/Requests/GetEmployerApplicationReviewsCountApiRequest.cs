@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public record GetEmployerApplicationReviewsCountApiRequest(long AccountId, List<long> VacancyReferences, string ApplicationSharedFilteringStatus) : IPostApiRequest
 {

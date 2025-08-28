@@ -1,18 +1,18 @@
 ﻿using System.Collections.Generic;
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Application.Cache;
-using Esfa.Recruit.Vacancies.Client.Application.Configuration;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
-using TrainingProvider = Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProvider;
+using TrainingProvider = Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProvider;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
 

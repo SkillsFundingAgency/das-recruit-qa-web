@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 
 public interface IVacancySummariesProvider
 {

@@ -1,17 +1,17 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.EventHandlers;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.EventHandlers;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
+using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Microsoft.Extensions.Logging;
 using Recruit.Communication.Types;
 using Xunit;
-using Projections = Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
+using Projections = Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.EventHandlers;
 

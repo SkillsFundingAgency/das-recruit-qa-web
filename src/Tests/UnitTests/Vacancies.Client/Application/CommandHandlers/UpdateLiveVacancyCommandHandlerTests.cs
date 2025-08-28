@@ -1,12 +1,12 @@
 ﻿using System.Threading;
-using Esfa.Recruit.Vacancies.Client.Application;
-using Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application;
+using Recruit.Vacancies.Client.Application.CommandHandlers;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Xunit;
 

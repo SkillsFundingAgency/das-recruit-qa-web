@@ -1,8 +1,8 @@
 using System;
 using System.Runtime.Serialization;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Exceptions;
+namespace Recruit.Vacancies.Client.Application.Exceptions;
 
 [Serializable]
 public class EntityValidationException : Exception

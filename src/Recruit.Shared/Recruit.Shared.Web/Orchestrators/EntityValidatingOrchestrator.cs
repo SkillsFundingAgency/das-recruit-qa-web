@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation;
 using Microsoft.Extensions.Logging;
 using Recruit.Shared.Web.Extensions;
 

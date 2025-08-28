@@ -1,7 +1,7 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Routes;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.Routes;
 
 public class ApprenticeshipRoute : IApprenticeshipRoute
 {

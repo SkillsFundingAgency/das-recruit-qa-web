@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Shared.Web.ViewModels.TaskList;
 
 namespace Recruit.Shared.Web.Domain;

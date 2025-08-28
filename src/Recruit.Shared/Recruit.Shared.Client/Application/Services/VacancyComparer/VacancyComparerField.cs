@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.Services.VacancyComparer;
+﻿namespace Recruit.Vacancies.Client.Application.Services.VacancyComparer;
 
 public class VacancyComparerField
 {

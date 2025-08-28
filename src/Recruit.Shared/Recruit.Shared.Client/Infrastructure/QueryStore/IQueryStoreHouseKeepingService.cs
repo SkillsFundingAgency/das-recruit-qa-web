@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 public interface IQueryStoreHouseKeepingService
 {

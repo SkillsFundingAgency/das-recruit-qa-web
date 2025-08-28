@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.Client;
 using Humanizer;
 using Microsoft.Extensions.Logging;
 using Recruit.Qa.Web.ViewModels;

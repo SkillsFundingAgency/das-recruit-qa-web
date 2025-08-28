@@ -1,10 +1,10 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+namespace Recruit.Vacancies.Client.Domain.Repositories;
 
 public interface IVacancyReviewQuery
 {

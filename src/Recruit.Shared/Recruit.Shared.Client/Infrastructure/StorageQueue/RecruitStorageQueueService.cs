@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Queues;
-using Esfa.Recruit.Vacancies.Client.Application.Queues.Messages;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.EventStore;
+using Recruit.Vacancies.Client.Application.Queues;
+using Recruit.Vacancies.Client.Application.Queues.Messages;
+using Recruit.Vacancies.Client.Infrastructure.EventStore;
 using Microsoft.WindowsAzure.Storage;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 
 internal class RecruitStorageQueueService : StorageQueueServiceBase, IRecruitQueueService
 {

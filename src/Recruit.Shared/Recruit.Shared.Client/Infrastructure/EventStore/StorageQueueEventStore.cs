@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Events;
-using Esfa.Recruit.Vacancies.Client.Application.Queues;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Application.Events;
+using Recruit.Vacancies.Client.Application.Queues;
+using Recruit.Vacancies.Client.Domain.Messaging;
 using Newtonsoft.Json;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.EventStore;
+namespace Recruit.Vacancies.Client.Infrastructure.EventStore;
 
 internal sealed class StorageQueueEventStore : IEventStore
 {

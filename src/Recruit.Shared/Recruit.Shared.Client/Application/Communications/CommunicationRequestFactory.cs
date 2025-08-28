@@ -1,7 +1,7 @@
 using Humanizer;
 using Recruit.Communication.Types;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications;
+namespace Recruit.Vacancies.Client.Application.Communications;
 
 public static class CommunicationRequestFactory
 {

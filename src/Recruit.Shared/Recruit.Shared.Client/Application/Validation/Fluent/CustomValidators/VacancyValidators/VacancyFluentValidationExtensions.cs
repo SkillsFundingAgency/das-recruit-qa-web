@@ -1,18 +1,18 @@
 using System;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Models;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
+using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using FluentValidation;
 using FluentValidation.Results;
 using SFA.DAS.VacancyServices.Wage;
 using WageType = SFA.DAS.VacancyServices.Wage.WageType;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators.VacancyValidators;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators.VacancyValidators;
 
 internal static class VacancyFluentValidationExtensions
 {

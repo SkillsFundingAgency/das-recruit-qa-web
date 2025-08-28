@@ -1,6 +1,6 @@
 using System.Web;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public class GetUserAccountsRequest : IGetApiRequest
 {

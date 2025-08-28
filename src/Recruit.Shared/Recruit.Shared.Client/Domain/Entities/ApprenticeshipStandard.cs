@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 
 public class ApprenticeshipStandard
 {

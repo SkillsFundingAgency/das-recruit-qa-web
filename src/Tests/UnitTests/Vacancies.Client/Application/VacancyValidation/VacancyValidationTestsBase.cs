@@ -1,15 +1,15 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.FeatureToggle;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
-using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+using Recruit.Vacancies.Client.Application.FeatureToggle;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation.Fluent;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
+using Recruit.Vacancies.Client.Infrastructure.Services;
+using Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
+using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Microsoft.Extensions.Logging;
 using Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Rules.VacancyRules;
 

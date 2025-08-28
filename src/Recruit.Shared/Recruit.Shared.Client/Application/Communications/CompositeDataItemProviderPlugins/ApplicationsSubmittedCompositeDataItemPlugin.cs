@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Application.Communications;
 using Humanizer;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;

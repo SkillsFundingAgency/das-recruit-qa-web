@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Services;
+﻿using Recruit.Vacancies.Client.Application.Services;
 using Microsoft.Extensions.Logging;
 using Xunit;
 

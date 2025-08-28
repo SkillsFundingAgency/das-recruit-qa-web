@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Rules.Engine;
+namespace Recruit.Vacancies.Client.Application.Rules.Engine;
 
 /// <summary>
 /// used to build a single consolidated outcome from multiple rule executions 

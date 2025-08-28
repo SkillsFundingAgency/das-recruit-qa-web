@@ -1,5 +1,5 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Configuration;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
+﻿using Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
 using Microsoft.Extensions.Options;
 using Xunit;
 

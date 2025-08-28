@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Rules;
+﻿using Recruit.Vacancies.Client.Application.Rules;
 
 namespace Recruit.Shared.Web.RuleTemplates;
 

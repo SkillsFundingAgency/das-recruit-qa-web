@@ -1,19 +1,19 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+﻿using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Events;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview;
+using Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
+namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class ApproveVacancyReviewCommandHandler: IRequestHandler<ApproveVacancyReviewCommand, Unit>
 {

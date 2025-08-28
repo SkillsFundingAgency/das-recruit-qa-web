@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Shared.Web.Extensions;
 

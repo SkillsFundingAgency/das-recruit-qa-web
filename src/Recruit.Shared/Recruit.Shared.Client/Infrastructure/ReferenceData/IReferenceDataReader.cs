@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 
 public interface IReferenceDataReader
 {

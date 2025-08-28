@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Messaging;
 using MediatR;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Messaging;
+namespace Recruit.Vacancies.Client.Infrastructure.Messaging;
 
 internal sealed class MediatrMessaging : IMessaging
 {

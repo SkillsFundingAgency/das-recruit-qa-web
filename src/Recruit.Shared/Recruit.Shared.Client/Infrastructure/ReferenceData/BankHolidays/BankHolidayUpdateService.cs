@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Services.ReferenceData;
+using Recruit.Vacancies.Client.Application.Services.ReferenceData;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
 
 public class BankHolidayUpdateService : IBankHolidayUpdateService
 {

@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public interface IQaVacancyClient
 {

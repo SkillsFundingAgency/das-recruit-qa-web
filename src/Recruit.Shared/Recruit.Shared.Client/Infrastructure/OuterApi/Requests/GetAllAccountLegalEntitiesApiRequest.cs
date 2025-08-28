@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public record GetAllAccountLegalEntitiesApiRequest(GetAllAccountLegalEntitiesApiRequest.GetAllAccountLegalEntitiesApiRequestData Payload) : IPostApiRequest
 {

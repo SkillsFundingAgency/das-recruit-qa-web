@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 internal struct QueryViewType
 {

@@ -1,13 +1,13 @@
 using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 using NotificationScope = Recruit.Communication.Types.NotificationScope;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications;
+namespace Recruit.Vacancies.Client.Application.Communications;
 
 public class UserPreferencesProviderPlugin : IUserPreferencesProvider
 {

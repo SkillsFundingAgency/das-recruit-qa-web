@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Polly;
-using Holidays = Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
+using Holidays = Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 
 internal sealed class MongoDbReferenceDataRepository : MongoDbCollectionBase, IReferenceDataReader, IReferenceDataWriter
 {

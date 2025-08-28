@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services;
+namespace Recruit.Vacancies.Client.Application.Services;
 
 public class EmployerService : IEmployerService
 {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using NUnit.Framework;
 using Recruit.Shared.Web;

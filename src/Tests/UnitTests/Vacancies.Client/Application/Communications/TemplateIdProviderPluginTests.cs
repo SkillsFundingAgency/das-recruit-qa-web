@@ -1,7 +1,7 @@
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Application.Communications;
 using Recruit.Communication.Types;
 using Xunit;
-using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
+using static Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Communications;
 

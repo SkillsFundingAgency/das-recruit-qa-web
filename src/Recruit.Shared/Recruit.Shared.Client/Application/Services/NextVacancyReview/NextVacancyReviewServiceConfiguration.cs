@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
+﻿namespace Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
 
 public class NextVacancyReviewServiceConfiguration
 {

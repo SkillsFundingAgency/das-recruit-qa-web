@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Extensions;
+namespace Recruit.Vacancies.Client.Infrastructure.Extensions;
 
 public static class StringExtensions
 {

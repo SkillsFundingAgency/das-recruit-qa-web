@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications;
+namespace Recruit.Vacancies.Client.Application.Communications;
 
 public static class CommunicationConstants
 {
@@ -6,7 +6,7 @@ public static class CommunicationConstants
 
     public const string UserType = "VacancyServices.Recruit.User";
 
-    public const string HelpdeskPhoneNumber = Esfa.Recruit.Vacancies.Client.Application.Constants.HelpdeskPhoneNumber;
+    public const string HelpdeskPhoneNumber = Constants.HelpdeskPhoneNumber;
 
     public static class ParticipantResolverNames
     {

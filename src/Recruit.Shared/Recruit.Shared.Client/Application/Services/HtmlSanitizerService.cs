@@ -5,7 +5,7 @@ using AngleSharp.Dom;
 using Ganss.Xss;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services;
+namespace Recruit.Vacancies.Client.Application.Services;
 
 public class HtmlSanitizerService : IHtmlSanitizerService
 {

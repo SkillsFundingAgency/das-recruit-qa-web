@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 
 public class VacancyDashboard
 {

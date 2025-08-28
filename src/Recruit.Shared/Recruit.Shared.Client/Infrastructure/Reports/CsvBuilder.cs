@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using CsvHelper;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Extensions;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
+using Recruit.Vacancies.Client.Domain.Extensions;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Reports;
+namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
 public class CsvBuilder : ICsvBuilder
 {

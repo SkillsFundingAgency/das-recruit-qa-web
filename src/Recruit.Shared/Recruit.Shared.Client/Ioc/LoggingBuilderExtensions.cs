@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Ioc;
+namespace Recruit.Vacancies.Client.Ioc;
 
 public static class LoggingBuilderExtensions
 {

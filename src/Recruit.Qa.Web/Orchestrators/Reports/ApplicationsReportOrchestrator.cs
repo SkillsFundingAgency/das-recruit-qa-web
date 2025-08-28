@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.Client;
 using Recruit.Qa.Web.ViewModels.Reports;
 using Recruit.Qa.Web.ViewModels.Reports.ApplicationsReport;
 using Recruit.Shared.Web.Extensions;

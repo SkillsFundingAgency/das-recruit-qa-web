@@ -1,7 +1,7 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
 using FluentValidation;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent;
 
 public class VacancyReviewValidator : AbstractValidator<VacancyReview>
 {

@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.Configuration;
+﻿namespace Recruit.Vacancies.Client.Application.Configuration;
 
 public static class EsfaTestTrainingProvider
 {

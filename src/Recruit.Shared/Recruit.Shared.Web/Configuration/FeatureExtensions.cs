@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.FeatureToggle;
+﻿using Recruit.Vacancies.Client.Application.FeatureToggle;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Recruit.Shared.Web.Configuration;

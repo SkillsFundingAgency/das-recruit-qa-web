@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
 
 public class BankHolidays : IReferenceDataItem
 {

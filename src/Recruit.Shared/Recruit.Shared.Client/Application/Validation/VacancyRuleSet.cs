@@ -1,6 +1,6 @@
 using System;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation;
+namespace Recruit.Vacancies.Client.Application.Validation;
 
 [Flags]
 public enum VacancyRuleSet : long

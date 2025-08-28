@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -7,12 +9,10 @@ using Microsoft.AspNetCore.Rewrite;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Recruit.Qa.Web.Configuration.Routing;
-using SFA.DAS.DfESignIn.Auth.Configuration;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Recruit.Shared.Web.Middleware;
+using SFA.DAS.DfESignIn.Auth.Configuration;
 
-namespace Esfa.Recruit.Qa.Web;
+namespace Recruit.Qa.Web;
 
 public partial class Startup
 {

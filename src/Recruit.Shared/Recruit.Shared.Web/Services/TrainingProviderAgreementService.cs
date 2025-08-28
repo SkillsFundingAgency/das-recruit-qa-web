@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
 
 namespace Recruit.Shared.Web.Services;
 

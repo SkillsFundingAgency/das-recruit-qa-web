@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Messaging;
+namespace Recruit.Vacancies.Client.Domain.Messaging;
 
 public interface IMessaging
 {

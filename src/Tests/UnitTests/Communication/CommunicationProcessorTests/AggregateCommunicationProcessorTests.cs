@@ -1,6 +1,6 @@
 using System.Linq;
 using Communication.Core;
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Application.Communications;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 using Xunit;

@@ -1,14 +1,14 @@
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+using Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public partial class VacancyClient(
     IQueryStoreReader reader,

@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using System.Text.Encodings.Web;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Microsoft.AspNetCore.Mvc.TagHelpers;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using Recruit.Shared.Web.Extensions;

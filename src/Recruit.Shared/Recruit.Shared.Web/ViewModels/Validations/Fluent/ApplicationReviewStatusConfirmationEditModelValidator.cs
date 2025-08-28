@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
+﻿using Recruit.Vacancies.Client.Application.Validation.Fluent;
 using FluentValidation;
 using Recruit.Shared.Web.ViewModels.ApplicationReview;
 

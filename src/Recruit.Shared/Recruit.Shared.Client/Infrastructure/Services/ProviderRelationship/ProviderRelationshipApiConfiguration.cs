@@ -1,6 +1,6 @@
 using SFA.DAS.Http.Configuration;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
 
 public class ProviderRelationshipApiConfiguration : IManagedIdentityClientConfiguration
 {

@@ -1,5 +1,5 @@
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
 using Recruit.Shared.Web.ViewModels;
 using System;
 using System.Collections.Generic;

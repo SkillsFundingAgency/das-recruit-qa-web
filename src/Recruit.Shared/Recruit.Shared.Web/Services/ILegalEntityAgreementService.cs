@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
 
 namespace Recruit.Shared.Web.Services;
 

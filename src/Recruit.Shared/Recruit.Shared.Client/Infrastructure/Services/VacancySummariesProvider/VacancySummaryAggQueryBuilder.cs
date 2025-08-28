@@ -4,7 +4,7 @@ using System.Linq;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 
 public class VacancySummaryAggQueryBuilder
 {

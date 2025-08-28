@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.EventStore;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.EventStore;
 
 public class EventItem
 {

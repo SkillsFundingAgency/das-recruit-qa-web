@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Newtonsoft.Json;
 using SFA.DAS.Encoding;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview;
+namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 public class VacancyReviewDto
 {

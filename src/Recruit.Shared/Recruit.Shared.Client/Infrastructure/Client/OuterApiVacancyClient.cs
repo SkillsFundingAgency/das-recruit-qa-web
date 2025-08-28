@@ -1,10 +1,10 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using SFA.DAS.Encoding;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public interface IOuterApiVacancyClient
 {

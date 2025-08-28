@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Cache;
+namespace Recruit.Vacancies.Client.Application.Cache;
 
 public class Cache : ICache
 {

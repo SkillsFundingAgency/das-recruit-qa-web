@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.FeatureToggle;
+﻿using Recruit.Vacancies.Client.Application.FeatureToggle;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 
 namespace Recruit.Shared.Web.TagHelpers;

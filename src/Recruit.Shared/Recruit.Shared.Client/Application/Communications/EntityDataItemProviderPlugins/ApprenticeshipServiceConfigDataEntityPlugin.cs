@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Client.Application.Communications;
+using Recruit.Client.Application.Communications;
 using Microsoft.Extensions.Options;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
+namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
 public class ApprenticeshipServiceConfigDataEntityPlugin : IEntityDataItemProvider
 {

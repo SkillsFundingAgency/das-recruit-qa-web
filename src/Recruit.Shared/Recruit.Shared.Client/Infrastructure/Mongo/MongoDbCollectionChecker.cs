@@ -4,14 +4,14 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Authentication;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Polly;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+namespace Recruit.Vacancies.Client.Infrastructure.Mongo;
 
 public class MongoDbCollectionChecker
 {

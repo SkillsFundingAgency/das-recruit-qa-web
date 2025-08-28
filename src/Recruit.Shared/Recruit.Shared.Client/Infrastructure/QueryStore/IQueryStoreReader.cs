@@ -1,16 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyApplications;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyApplications;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 public interface IQueryStoreReader
 {

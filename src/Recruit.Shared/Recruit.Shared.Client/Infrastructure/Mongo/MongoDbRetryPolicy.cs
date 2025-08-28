@@ -6,7 +6,7 @@ using Polly.Contrib.WaitAndRetry;
 using System;
 using System.Linq;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
+namespace Recruit.Vacancies.Client.Infrastructure.Mongo;
 
 public static class MongoDbRetryPolicy
 {

@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 using SFA.DAS.Encoding;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview;
+namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 
 public interface IVacancyReviewRepositoryRunner

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
 
 public class ProfanityList : IReferenceDataItem
 {

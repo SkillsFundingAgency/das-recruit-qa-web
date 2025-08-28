@@ -1,7 +1,7 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Exceptions;
+using Recruit.Vacancies.Client.Domain.Exceptions;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
+namespace Recruit.Vacancies.Client.Infrastructure.Exceptions;
 
 [Serializable]
 public class ReportNotFoundException : RecruitException

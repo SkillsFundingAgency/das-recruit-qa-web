@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 public record GetProviderDashboardCountApiRequest(long Ukprn) : IGetApiRequest
 {

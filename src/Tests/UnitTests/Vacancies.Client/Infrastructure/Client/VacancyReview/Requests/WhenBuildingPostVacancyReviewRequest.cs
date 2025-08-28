@@ -1,7 +1,7 @@
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using NUnit.Framework;
 using SFA.DAS.Encoding;
 
@@ -16,7 +16,7 @@ public class WhenBuildingPostVacancyReviewRequest
         encodingService.Setup(x => x.Decode(It.IsAny<string>(), It.IsAny<EncodingType>())).Returns(123456);
         var fixture = new Fixture();
         var vReview = fixture
-            .Build<Esfa.Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
+            .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
             .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
             .Create();
         

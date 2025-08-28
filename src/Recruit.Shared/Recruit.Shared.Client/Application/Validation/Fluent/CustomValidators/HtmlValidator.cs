@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Text.RegularExpressions;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Application.Services;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
 
 internal class HtmlValidator<T, TProperty> : PropertyValidator<T, TProperty>
 {

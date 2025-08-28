@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 
 public class ProviderDashboardSummary
 {

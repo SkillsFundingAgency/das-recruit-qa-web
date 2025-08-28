@@ -1,6 +1,6 @@
 using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
 public interface IOuterApiClient
 {

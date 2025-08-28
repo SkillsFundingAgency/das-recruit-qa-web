@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Recruit.Communication.Types;
 using Xunit;

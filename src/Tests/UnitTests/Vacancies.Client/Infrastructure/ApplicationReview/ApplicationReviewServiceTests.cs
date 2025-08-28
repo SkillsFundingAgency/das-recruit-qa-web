@@ -1,9 +1,9 @@
 ﻿using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
+using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Requests;
+using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ApplicationReview;
@@ -41,7 +41,7 @@ internal class ApplicationReviewServiceTests
                     HasEverBeenEmployerInterviewing = false,
                     AdditionalQuestion1 = "Q1",
                     AdditionalQuestion2 = "Q2",
-                    Application = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
+                    Application = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
                     {
                         Id = Guid.NewGuid(),
                         CandidateId = Guid.NewGuid(),
@@ -144,7 +144,7 @@ internal class ApplicationReviewServiceTests
                     HasEverBeenEmployerInterviewing = false,
                     AdditionalQuestion1 = "Q1",
                     AdditionalQuestion2 = "Q2",
-                    Application = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
+                    Application = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
                     {
                         Id = Guid.NewGuid(),
                         CandidateId = Guid.NewGuid(),
@@ -224,7 +224,7 @@ internal class ApplicationReviewServiceTests
         // Arrange
         var apiResponse = new GetApplicationReviewByIdApiResponse
         {
-            ApplicationReview = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.ApplicationReview
+            ApplicationReview = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.ApplicationReview
             {
                 Id = applicationReviewId,
                 CandidateId = Guid.NewGuid(),
@@ -242,7 +242,7 @@ internal class ApplicationReviewServiceTests
                 HasEverBeenEmployerInterviewing = false,
                 AdditionalQuestion1 = "Q1",
                 AdditionalQuestion2 = "Q2",
-                Application = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
+                Application = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.Application
                 {
                     Id = Guid.NewGuid(),
                     CandidateId = Guid.NewGuid(),
@@ -312,7 +312,7 @@ internal class ApplicationReviewServiceTests
         // Arrange
         var apiResponse = new GetApplicationReviewByIdApiResponse
         {
-            ApplicationReview = new Esfa.Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.ApplicationReview()
+            ApplicationReview = new Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses.ApplicationReview()
             {
                 WithdrawnDate = DateTime.Now
             }

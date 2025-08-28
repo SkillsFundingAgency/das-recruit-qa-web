@@ -1,7 +1,7 @@
 ﻿using System;
 using Polly;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services;
+namespace Recruit.Vacancies.Client.Infrastructure.Services;
 
 public static class PollyRetryPolicy
 {

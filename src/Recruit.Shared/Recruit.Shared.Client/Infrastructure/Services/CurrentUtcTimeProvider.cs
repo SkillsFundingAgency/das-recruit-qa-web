@@ -1,7 +1,7 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Providers;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services;
+namespace Recruit.Vacancies.Client.Infrastructure.Services;
 
 public class CurrentUtcTimeProvider : ITimeProvider
 {

@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 
 public abstract class StorageQueueServiceBase
 {

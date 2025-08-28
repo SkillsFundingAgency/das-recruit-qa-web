@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.HttpRequestHandlers;
+namespace Recruit.Vacancies.Client.Infrastructure.HttpRequestHandlers;
 
 public class VersionHeaderHandler : DelegatingHandler
 {

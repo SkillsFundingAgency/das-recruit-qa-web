@@ -1,5 +1,5 @@
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Services.EmployerService;
@@ -100,8 +100,8 @@ public class GetEmployerNameTests
         result.Should().Be(employerName);
     }
 
-    private Esfa.Recruit.Vacancies.Client.Application.Services.EmployerService GetSut()
+    private Recruit.Vacancies.Client.Application.Services.EmployerService GetSut()
     {
-        return new Esfa.Recruit.Vacancies.Client.Application.Services.EmployerService(_mockEmployerProfileRepository.Object);
+        return new Recruit.Vacancies.Client.Application.Services.EmployerService(_mockEmployerProfileRepository.Object);
     }
 }

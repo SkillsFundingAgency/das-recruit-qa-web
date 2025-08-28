@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
 
 public class VacancyAnalyticsSummaryV2 : QueryProjectionBase
 {

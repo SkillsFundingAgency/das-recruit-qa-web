@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.FeatureToggle;
+namespace Recruit.Vacancies.Client.Application.FeatureToggle;
 
 public class Feature(IConfiguration configuration) : IFeature
 {

@@ -1,4 +1,4 @@
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Providers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Recruit.Qa.Web.Configuration;

@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Net;
-using Esfa.Recruit.Vacancies.Client.Domain.Exceptions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Domain.Exceptions;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;

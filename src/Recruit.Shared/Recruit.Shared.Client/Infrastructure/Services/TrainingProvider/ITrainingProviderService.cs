@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 
 public interface ITrainingProviderService
 {

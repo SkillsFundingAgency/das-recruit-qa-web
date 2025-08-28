@@ -1,6 +1,6 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Rules;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.VacancyRules;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Application.Rules;
+using Recruit.Vacancies.Client.Application.Rules.VacancyRules;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Rules.VacancyRules;

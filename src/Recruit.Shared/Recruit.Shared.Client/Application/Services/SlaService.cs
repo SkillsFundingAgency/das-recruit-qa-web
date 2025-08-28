@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Providers;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services;
+namespace Recruit.Vacancies.Client.Application.Services;
 
 public class SlaService : ISlaService
 {

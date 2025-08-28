@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Exceptions;
+using Recruit.Vacancies.Client.Application.Exceptions;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation;
+namespace Recruit.Vacancies.Client.Application.Validation;
 
 public sealed class EntityValidator<T, TRules> : IEntityValidator<T, TRules> where TRules : struct, IComparable, IConvertible, IFormattable 
 {

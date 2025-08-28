@@ -4,18 +4,18 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
-using Esfa.Recruit.Vacancies.Client.Application.Services.Reports;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
+using Recruit.Vacancies.Client.Application.Services.Reports;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public class QaVacancyClient : IQaVacancyClient
 {

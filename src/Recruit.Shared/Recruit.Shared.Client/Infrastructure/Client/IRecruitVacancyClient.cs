@@ -1,7 +1,7 @@
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public interface IRecruitVacancyClient
 {

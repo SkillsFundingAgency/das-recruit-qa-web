@@ -1,9 +1,9 @@
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Communication.Types;
 using Xunit;
-using static Esfa.Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
+using static Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Communications;
 
@@ -56,7 +56,7 @@ public class UserPreferencesProviderPluginTests
         var userPref = _fixture
             .Build<UserNotificationPreferences>()
             .With(p => p.NotificationTypes, NotificationTypes.VacancyRejected)
-            .With(p => p.NotificationScope, Esfa.Recruit.Vacancies.Client.Domain.Entities.NotificationScope.OrganisationVacancies)
+            .With(p => p.NotificationScope, Recruit.Vacancies.Client.Domain.Entities.NotificationScope.OrganisationVacancies)
             .Create();
 
         _repositoryMock
@@ -80,7 +80,7 @@ public class UserPreferencesProviderPluginTests
         var userPref = _fixture
             .Build<UserNotificationPreferences>()
             .With(p => p.NotificationTypes, NotificationTypes.VacancyRejected)
-            .With(p => p.NotificationScope, Esfa.Recruit.Vacancies.Client.Domain.Entities.NotificationScope.OrganisationVacancies)
+            .With(p => p.NotificationScope, Recruit.Vacancies.Client.Domain.Entities.NotificationScope.OrganisationVacancies)
             .Create();
         var user = _fixture.Create<CommunicationUser>();
         _repositoryMock
@@ -105,7 +105,7 @@ public class UserPreferencesProviderPluginTests
         var userPref = _fixture
             .Build<UserNotificationPreferences>()
             .With(p => p.NotificationTypes, NotificationTypes.VacancyRejectedByEmployer)
-            .With(p => p.NotificationScope, Esfa.Recruit.Vacancies.Client.Domain.Entities.NotificationScope.OrganisationVacancies)
+            .With(p => p.NotificationScope, Recruit.Vacancies.Client.Domain.Entities.NotificationScope.OrganisationVacancies)
             .Create();
 
         _repositoryMock
@@ -129,7 +129,7 @@ public class UserPreferencesProviderPluginTests
         var userPref = _fixture
             .Build<UserNotificationPreferences>()
             .With(p => p.NotificationTypes, NotificationTypes.ApplicationSubmitted)
-            .With(p => p.NotificationScope, Esfa.Recruit.Vacancies.Client.Domain.Entities.NotificationScope.UserSubmittedVacancies)
+            .With(p => p.NotificationScope, Recruit.Vacancies.Client.Domain.Entities.NotificationScope.UserSubmittedVacancies)
             .Create();
 
         _repositoryMock
@@ -153,7 +153,7 @@ public class UserPreferencesProviderPluginTests
         var userPref = _fixture
             .Build<UserNotificationPreferences>()
             .With(p => p.NotificationTypes, NotificationTypes.VacancySentForReview)
-            .With(p => p.NotificationScope, Esfa.Recruit.Vacancies.Client.Domain.Entities.NotificationScope.UserSubmittedVacancies)
+            .With(p => p.NotificationScope, Recruit.Vacancies.Client.Domain.Entities.NotificationScope.UserSubmittedVacancies)
             .Create();
 
         _repositoryMock

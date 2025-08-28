@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi.Requests;

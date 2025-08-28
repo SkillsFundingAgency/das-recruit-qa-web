@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Interfaces;
+using Recruit.Vacancies.Client.Domain.Interfaces;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Entities;
+namespace Recruit.Vacancies.Client.Domain.Entities;
 
 public class Vacancy : ITaskListVacancy
 {

@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Infrastructure.Client;
 
 namespace Recruit.Shared.Web.Orchestrators;
 

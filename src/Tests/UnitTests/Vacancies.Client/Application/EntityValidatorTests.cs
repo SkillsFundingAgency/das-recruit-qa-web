@@ -1,4 +1,4 @@
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation;
 using FluentValidation;
 using Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation;
 using Xunit;

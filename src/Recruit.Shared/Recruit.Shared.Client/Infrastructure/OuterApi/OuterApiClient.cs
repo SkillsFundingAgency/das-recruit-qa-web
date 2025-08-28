@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+namespace Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
 public class OuterApiClient : IOuterApiClient
 {

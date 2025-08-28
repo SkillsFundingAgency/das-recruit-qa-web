@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 
 public class Qualifications
 {

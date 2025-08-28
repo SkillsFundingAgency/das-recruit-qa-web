@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
 
 public class EmployerDashboardSummary
 {

@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using FluentValidation;
-using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation.Fluent;
+using Recruit.Vacancies.Client.Application.Validation;
 using Recruit.Qa.Web.ViewModels.ManageProvider;
 using Recruit.Shared.Web.Extensions;
 

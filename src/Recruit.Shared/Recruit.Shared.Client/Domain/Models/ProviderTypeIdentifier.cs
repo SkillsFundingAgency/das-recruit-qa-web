@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Domain.Models;
+﻿namespace Recruit.Vacancies.Client.Domain.Models;
 
 public enum ProviderTypeIdentifier : short
 {

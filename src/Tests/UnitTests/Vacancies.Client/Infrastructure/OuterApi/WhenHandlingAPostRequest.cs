@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Microsoft.Extensions.Options;
 using Moq.Protected;
 using Newtonsoft.Json;

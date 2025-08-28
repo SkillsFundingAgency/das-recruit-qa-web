@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.Rules.Engine;
+﻿namespace Recruit.Vacancies.Client.Application.Rules.Engine;
 
 public sealed class RuleSetOptions
 {

@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿namespace Recruit.Vacancies.Client.Domain.Entities;
 
 /// <summary>
 /// overall decision for a rule set evaluation

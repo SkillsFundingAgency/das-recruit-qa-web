@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+using Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 
 public static class LegalEntityMapper
 {

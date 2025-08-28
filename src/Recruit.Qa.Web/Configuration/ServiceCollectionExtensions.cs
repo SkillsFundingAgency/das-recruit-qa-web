@@ -1,5 +1,5 @@
 using System.Linq;
-using Esfa.Recruit.Qa.Web;
+using Recruit.Qa.Web;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;

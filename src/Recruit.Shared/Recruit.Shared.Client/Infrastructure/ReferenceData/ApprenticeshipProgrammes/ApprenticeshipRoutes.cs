@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.Routes;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Routes;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
 public class ApprenticeshipRoutes : IReferenceDataItem
 {

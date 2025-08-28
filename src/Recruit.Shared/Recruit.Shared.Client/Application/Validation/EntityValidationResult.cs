@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentValidation.Results;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation;
+namespace Recruit.Vacancies.Client.Application.Validation;
 
 public class EntityValidationResult
 {

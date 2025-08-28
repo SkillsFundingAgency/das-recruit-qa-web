@@ -1,14 +1,14 @@
 using System;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Services;
-using Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators.VacancyValidators;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Services;
+using Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators.VacancyValidators;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
+using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using FluentValidation;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent;
 
 public sealed class FluentVacancyValidator : AbstractValidator<Vacancy>
 {

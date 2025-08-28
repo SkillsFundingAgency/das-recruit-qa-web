@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Logging;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
+namespace Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
 
 public class VacancyParticipantsResolverPlugin : IParticipantResolver
 {

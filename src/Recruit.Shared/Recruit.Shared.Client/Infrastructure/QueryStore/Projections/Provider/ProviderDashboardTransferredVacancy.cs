@@ -1,7 +1,7 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 
 public class ProviderDashboardTransferredVacancy
 {

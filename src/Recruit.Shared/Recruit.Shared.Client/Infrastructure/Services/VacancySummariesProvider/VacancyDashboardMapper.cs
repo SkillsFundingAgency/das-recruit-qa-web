@@ -1,6 +1,6 @@
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 
 internal static class VacancyDashboardMapper
 {

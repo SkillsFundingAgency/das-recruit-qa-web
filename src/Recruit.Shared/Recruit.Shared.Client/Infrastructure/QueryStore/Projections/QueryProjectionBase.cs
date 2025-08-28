@@ -1,6 +1,6 @@
 using System;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 
 public class QueryProjectionBase
 {

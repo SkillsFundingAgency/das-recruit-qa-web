@@ -1,5 +1,5 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Client;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.Client;
 using Recruit.Shared.Web.Mappers;
 using Recruit.Shared.Web.ViewModels;
 using System;

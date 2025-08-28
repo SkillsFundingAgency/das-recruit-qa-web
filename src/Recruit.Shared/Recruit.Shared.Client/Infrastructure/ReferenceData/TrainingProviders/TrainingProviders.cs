@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 
 public class TrainingProviders : IReferenceDataItem
 {

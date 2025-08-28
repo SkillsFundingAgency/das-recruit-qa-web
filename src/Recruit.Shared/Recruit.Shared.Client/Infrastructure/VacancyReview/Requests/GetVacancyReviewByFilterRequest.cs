@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 
 public class GetVacancyReviewByFilterRequest(List<ReviewStatus>? status = null, DateTime? expiredAssignationDateTime = null) : IGetApiRequest
 {

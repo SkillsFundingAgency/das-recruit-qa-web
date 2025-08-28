@@ -1,10 +1,10 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Events.Interfaces;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Events.Interfaces;
+using Recruit.Vacancies.Client.Domain.Messaging;
 using MediatR;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Events;
+namespace Recruit.Vacancies.Client.Domain.Events;
 
 public class ApplicationReviewedEvent : EventBase, INotification, IApplicationReviewEvent
 {

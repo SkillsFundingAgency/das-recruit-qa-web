@@ -1,6 +1,6 @@
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Mappers;
+namespace Recruit.Vacancies.Client.Application.Mappers;
 
 public static class VacancyUserMapper
 {

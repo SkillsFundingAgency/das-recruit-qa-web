@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.Validation;
+﻿namespace Recruit.Vacancies.Client.Application.Validation;
 
 public static class ErrorMessages
 {

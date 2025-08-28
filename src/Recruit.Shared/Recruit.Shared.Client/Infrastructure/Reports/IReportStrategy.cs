@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Reports;
+namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
 public interface IReportStrategy
 {

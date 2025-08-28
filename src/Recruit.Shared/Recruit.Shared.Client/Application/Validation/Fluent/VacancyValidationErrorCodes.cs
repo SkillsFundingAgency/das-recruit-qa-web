@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent;
+﻿namespace Recruit.Vacancies.Client.Application.Validation.Fluent;
 
 public static class VacancyValidationErrorCodes
 {

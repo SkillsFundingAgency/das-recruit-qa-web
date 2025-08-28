@@ -1,6 +1,6 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Interfaces;
+namespace Recruit.Vacancies.Client.Domain.Interfaces;
 
 public interface ITaskListVacancy
 {

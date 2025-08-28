@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Request;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Request;
+using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
 
 public class OuterApiGeocodeService : IOuterApiGeocodeService
 {

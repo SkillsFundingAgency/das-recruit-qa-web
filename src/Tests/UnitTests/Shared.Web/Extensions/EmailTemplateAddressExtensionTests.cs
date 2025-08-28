@@ -1,5 +1,5 @@
-﻿using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Extensions;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Extensions;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Shared.Web.Extensions;

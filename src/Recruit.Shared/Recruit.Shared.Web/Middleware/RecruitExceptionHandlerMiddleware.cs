@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Exceptions;
+using Recruit.Vacancies.Client.Domain.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Net.Http.Headers;

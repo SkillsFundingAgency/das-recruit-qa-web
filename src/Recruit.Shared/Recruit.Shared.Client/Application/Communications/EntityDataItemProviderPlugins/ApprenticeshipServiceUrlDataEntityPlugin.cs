@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Esfa.Recruit.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Client.Application.Communications;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Exceptions;
 using Recruit.Communication.Types.Interfaces;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
+namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
 public class ApprenticeshipServiceUrlDataEntityPlugin : IEntityDataItemProvider
 {

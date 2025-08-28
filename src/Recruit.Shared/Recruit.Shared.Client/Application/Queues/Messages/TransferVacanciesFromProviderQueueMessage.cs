@@ -1,7 +1,7 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Queues.Messages;
+namespace Recruit.Vacancies.Client.Application.Queues.Messages;
 
 public class TransferVacanciesFromProviderQueueMessage
 {

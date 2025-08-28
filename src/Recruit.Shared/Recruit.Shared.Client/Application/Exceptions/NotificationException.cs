@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Exceptions;
+namespace Recruit.Vacancies.Client.Application.Exceptions;
 
 [Serializable]
 public class NotificationException : Exception

@@ -1,9 +1,9 @@
 using System.Linq;
-using Esfa.Recruit.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Client.Application.Communications;
+using Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Options;
 using Xunit;
 

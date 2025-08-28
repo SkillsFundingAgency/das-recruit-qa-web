@@ -5,14 +5,14 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Domain.Models;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
+using Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
+using Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
 
 public class ProviderRelationshipsService : IProviderRelationshipsService
 {

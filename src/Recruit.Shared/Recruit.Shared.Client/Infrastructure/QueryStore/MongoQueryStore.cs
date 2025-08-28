@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Mongo;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Polly;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 internal sealed class MongoQueryStore : MongoDbCollectionBase, IQueryStore, IQueryStoreHouseKeepingService
 {

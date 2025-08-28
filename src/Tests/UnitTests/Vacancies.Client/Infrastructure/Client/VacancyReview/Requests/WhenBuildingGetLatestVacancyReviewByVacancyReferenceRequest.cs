@@ -1,5 +1,5 @@
 using AutoFixture.NUnit3;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.VacancyReview.Requests;

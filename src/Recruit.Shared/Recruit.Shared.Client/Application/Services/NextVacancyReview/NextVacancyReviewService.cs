@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Options;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
+namespace Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
 
 public class NextVacancyReviewService : INextVacancyReviewService
 {

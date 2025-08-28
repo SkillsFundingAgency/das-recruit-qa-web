@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.User;
+namespace Recruit.Vacancies.Client.Infrastructure.User;
 
 public class UserDto
 {

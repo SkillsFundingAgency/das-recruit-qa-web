@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Application.Validation;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Recruit.Shared.Web;

@@ -1,5 +1,5 @@
 using System.Security.Claims;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Qa.Web.Security;
 
 namespace Recruit.Qa.Web.Extensions;

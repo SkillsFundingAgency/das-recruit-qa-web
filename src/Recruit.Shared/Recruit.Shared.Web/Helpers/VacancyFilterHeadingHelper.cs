@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Humanizer;
 using Recruit.Shared.Web.Extensions;
 

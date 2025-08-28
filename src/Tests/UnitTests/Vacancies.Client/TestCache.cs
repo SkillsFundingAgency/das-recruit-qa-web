@@ -1,4 +1,4 @@
-﻿using Esfa.Recruit.Vacancies.Client.Application.Cache;
+﻿using Recruit.Vacancies.Client.Application.Cache;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client;
 

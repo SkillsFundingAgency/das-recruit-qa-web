@@ -1,5 +1,5 @@
-using Esfa.Recruit.Vacancies.Client.Application.Mappers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Mappers;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Mappers;

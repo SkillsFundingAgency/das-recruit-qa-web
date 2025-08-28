@@ -1,16 +1,16 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Application.Commands;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
-using Esfa.Recruit.Vacancies.Client.Domain.Messaging;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Domain.Messaging;
+using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.CommandHandlers;
+namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class TransferEmployerReviewToQAReviewCommandHandler : IRequestHandler<TransferEmployerReviewToQAReviewCommand, Unit>
 {

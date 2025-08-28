@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
 
 public class QaDashboard : QueryProjectionBase
 {

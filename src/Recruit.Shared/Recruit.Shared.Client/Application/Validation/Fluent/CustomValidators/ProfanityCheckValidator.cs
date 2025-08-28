@@ -1,9 +1,9 @@
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Extensions;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
 
 public class ProfanityCheckValidator<T, TProperty> : PropertyValidator<T, TProperty>
 {

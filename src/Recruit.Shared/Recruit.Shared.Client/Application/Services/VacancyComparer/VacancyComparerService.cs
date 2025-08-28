@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services.VacancyComparer;
+namespace Recruit.Vacancies.Client.Application.Services.VacancyComparer;
 
 public class VacancyComparerService : IVacancyComparerService
 {

@@ -2,15 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Services.ReferenceData;
-using Esfa.Recruit.Vacancies.Client.Domain.Models;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Application.Services.ReferenceData;
+using Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Microsoft.Extensions.Logging;
 using Polly;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 
 public class TrainingProvidersUpdateService : ITrainingProvidersUpdateService
 {

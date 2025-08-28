@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Rules.Engine;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Rules.Engine;
+using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Rules.VacancyRules;
+namespace Recruit.Vacancies.Client.Application.Rules.VacancyRules;
 
 public sealed class VacancyAnonymousCheckRule : Rule, IRule<Vacancy>
 {

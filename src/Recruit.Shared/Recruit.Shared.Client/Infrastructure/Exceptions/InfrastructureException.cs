@@ -1,6 +1,6 @@
 using System;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Exceptions;
+namespace Recruit.Vacancies.Client.Infrastructure.Exceptions;
 
 [Serializable]
 public class InfrastructureException : Exception

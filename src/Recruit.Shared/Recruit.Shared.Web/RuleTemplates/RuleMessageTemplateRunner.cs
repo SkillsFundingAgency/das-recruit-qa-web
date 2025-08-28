@@ -1,6 +1,6 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Application.Rules;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Rules;
+using Recruit.Vacancies.Client.Domain.Entities;
 using Newtonsoft.Json;
 
 namespace Recruit.Shared.Web.RuleTemplates;

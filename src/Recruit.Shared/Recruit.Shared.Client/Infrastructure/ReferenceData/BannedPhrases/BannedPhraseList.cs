@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.BannedPhrases;
+namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.BannedPhrases;
 
 public class BannedPhraseList : IReferenceDataItem
 {

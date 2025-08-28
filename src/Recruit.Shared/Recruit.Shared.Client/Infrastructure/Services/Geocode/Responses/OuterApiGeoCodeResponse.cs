@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
+﻿namespace Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
 
 public class GetGeoPointResponse
 {

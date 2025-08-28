@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
 
 internal class ProviderPermissions
 {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Services.VacancyComparer;
+namespace Recruit.Vacancies.Client.Application.Services.VacancyComparer;
 
 public class VacancyComparerResult
 {

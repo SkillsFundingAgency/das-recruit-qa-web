@@ -1,7 +1,7 @@
 using System;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
+namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 
 public class PostVacancyReviewRequest(Guid id, VacancyReviewDto vacancyReview) : IPostApiRequest
 {

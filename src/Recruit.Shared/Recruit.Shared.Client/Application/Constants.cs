@@ -1,4 +1,4 @@
-namespace Esfa.Recruit.Vacancies.Client.Application;
+namespace Recruit.Vacancies.Client.Application;
 
 public static class Constants
 {

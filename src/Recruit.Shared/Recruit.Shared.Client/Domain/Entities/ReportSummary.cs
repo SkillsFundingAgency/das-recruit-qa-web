@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Entities;
+namespace Recruit.Vacancies.Client.Domain.Entities;
 
 public class ReportSummary
 {

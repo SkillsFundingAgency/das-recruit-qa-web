@@ -1,7 +1,7 @@
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Entities;
 using MongoDB.Bson;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.BlockedOrganisationsProvider;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.BlockedOrganisationsProvider;
 
 public static class BlockedOrganisationsAggQueryBuilder
 {

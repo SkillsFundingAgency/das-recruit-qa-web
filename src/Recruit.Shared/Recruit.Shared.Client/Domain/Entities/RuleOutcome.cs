@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Esfa.Recruit.Vacancies.Client.Application.Rules;
+using Recruit.Vacancies.Client.Application.Rules;
 
-namespace Esfa.Recruit.Vacancies.Client.Domain.Entities;
+namespace Recruit.Vacancies.Client.Domain.Entities;
 
 public class RuleOutcome
 {

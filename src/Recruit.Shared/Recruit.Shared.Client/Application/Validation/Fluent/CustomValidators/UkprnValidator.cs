@@ -1,7 +1,7 @@
 using FluentValidation;
 using FluentValidation.Validators;
 
-namespace Esfa.Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
+namespace Recruit.Vacancies.Client.Application.Validation.Fluent.CustomValidators;
 
 public class UkprnValidator<T, TProperty> : PropertyValidator<T, TProperty>
 {

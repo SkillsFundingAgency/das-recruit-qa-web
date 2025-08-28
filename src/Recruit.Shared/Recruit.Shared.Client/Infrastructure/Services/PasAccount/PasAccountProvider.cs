@@ -2,13 +2,13 @@
 using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Application.Configuration;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using SFA.DAS.Http;
 using SFA.DAS.Http.TokenGenerators;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
+namespace Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
 
 public class PasAccountProvider : IPasAccountProvider
 {

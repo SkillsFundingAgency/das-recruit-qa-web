@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.Reports;
+namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
 public class ReportStrategyResult
 {

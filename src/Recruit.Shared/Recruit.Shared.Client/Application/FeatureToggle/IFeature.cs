@@ -1,4 +1,4 @@
-﻿namespace Esfa.Recruit.Vacancies.Client.Application.FeatureToggle;
+﻿namespace Recruit.Vacancies.Client.Application.FeatureToggle;
 
 public interface IFeature
 {

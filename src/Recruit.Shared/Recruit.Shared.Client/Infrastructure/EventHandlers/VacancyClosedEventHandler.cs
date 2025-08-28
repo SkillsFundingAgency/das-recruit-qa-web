@@ -1,21 +1,21 @@
 ﻿using System;
-using Esfa.Recruit.Vacancies.Client.Domain.Events;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Domain.Events;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
-using Esfa.Recruit.Vacancies.Client.Application.Providers;
-using Esfa.Recruit.Vacancies.Client.Domain.Repositories;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.Extensions;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Esfa.Recruit.Vacancies.Client.Domain.Entities;
-using Esfa.Recruit.Vacancies.Client.Application.Communications;
-using Esfa.Recruit.Vacancies.Client.Infrastructure.StorageQueue;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Application.Communications;
+using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Communication.Types;
 
-namespace Esfa.Recruit.Vacancies.Client.Infrastructure.EventHandlers;
+namespace Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 
 public class VacancyClosedEventHandler : INotificationHandler<VacancyClosedEvent>
 {
