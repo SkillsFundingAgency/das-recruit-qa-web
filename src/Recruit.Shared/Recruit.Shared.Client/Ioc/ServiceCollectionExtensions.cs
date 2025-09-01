@@ -149,7 +149,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ITrainingProviderService, TrainingProviderService>();
         services.AddTransient<ITrainingProviderSummaryProvider, TrainingProviderSummaryProvider>();
         services.AddTransient<IPasAccountProvider, PasAccountProvider>();
-        services.AddHttpClient<IOuterApiClient, OuterApiClient>();
+        services.AddHttpClient<IOuterApiClient, RecruitOuterApiClient>();
         services.AddTransient<IOuterApiGeocodeService, OuterApiGeocodeService>();
 
         // Projection services

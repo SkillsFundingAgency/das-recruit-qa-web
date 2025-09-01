@@ -32,7 +32,7 @@ public class WhenHandlingAGetRequest
         };
         var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, $"{config.BaseUrl}{getTestRequest.GetUrl}", config.Key,HttpMethod.Get);
         var client = new HttpClient(httpMessageHandler.Object);
-        var apiClient = new OuterApiClient(client, mockConfig.Object);
+        var apiClient = new RecruitOuterApiClient(client, mockConfig.Object);
 
         //Act
         var actual = await apiClient.Get<List<string>>(getTestRequest);
@@ -58,7 +58,7 @@ public class WhenHandlingAGetRequest
             
         var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, $"{config.BaseUrl}{getTestRequest.GetUrl}", config.Key,HttpMethod.Get);
         var client = new HttpClient(httpMessageHandler.Object);
-        var apiClient = new OuterApiClient(client, mockConfig.Object);
+        var apiClient = new RecruitOuterApiClient(client, mockConfig.Object);
 
         //Act Assert
         await Assert.ThrowsAsync<HttpRequestException>(() => apiClient.Get<List<string>>(getTestRequest));
@@ -82,7 +82,7 @@ public class WhenHandlingAGetRequest
 
         var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, $"{config.BaseUrl}{getTestRequest.GetUrl}", config.Key,HttpMethod.Get);
         var client = new HttpClient(httpMessageHandler.Object);
-        var apiClient = new OuterApiClient(client, mockConfig.Object);
+        var apiClient = new RecruitOuterApiClient(client, mockConfig.Object);
 
         //Act
         var result = await apiClient.Get<GetGeoPointResponse>(getTestRequest);

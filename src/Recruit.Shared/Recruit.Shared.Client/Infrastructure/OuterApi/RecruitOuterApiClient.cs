@@ -8,12 +8,12 @@ using Newtonsoft.Json;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
-public class OuterApiClient : IOuterApiClient
+public class RecruitOuterApiClient : IOuterApiClient
 {
     private readonly HttpClient _httpClient;
     private readonly OuterApiConfiguration _config;
 
-    public OuterApiClient (
+    public RecruitOuterApiClient (
         HttpClient httpClient, 
         IOptions<OuterApiConfiguration> config)
     {

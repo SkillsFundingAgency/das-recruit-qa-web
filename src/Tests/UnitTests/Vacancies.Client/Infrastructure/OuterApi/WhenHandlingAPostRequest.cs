@@ -31,7 +31,7 @@ public class WhenHandlingAPostRequest
         };
         var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, $"{config.BaseUrl}{postTestRequest.PostUrl}", config.Key,HttpMethod.Post);
         var client = new HttpClient(httpMessageHandler.Object);
-        var apiClient = new OuterApiClient(client, mockConfig.Object);
+        var apiClient = new RecruitOuterApiClient(client, mockConfig.Object);
 
         //Act
         await apiClient.Post(postTestRequest);
