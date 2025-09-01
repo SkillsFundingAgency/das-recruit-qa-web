@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
-using AutoFixture.NUnit3;
+﻿using AutoFixture.NUnit3;
+using NUnit.Framework;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
-using NUnit.Framework;
 using SFA.DAS.Encoding;
+using System.Collections.Generic;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 
@@ -21,7 +21,7 @@ public class EmployerAccountProviderTests
         List<long> vacancyReferences,
         GetApplicationReviewStatsResponse response,
         [Frozen] Mock<IEncodingService> encodingService,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] EmployerAccountProvider employerAccountProvider)
     {
         encodingService.Setup(x => x.Decode(hashedAccountId, EncodingType.AccountId))
@@ -44,7 +44,7 @@ public class EmployerAccountProviderTests
         long accountId,
         GetDashboardCountApiResponse response,
         [Frozen] Mock<IEncodingService> encodingService,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] EmployerAccountProvider employerAccountProvider)
     {
         encodingService.Setup(x => x.Decode(hashedAccountId, EncodingType.AccountId))
@@ -69,7 +69,7 @@ public class EmployerAccountProviderTests
         List<ApplicationReviewStatus> statuses,
         GetVacanciesDashboardResponse response,
         [Frozen] Mock<IEncodingService> encodingService,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] EmployerAccountProvider employerAccountProvider)
     {
         encodingService.Setup(x => x.Decode(hashedAccountId, EncodingType.AccountId))
@@ -97,7 +97,7 @@ public class EmployerAccountProviderTests
         bool isAscending,
         GetAllAccountLegalEntitiesApiResponse response,
         [Frozen] Mock<IEncodingService> encodingService,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] EmployerAccountProvider employerAccountProvider)
     {
         var accountIds = new List<long>();

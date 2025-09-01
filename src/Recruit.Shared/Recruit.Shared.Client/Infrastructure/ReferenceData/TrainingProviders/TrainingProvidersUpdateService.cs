@@ -1,14 +1,14 @@
+using Microsoft.Extensions.Logging;
+using Polly;
+using Recruit.Vacancies.Client.Application.Services.ReferenceData;
+using Recruit.Vacancies.Client.Domain.Models;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Application.Services.ReferenceData;
-using Recruit.Vacancies.Client.Domain.Models;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Microsoft.Extensions.Logging;
-using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 
@@ -16,12 +16,12 @@ public class TrainingProvidersUpdateService : ITrainingProvidersUpdateService
 {
     private readonly ILogger<TrainingProvidersUpdateService> _logger;
     private readonly IReferenceDataWriter _referenceDataWriter;
-    private readonly IOuterApiClient _outerApiClient;
+    private readonly IRecruitOuterApiClient _outerApiClient;
 
     public TrainingProvidersUpdateService(
         ILogger<TrainingProvidersUpdateService> logger, 
         IReferenceDataWriter referenceDataWriter, 
-        IOuterApiClient outerApiClient)
+        IRecruitOuterApiClient outerApiClient)
     {
         _logger = logger;
         _referenceDataWriter = referenceDataWriter;

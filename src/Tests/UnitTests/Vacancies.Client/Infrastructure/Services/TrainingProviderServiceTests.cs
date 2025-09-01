@@ -4,7 +4,6 @@ using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.Configuration;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
@@ -13,6 +12,7 @@ using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
 using TrainingProvider = Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProvider;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
 
@@ -26,7 +26,7 @@ public class TrainingProviderServiceTests
         var referenceDataReader = new Mock<IReferenceDataReader>();
         var cache = new Mock<ICache>();
         var timeProvider = new Mock<ITimeProvider>();
-        var outerApiClient = new Mock<IOuterApiClient>();
+        var outerApiClient = new Mock<IRecruitOuterApiClient>();
 
         var sut = new TrainingProviderService(loggerMock.Object, referenceDataReader.Object, cache.Object, timeProvider.Object, outerApiClient.Object);
 
@@ -48,7 +48,7 @@ public class TrainingProviderServiceTests
         var referenceDataReader = new Mock<IReferenceDataReader>();
         var cache = new Mock<ICache>();
         var timeProvider = new Mock<ITimeProvider>();
-        var outerApiClient = new Mock<IOuterApiClient>();
+        var outerApiClient = new Mock<IRecruitOuterApiClient>();
         var trainingProvider = new TrainingProvider
         {
             Ukprn = ukprn,
@@ -92,7 +92,7 @@ public class TrainingProviderServiceTests
         long ukprn,
         List<long> vacancyReferences,
         GetApplicationReviewStatsResponse response,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] TrainingProviderService trainingProviderService)
     {
         var expectedGetUrl = new GetProviderApplicationReviewsCountApiRequest(ukprn, vacancyReferences);
@@ -111,7 +111,7 @@ public class TrainingProviderServiceTests
         int pageNumber,
         List<ApplicationReviewStatus> status,
         GetVacanciesDashboardResponse response,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] TrainingProviderService trainingProviderService)
     {
         var expectedGetUrl = new GetProviderDashboardVacanciesApiRequest(ukprn, pageNumber, status);
@@ -128,7 +128,7 @@ public class TrainingProviderServiceTests
     public async Task GetProviderDashboardStats_Should_Return_As_Expected(
         long ukprn,
         GetDashboardCountApiResponse response,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Greedy] TrainingProviderService trainingProviderService)
     {
         var expectedGetUrl = new GetProviderDashboardCountApiRequest(ukprn);

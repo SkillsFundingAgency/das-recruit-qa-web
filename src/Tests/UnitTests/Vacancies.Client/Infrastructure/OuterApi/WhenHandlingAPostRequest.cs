@@ -7,6 +7,8 @@ using Microsoft.Extensions.Options;
 using Moq.Protected;
 using Newtonsoft.Json;
 using Xunit;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi;
 
@@ -20,8 +22,8 @@ public class WhenHandlingAPostRequest
         var testObject = new List<string>{"test-value"};
         var postTestRequest = new PostTestRequest(testObject);
             
-        var config = new OuterApiConfiguration {BaseUrl = "http://valid-url/", Key = key};
-        var mockConfig = new Mock<IOptions<OuterApiConfiguration>>();
+        var config = new RecruitOuterApiConfiguration {BaseUrl = "http://valid-url/", Key = key};
+        var mockConfig = new Mock<IOptions<RecruitOuterApiConfiguration>>();
         mockConfig.Setup(x => x.Value).Returns(config);
 
         var response = new HttpResponseMessage

@@ -1,9 +1,9 @@
 using AutoFixture.NUnit3;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using NUnit.Framework;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
-using NUnit.Framework;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 
@@ -14,7 +14,7 @@ public class WhenGettingEmployerIdentifiers
         string email,
         string userId,
         GetUserAccountsResponse response,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         EmployerAccountProvider provider)
     {
         var request = new GetUserAccountsRequest(userId, email);

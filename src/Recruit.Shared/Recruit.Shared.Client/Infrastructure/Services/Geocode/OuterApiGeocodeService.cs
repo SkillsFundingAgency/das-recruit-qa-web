@@ -1,18 +1,18 @@
-﻿using System;
-using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+﻿using Microsoft.Extensions.Logging;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Request;
 using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
 
 public class OuterApiGeocodeService : IOuterApiGeocodeService
 {
-    private IOuterApiClient _outerApiClient;
+    private IRecruitOuterApiClient _outerApiClient;
     private ILogger<OuterApiGeocodeService> _logger;
 
-    public OuterApiGeocodeService(IOuterApiClient outerApiClient, ILogger<OuterApiGeocodeService> logger)
+    public OuterApiGeocodeService(IRecruitOuterApiClient outerApiClient, ILogger<OuterApiGeocodeService> logger)
     {
         _outerApiClient = outerApiClient;
         _logger = logger;

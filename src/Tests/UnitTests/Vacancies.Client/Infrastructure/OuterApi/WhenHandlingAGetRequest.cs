@@ -1,13 +1,15 @@
+using Microsoft.Extensions.Options;
+using Moq.Protected;
+using Newtonsoft.Json;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
-using Microsoft.Extensions.Options;
-using Moq.Protected;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.OuterApi;
@@ -21,8 +23,8 @@ public class WhenHandlingAGetRequest
         var key = "123-abc-567";
         var getTestRequest = new GetTestRequest();
         var testObject = new List<string>();
-        var config = new OuterApiConfiguration {BaseUrl = "http://valid-url/", Key = key};
-        var mockConfig = new Mock<IOptions<OuterApiConfiguration>>();
+        var config = new RecruitOuterApiConfiguration {BaseUrl = "http://valid-url/", Key = key};
+        var mockConfig = new Mock<IOptions<RecruitOuterApiConfiguration>>();
         mockConfig.Setup(x => x.Value).Returns(config);
 
         var response = new HttpResponseMessage
@@ -47,8 +49,8 @@ public class WhenHandlingAGetRequest
         //Arrange
         var key = "123-abc-567";
         var getTestRequest = new GetTestRequest();
-        var config = new OuterApiConfiguration {BaseUrl = "http://valid-url/", Key = key };
-        var mockConfig = new Mock<IOptions<OuterApiConfiguration>>();
+        var config = new RecruitOuterApiConfiguration {BaseUrl = "http://valid-url/", Key = key };
+        var mockConfig = new Mock<IOptions<RecruitOuterApiConfiguration>>();
         mockConfig.Setup(x => x.Value).Returns(config);
         var response = new HttpResponseMessage
         {
@@ -71,8 +73,8 @@ public class WhenHandlingAGetRequest
         //Arrange
         var key = "123-abc-567";
         var getTestRequest = new GetTestRequest();
-        var config = new OuterApiConfiguration { BaseUrl = "http://valid-url/", Key = key };
-        var mockConfig = new Mock<IOptions<OuterApiConfiguration>>();
+        var config = new RecruitOuterApiConfiguration { BaseUrl = "http://valid-url/", Key = key };
+        var mockConfig = new Mock<IOptions<RecruitOuterApiConfiguration>>();
         mockConfig.Setup(x => x.Value).Returns(config);
         var response = new HttpResponseMessage
         {

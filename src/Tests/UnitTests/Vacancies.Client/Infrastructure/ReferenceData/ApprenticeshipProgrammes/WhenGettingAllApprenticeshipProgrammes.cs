@@ -3,12 +3,12 @@ using AutoFixture.NUnit3;
 using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.FeatureToggle;
 using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 using NUnit.Framework;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
@@ -19,7 +19,7 @@ public class WhenGettingAllApprenticeshipProgrammes
         GetTrainingProgrammesResponse apiResponse,
         [Frozen] Mock<IConfiguration> mockConfiguration,
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
-        [Frozen] Mock<IOuterApiClient> outerApiClient)
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient)
     {
         outerApiClient
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
@@ -38,7 +38,7 @@ public class WhenGettingAllApprenticeshipProgrammes
         Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes response,
         [Frozen] Mock<ICache> cache,
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Frozen] Mock<IConfiguration> mockConfiguration)
     {
         var dateTime = new DateTime(2025, 2, 1, 6, 0, 0);

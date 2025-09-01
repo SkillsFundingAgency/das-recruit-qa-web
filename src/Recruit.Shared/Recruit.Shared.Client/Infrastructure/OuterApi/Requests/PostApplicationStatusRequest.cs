@@ -1,3 +1,4 @@
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using System;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;

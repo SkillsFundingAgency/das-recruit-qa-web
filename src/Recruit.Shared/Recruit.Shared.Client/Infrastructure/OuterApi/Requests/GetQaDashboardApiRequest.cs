@@ -2,7 +2,7 @@
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
-public class GetNextVacancyReferenceRequest: IGetApiRequest
+public record GetQaDashboardApiRequest : IGetApiRequest
 {
-    public string GetUrl => "vacancies/vacancyreference";
+    public string GetUrl => "dashboard";
 }

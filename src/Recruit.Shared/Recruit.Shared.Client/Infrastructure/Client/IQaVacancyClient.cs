@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public interface IQaVacancyClient
 {
-    Task<QaDashboard> GetDashboardAsync();
     Task<Vacancy> GetVacancyAsync(long vacancyReference);
     Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId);
     Task<Domain.Entities.VacancyReview> GetVacancyReviewAsync(Guid reviewId);

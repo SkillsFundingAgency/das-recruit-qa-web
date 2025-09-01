@@ -5,39 +5,30 @@ using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.Client;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
 using Recruit.Vacancies.Client.Domain.Extensions;
 using Recruit.Qa.Web.ViewModels;
 using Recruit.Qa.Web.Extensions;
 using Recruit.Qa.Web.Security;
+using QaDashboard = Recruit.Vacancies.Client.Domain.Models.QaDashboard;
 
 namespace Recruit.Qa.Web.Orchestrators;
 
-public class DashboardOrchestrator
+public class DashboardOrchestrator(
+    IQaVacancyClient vacancyClient,
+    ITimeProvider timeProvider,
+    UserAuthorizationService userAuthorizationService,
+    IRecruitQaOuterApiVacancyClient recruitQaOuterApiVacancyClient)
 {
-    private readonly IQaVacancyClient _vacancyClient;
-    private readonly ITimeProvider _timeProvider;
-    private readonly UserAuthorizationService _userAuthorizationService;
-
-    public DashboardOrchestrator(
-        IQaVacancyClient vacancyClient, ITimeProvider timeProvider, UserAuthorizationService userAuthorizationService)
-    {
-        _vacancyClient = vacancyClient;
-        _timeProvider = timeProvider;
-        _userAuthorizationService = userAuthorizationService;
-    }
-
     public async Task<DashboardViewModel> GetDashboardViewModelAsync(string searchTerm, ClaimsPrincipal user)
     {
         var vacancyUser = user.GetVacancyUser();
-        var reviews = await _vacancyClient.GetDashboardAsync();
+        var reviews = await recruitQaOuterApiVacancyClient.GetDashboardAsync();
         var vm = MapToViewModel(reviews);
 
-        vm.IsUserAdmin = await _userAuthorizationService.IsTeamLeadAsync(user);
+        vm.IsUserAdmin = await userAuthorizationService.IsTeamLeadAsync(user);
         if (vm.IsUserAdmin)
         {
-            var inProgressSummaries = await _vacancyClient.GetVacancyReviewsInProgressAsync();
-
+            var inProgressSummaries = await vacancyClient.GetVacancyReviewsInProgressAsync();
             var inProgressVacanciesVmTasks = inProgressSummaries.Select(v => MapToViewModelAsync(v, vacancyUser)).ToList();
             var inProgressVacanciesVm = await Task.WhenAll(inProgressVacanciesVmTasks);
             vm.InProgressVacancies = inProgressVacanciesVm.ToList();
@@ -46,7 +37,7 @@ public class DashboardOrchestrator
         if (string.IsNullOrEmpty(searchTerm)) return vm;
 
         vm.LastSearchTerm = searchTerm;
-        var matchedVacancyReview = await _vacancyClient.GetSearchResultAsync(searchTerm);
+        var matchedVacancyReview = await vacancyClient.GetSearchResultAsync(searchTerm);
 
         if (matchedVacancyReview != null)
         {
@@ -60,15 +51,15 @@ public class DashboardOrchestrator
     private async Task<VacancyReviewSearchResultViewModel> MapToViewModelAsync(VacancyReview vacancyReview, VacancyUser vacancyUser)
     {
         var isAvailableForReview =
-            _vacancyClient.VacancyReviewCanBeAssigned(vacancyReview.Status, vacancyReview.ReviewedDate);
+            vacancyClient.VacancyReviewCanBeAssigned(vacancyReview.Status, vacancyReview.ReviewedDate);
 
-        var vacancy = await _vacancyClient.GetVacancyAsync(vacancyReview.VacancyReference);
+        var vacancy = await vacancyClient.GetVacancyAsync(vacancyReview.VacancyReference);
 
         return new VacancyReviewSearchResultViewModel
         {
             IsAssignedToLoggedInUser = vacancyUser.UserId == vacancyReview.ReviewedByUser?.UserId,
             AssignedTo = vacancyReview.ReviewedByUser?.Name,
-            AssignedTimeElapsed = vacancyReview.ReviewedDate.GetShortTimeElapsed(_timeProvider.Now),
+            AssignedTimeElapsed = vacancyReview.ReviewedDate.GetShortTimeElapsed(timeProvider.Now),
             ClosingDate = vacancyReview.VacancySnapshot.ClosingDate.GetValueOrDefault(),
             EmployerName = vacancyReview.VacancySnapshot.LegalEntityName,
             VacancyReference = vacancyReview.VacancyReference.ToString(),
@@ -83,9 +74,9 @@ public class DashboardOrchestrator
 
     public async Task<Guid?> AssignNextVacancyReviewAsync(VacancyUser user)
     {
-        await _vacancyClient.AssignNextVacancyReviewAsync(user);
+        await vacancyClient.AssignNextVacancyReviewAsync(user);
 
-        var userVacancyReviews = await _vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.UserId);
+        var userVacancyReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.UserId);
 
         return userVacancyReviews.FirstOrDefault()?.Id;
     }

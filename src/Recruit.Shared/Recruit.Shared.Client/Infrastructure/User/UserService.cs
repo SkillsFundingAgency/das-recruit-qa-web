@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.User.Requests;
 
 namespace Recruit.Vacancies.Client.Infrastructure.User;
@@ -29,7 +29,7 @@ public class UserRepositoryRunner : IUserRepositoryRunner
     }
 }
 
-public class UserService(IOuterApiClient outerApiClient) : IUserWriteRepository
+public class UserService(IRecruitOuterApiClient outerApiClient) : IUserWriteRepository
 {
     public async Task UpsertUserAsync(Domain.Entities.User user)
     {

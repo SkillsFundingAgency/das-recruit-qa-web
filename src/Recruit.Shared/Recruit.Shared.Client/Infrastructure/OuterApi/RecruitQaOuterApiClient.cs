@@ -10,14 +10,14 @@ using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
-public class RecruitOuterApiClient : IRecruitOuterApiClient
+public class RecruitQaOuterApiClient : IRecruitQaOuterApiClient
 {
     private readonly HttpClient _httpClient;
-    private readonly RecruitOuterApiConfiguration _config;
+    private readonly RecruitQaOuterApiConfiguration _config;
 
-    public RecruitOuterApiClient (
+    public RecruitQaOuterApiClient(
         HttpClient httpClient, 
-        IOptions<RecruitOuterApiConfiguration> config)
+        IOptions<RecruitQaOuterApiConfiguration> config)
     {
         _httpClient = httpClient;
         _config = config.Value;

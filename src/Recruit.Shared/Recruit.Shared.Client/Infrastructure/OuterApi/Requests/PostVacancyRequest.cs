@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using SFA.DAS.Encoding;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;

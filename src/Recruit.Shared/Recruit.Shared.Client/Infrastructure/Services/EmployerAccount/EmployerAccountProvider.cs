@@ -1,20 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
-using Microsoft.Extensions.Logging;
 using SFA.DAS.Encoding;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 
 public class EmployerAccountProvider(
     ILogger<EmployerAccountProvider> logger,
-    IOuterApiClient outerApiClient,
+    IRecruitOuterApiClient outerApiClient,
     IEncodingService encodingService)
     : IEmployerAccountProvider
 {

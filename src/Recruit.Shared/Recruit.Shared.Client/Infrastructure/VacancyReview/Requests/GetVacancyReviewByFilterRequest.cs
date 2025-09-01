@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 using SFA.DAS.Encoding;
@@ -43,7 +43,7 @@ public class VacancyReviewRepositoryRunner : IVacancyReviewRepositoryRunner
     }
 }
 
-public class VacancyReviewService(IOuterApiClient outerApiClient, IEncodingService encodingService) : IVacancyReviewRepository, IVacancyReviewQuery
+public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodingService encodingService) : IVacancyReviewRepository, IVacancyReviewQuery
 {
     public string Key { get; } = "OuterApiVacancyReview";
     public async Task CreateAsync(Domain.Entities.VacancyReview vacancy)
@@ -68,9 +68,8 @@ public class VacancyReviewService(IOuterApiClient outerApiClient, IEncodingServi
         await outerApiClient.Post(new PostVacancyReviewRequest(review.Id,VacancyReviewDto.MapVacancyReviewDto(review, encodingService)), false);
     }
 
-    public Task<List<VacancyReviewSummary>> GetActiveAsync()
+    public async Task<List<VacancyReviewSummary>> GetActiveAsync()
     {
-        //NOTE: WILL NOT IMPLEMENT. To implement as a more efficient query in GetVacancyReviewByFilterRequest
         throw new NotImplementedException();
     }
 

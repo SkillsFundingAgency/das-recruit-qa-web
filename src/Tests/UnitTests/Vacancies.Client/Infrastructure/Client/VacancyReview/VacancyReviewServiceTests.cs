@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using AutoFixture.NUnit3;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 using Newtonsoft.Json;
 using NUnit.Framework;
 using SFA.DAS.Encoding;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.VacancyReview;
 
@@ -15,7 +15,7 @@ public class VacancyReviewServiceTests
 {
     [Test, MoqAutoData]
     public async Task When_Calling_CreateAsync_The_Data_Is_Mapped_And_Request_Made(
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Frozen] Mock<IEncodingService> encodingService,
         VacancyReviewService service)
     {
@@ -36,7 +36,7 @@ public class VacancyReviewServiceTests
     
     [Test, MoqAutoData]
     public async Task When_Calling_UpdateAsync_The_Data_Is_Mapped_And_Request_Made(
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Frozen] Mock<IEncodingService> encodingService,
         VacancyReviewService service)
     {
@@ -60,7 +60,7 @@ public class VacancyReviewServiceTests
         Guid reviewId,
         VacancyReviewDto vacancyDto,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -83,7 +83,7 @@ public class VacancyReviewServiceTests
     [Test, MoqAutoData]
     public async Task When_Calling_GetAsync_The_Request_Is_Made_And_Null_Returned_If_Not_Found(
         Guid reviewId,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         var expectedRequest = new GetVacancyReviewRequest(reviewId);
@@ -103,7 +103,7 @@ public class VacancyReviewServiceTests
         long vacancyReference,
         VacancyReviewDto vacancyDto,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -126,7 +126,7 @@ public class VacancyReviewServiceTests
     [Test, MoqAutoData]
     public async Task When_Calling_GetLatestReviewByReferenceAsync_The_Request_Is_Made_And_Null_Returned_If_Not_Found(
         long vacancyReference,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         var expectedRequest = new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference, "latest");
@@ -147,7 +147,7 @@ public class VacancyReviewServiceTests
         VacancyReviewDto vacancyDto,
         VacancyReviewDto vacancyDto2,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -182,7 +182,7 @@ public class VacancyReviewServiceTests
         VacancyReviewDto vacancyDto,
         VacancyReviewDto vacancyDto2,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -217,7 +217,7 @@ public class VacancyReviewServiceTests
         VacancyReviewDto vacancyDto,
         VacancyReviewDto vacancyDto2,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -251,7 +251,7 @@ public class VacancyReviewServiceTests
         long vacancyReference,
         VacancyReviewDto vacancyDto,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -274,7 +274,7 @@ public class VacancyReviewServiceTests
     [Test, MoqAutoData]
     public async Task When_Calling_GetCurrentReferredVacancyReviewAsync_The_Request_Is_Made_And_Null_Returned_If_Not_Found(
         long vacancyReference,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         var expectedRequest = new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference, "latestReferred");
@@ -299,7 +299,7 @@ public class VacancyReviewServiceTests
     [Test, MoqAutoData]
     public async Task When_Calling_GetVacancyReviewSummary_The_ApiClient_Is_Called_And_Response_Returned(
         GetVacancyReviewSummaryResponse apiResponse,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         outerApiClient.Setup(x => x.Get<GetVacancyReviewSummaryResponse>(It.IsAny<GetVacancyReviewSummaryRequest>()))
@@ -314,7 +314,7 @@ public class VacancyReviewServiceTests
     public async Task When_Calling_GetApprovedCountAsync_The_ApiClient_Is_Called_And_Response_Returned(
         string userId,
         GetVacancyReviewCountResponse apiResponse,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         var expectedRequest = new GetVacancyReviewCountByUserFilterRequest(userId);
@@ -331,7 +331,7 @@ public class VacancyReviewServiceTests
     public async Task When_Calling_GetApprovedFirstTimeCountAsync_The_ApiClient_Is_Called_And_Response_Returned(
         string userId,
         GetVacancyReviewCountResponse apiResponse,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         var expectedRequest = new GetVacancyReviewCountByUserFilterRequest(userId, true);
@@ -350,7 +350,7 @@ public class VacancyReviewServiceTests
         VacancyReviewDto vacancyDto,
         VacancyReviewDto vacancyDto2,
         Vacancy vacancy,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
         vacancyDto.Status = ReviewStatus.PendingReview.ToString();
@@ -384,7 +384,7 @@ public class VacancyReviewServiceTests
         string accountLegalEntityPublicHashedId,
         long accountLegalEntityId,
         GetVacancyReviewCountResponse vacancyReviewCountResponse,
-        [Frozen] Mock<IOuterApiClient> outerApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
         [Frozen] Mock<IEncodingService> encodingService,
         VacancyReviewService service)
     {

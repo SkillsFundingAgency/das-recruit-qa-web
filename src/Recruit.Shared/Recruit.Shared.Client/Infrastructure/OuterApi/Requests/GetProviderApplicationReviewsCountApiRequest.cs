@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using System.Collections.Generic;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 

@@ -56,6 +56,8 @@ using SFA.DAS.EAS.Account.Api.Client;
 using SFA.DAS.Http.MessageHandlers;
 using SFA.DAS.Http.TokenGenerators;
 using VacancyRuleSet = Recruit.Vacancies.Client.Application.Rules.VacancyRules.VacancyRuleSet;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Ioc;
 
@@ -70,9 +72,9 @@ public static class ServiceCollectionExtensions
         RegisterClients(services);
         RegisterServiceDeps(services, configuration);
         RegisterAccountApiClientDeps(services);
-        RegisterMongoQueryStores(services, configuration);
+        RegisterMongoQueryStores(services);
         RegisterRepositories(services, configuration);
-        RegisterOutOfProcessEventDelegatorDeps(services, configuration);
+        RegisterOutOfProcessEventDelegatorDeps(services);
         RegisterQueueStorageServices(services, configuration);
         AddValidation(services);
         AddRules(services);
@@ -109,7 +111,8 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(configuration);
         services.Configure<NextVacancyReviewServiceConfiguration>(o => o.VacancyReviewAssignationTimeoutMinutes = configuration.GetValue<int>("RecruitConfiguration:VacancyReviewAssignationTimeoutMinutes"));
         services.Configure<PasAccountApiConfiguration>(configuration.GetSection("PasAccountApiConfiguration"));
-        services.Configure<OuterApiConfiguration>(configuration.GetSection("OuterApiConfiguration"));
+        services.Configure<RecruitOuterApiConfiguration>(configuration.GetSection("OuterApiConfiguration"));
+        services.Configure<RecruitQaOuterApiConfiguration>(configuration.GetSection("RecruitQaOuterApiConfiguration"));
 
         // Domain services
         services.AddTransient<ITimeProvider, CurrentUtcTimeProvider>();
@@ -149,7 +152,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ITrainingProviderService, TrainingProviderService>();
         services.AddTransient<ITrainingProviderSummaryProvider, TrainingProviderSummaryProvider>();
         services.AddTransient<IPasAccountProvider, PasAccountProvider>();
-        services.AddHttpClient<IOuterApiClient, RecruitOuterApiClient>();
+        services.AddHttpClient<IRecruitOuterApiClient, RecruitOuterApiClient>();
         services.AddTransient<IOuterApiGeocodeService, OuterApiGeocodeService>();
 
         // Projection services
@@ -238,7 +241,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IReferenceDataWriter, MongoDbReferenceDataRepository>();
     }
 
-    private static void RegisterOutOfProcessEventDelegatorDeps(IServiceCollection services, IConfiguration configuration)
+    private static void RegisterOutOfProcessEventDelegatorDeps(IServiceCollection services)
     {
         services.AddTransient<IEventStore, StorageQueueEventStore>();
     }
@@ -252,7 +255,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ICommunicationQueueService>(_ => new CommunicationStorageQueueService(communicationStorageConnectionString));
     }
 
-    private static void RegisterMongoQueryStores(IServiceCollection services, IConfiguration configuration)
+    private static void RegisterMongoQueryStores(IServiceCollection services)
     {
         services.AddTransient<IQueryStore, MongoQueryStore>();
         services.AddTransient<IQueryStoreHouseKeepingService, MongoQueryStore>();
@@ -282,7 +285,10 @@ public static class ServiceCollectionExtensions
             .AddTransient<IEmployerVacancyClient, VacancyClient>()
             .AddTransient<IProviderVacancyClient, VacancyClient>()
             .AddTransient<IQaVacancyClient, QaVacancyClient>()
-            .AddTransient<IOuterApiVacancyClient, OuterApiVacancyClient>();
+            .AddTransient<IRecruitOuterApiVacancyClient, RecruitOuterApiVacancyClient>()
+            .AddTransient<IRecruitQaOuterApiVacancyClient, RecruitQaOuterApiVacancyClient>()
+            .AddTransient<IRecruitQaOuterApiClient, RecruitQaOuterApiClient>();
+
     }
 
 

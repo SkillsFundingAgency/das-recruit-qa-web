@@ -6,10 +6,10 @@ using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.FeatureToggle;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Microsoft.Extensions.Configuration;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
@@ -17,10 +17,10 @@ public class ApprenticeshipProgrammeProvider : IApprenticeshipProgrammeProvider
 {
     private readonly ICache _cache;
     private readonly ITimeProvider _timeProvider;
-    private readonly IOuterApiClient _outerApiClient;
+    private readonly IRecruitOuterApiClient _outerApiClient;
     private readonly IFeature _feature;
 
-    public ApprenticeshipProgrammeProvider(ICache cache, ITimeProvider timeProvider, IOuterApiClient outerApiClient, IFeature feature, IConfiguration configuration)
+    public ApprenticeshipProgrammeProvider(ICache cache, ITimeProvider timeProvider, IRecruitOuterApiClient outerApiClient, IFeature feature, IConfiguration configuration)
     {
         _cache = cache;
         _timeProvider = timeProvider;

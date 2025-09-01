@@ -1,24 +1,24 @@
 using System.Linq;
 using Recruit.Vacancies.Client.Domain.Models;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using Microsoft.Extensions.Logging;
 using Xunit;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 
 public class TrainingProviderUpdateServiceTests
 {
-    private readonly Mock<IOuterApiClient> _mockOuterApiClient;
+    private readonly Mock<IRecruitOuterApiClient> _mockOuterApiClient;
     private readonly Mock<IReferenceDataWriter> _mockReferenceDataWriter;
     private readonly TrainingProvidersUpdateService _sut;
 
     public TrainingProviderUpdateServiceTests ()
     {
-        _mockOuterApiClient = new Mock<IOuterApiClient>();
+        _mockOuterApiClient = new Mock<IRecruitOuterApiClient>();
         _mockReferenceDataWriter = new Mock<IReferenceDataWriter>();
 
         _sut = new TrainingProvidersUpdateService(Mock.Of<ILogger<TrainingProvidersUpdateService>>(),

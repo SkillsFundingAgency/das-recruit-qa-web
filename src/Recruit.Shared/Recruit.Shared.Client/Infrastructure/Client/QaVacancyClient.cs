@@ -12,14 +12,12 @@ using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
 public class QaVacancyClient : IQaVacancyClient
 {
-    private readonly IQueryStoreReader _queryStoreReader;
     private readonly IVacancyReviewQuery _vacancyReviewQuery;
     private readonly IVacancyRepository _vacancyRepository;
     private readonly IApprenticeshipProgrammeProvider _apprenticeshipProgrammesProvider;
@@ -41,7 +39,6 @@ public class QaVacancyClient : IQaVacancyClient
         IReportService reportService, 
         IQualificationsProvider qualificationsProvider)
     {
-        _queryStoreReader = queryStoreReader;
         _vacancyReviewQuery = vacancyReviewQuery;
         _vacancyRepository = vacancyRepository;
         _apprenticeshipProgrammesProvider = apprenticeshipProgrammesProvider;
@@ -70,12 +67,6 @@ public class QaVacancyClient : IQaVacancyClient
         {
             QualificationTypes = qualification.ToList()
         };
-    }
-
-    public async Task<QaDashboard> GetDashboardAsync()
-    {
-        var dashboard = await _queryStoreReader.GetQaDashboardAsync().ConfigureAwait(true);
-        return dashboard;
     }
 
     public async Task<Domain.Entities.VacancyReview> GetSearchResultAsync(string searchTerm)

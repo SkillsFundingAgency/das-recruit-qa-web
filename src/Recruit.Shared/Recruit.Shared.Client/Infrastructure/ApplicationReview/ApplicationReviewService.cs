@@ -8,10 +8,10 @@ using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Requests;
 using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
 using Recruit.Vacancies.Client.Infrastructure.Extensions;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Address = Recruit.Vacancies.Client.Domain.Entities.Address;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
 
@@ -69,7 +69,7 @@ public class ApplicationReviewRepositoryRunner(IEnumerable<IApplicationWriteRepo
     }
 }
 
-public class ApplicationReviewService(IOuterApiClient outerApiClient, ILogger<ApplicationReviewService> logger) : IApplicationWriteRepository, ISqlDbRepository
+public class ApplicationReviewService(IRecruitOuterApiClient outerApiClient, ILogger<ApplicationReviewService> logger) : IApplicationWriteRepository, ISqlDbRepository
 {
     public async Task UpdateAsync(Domain.Entities.ApplicationReview applicationReview)
     {

@@ -1,10 +1,10 @@
 ﻿using AutoFixture.NUnit3;
+using NUnit.Framework;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
 using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Requests;
 using Recruit.Vacancies.Client.Infrastructure.ApplicationReview.Responses;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi;
-using NUnit.Framework;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.ApplicationReview;
 
@@ -15,7 +15,7 @@ internal class ApplicationReviewServiceTests
     public async Task GetForVacancySortedAsync_ReturnsSortedApplicationReviews(long vacancyReference,
         SortColumn sortColumn,
         SortOrder sortOrder,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
@@ -95,7 +95,7 @@ internal class ApplicationReviewServiceTests
     [Test, MoqAutoData]
     public async Task GetForVacancySortedAsync_ReturnsEmptyList_WhenNoApplicationReviews(
         long vacancyReference,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
@@ -118,7 +118,7 @@ internal class ApplicationReviewServiceTests
     public async Task GetForSharedVacancySortedAsync_ReturnsSortedApplicationReviews(long vacancyReference,
         SortColumn sortColumn,
         SortOrder sortOrder,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
@@ -197,7 +197,7 @@ internal class ApplicationReviewServiceTests
     [Test, MoqAutoData]
     public async Task GetForSharedVacancySortedAsync_ReturnsEmptyList_WhenNoApplicationReviews(
         long vacancyReference,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
@@ -218,7 +218,7 @@ internal class ApplicationReviewServiceTests
 
     [Test, MoqAutoData]
     public async Task GetAsync_ReturnsMappedApplicationReview_WhenApiReturnsResponse(Guid applicationReviewId,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
@@ -285,7 +285,7 @@ internal class ApplicationReviewServiceTests
 
     [Test, MoqAutoData]
     public async Task GetAsync_ReturnsNull_WhenApiReturnsNull(Guid applicationReviewId,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
@@ -306,7 +306,7 @@ internal class ApplicationReviewServiceTests
 
     [Test, MoqAutoData]
     public async Task GetAsync_WithdrawnDate_Not_Null_ReturnsNull(Guid applicationReviewId,
-        [Frozen] Mock<IOuterApiClient> mockApiClient,
+        [Frozen] Mock<IRecruitOuterApiClient> mockApiClient,
         [Greedy] ApplicationReviewService service)
     {
         // Arrange
