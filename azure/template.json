@@ -188,6 +188,33 @@
       }
     },
     {
+      "apiVersion": "2020-10-01",
+      "name": "[concat('qa-app-insights-', parameters('utcValue'))]",
+      "type": "Microsoft.Resources/deployments",
+      "resourceGroup": "[variables('resourceGroupName')]",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'application-insights.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "appInsightsName": {
+            "value": "[variables('qaAppServiceName')]"
+          },
+          "attachedService": {
+            "value": "[variables('qaAppServiceName')]"
+          },
+          "logAnalyticsWorkspaceId": {
+            "value": "[resourceId(parameters('logAnalyticsSubscriptionId'),parameters('sharedManagementResourceGroup'),'Microsoft.OperationalInsights/workspaces',parameters('logAnalyticsWorkspaceName'))]"
+          }
+        }
+      },
+      "dependsOn": [
+        "[variables('resourceGroupName')]"
+      ]
+    },
+    {
       "condition": "[parameters('deployPrivateLinkedScopedResource')]",
       "apiVersion": "2021-04-01",
       "name": "[concat(variables('qaAppServiceName'), '-private-link-scoped-', parameters('utcValue'))]",
