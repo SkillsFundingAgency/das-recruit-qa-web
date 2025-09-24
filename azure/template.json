@@ -173,7 +173,7 @@
                 },
                 {
                   "name": "ConfigNames",
-                  "value": "[variables('qaConfigNames')]"
+                  "value": "[variables('configNames')]"
                 }
               ]
             }
