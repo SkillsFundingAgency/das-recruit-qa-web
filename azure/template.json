@@ -14,7 +14,13 @@
     "sharedEnvResourceGroup": {
       "type": "string"
     },
-    "customHostName": {
+    "employerCustomHostname": {
+      "type": "string"
+    },
+    "qaAppCustomHostname": {
+      "type": "string"
+    },
+    "qaAppKeyvaultCertificateName": {
       "type": "string"
     },
     "configurationStorageConnectionString": {
