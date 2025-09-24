@@ -47,6 +47,9 @@
     "sharedFrontEndSubnetResourceId": {
       "type": "string"
     },
+    "frontEndAccessRestrictions": {
+      "type": "array"
+    },
     "sharedKeyVaultName": {
       "type": "string"
     },
