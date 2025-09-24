@@ -41,13 +41,10 @@
     "resourceGroupLocation": {
       "type": "string"
     },
-    "sharedBackEndAppServicePlanName": {
+    "sharedFrontEndAppServicePlanName": {
       "type": "string"
     },
-    "backEndAccessRestrictions": {
-      "type": "array"
-    },
-    "sharedBackEndSubnetResourceId": {
+    "sharedFrontEndSubnetResourceId": {
       "type": "string"
     },
     "sharedKeyVaultName": {
@@ -55,18 +52,6 @@
     },
     "sharedSQLServerName": {
       "type": "string"
-    },
-    "elasticPoolName": {
-      "type": "string",
-      "defaultValue": ""
-    },
-    "databaseSkuName": {
-      "type": "string",
-      "defaultValue": "S0"
-    },
-    "databaseTier": {
-      "type": "string",
-      "defaultValue": "Standard"
     },
     "logAnalyticsSubscriptionId": {
       "type": "string",
