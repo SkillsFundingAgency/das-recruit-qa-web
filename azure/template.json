@@ -63,6 +63,9 @@
     "logAnalyticsWorkspaceName": {
       "type": "string"
     },
+    "cdnUrl": {
+      "type": "string"
+    },
     "utcValue": {
       "type": "string",
       "defaultValue": "[utcNow()]"
