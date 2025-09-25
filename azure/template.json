@@ -84,11 +84,11 @@
   "variables": {
     "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/das-platform-building-blocks/master/templates/",
     "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
-    "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
+    "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-qa-rg')]",
     "qaAppServiceName": "[concat(variables('resourceNamePrefix'), '-qa-as')]",
     "privateLinkScopeName": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-shared-ampls'))]",
     "configNames": "SFA.DAS.Recruit.QA,SFA.DAS.Provider.DfeSignIn,SFA.DAS.Encoding"
-  },
+  },ß
   "resources": [
     {
       "apiVersion": "2021-04-01",
