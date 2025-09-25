@@ -39,7 +39,15 @@ jobs:
             StorageAccountResourceGroup: $(SharedEnvResourceGroup)
             TargetFileName: '*.schema.json'
             TableName: Configuration
-            ConfigurationSecrets: {} # remove this if there are no secrets that need to be mapped for config
+            ConfigurationSecrets:
+              RecruitCosmosConnectionString: $(RecruitCosmosConnectionString)
+              RecruitStorageConnectionString: $(RecruitStorageConnectionString)
+              RecruitApimSubscriptionKey: $(RecruitApimSubscriptionKey)
+              SlackWebHookUrl: $(SlackWebHookUrl)
+              DefaultSessionRedisConnectionString: $(DefaultSessionRedisConnectionString)
+              LoggingRedisConnectionString: $(LoggingRedisConnectionString)
+              FaaStorageConnectionString: $(FaaStorageConnectionString)
+              GoogleMapsPrivateKey: $(GoogleMapsPrivateKey)
         - template: azure-pipelines-templates/deploy/step/app-deploy.yml@das-platform-building-blocks
           parameters:
             ServiceConnection: ${{ parameters.ServiceConnection }}
