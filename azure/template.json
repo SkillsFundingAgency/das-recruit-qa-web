@@ -88,7 +88,7 @@
     "qaAppServiceName": "[concat(variables('resourceNamePrefix'), '-qa-as')]",
     "privateLinkScopeName": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-shared-ampls'))]",
     "configNames": "SFA.DAS.Recruit.QA,SFA.DAS.Provider.DfeSignIn,SFA.DAS.Encoding"
-  },ß
+  },
   "resources": [
     {
       "apiVersion": "2021-04-01",
