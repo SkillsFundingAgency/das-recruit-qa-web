@@ -1,0 +1,30 @@
+﻿using System;
+using System.Threading.Tasks;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using Microsoft.Extensions.Logging;
+using Recruit.Qa.Web.RouteModel;
+using Recruit.Qa.Web.ViewModels.Reports.ReportConfirmation;
+
+namespace Recruit.Qa.Web.Orchestrators.Reports;
+
+public class ReportConfirmationOrchestrator : ReportOrchestratorBase
+{
+    public ReportConfirmationOrchestrator(ILogger<ReportConfirmationOrchestrator> logger, IQaVacancyClient client) : base(logger, client)
+    {
+    }
+
+    public async Task<ConfirmationViewModel> GetConfirmationViewModelAsync(ReportRouteModel rrm)
+    {
+        var report = await GetReportAsync(rrm.ReportId);
+
+        var vm = new ConfirmationViewModel
+        {
+            FromDate = ((DateTime)report.Parameters[ReportParameterName.FromDate]).AsGdsDate(),
+            ToDate = ((DateTime)report.Parameters[ReportParameterName.ToDate]).AsGdsDate(),
+        };
+
+        return vm;
+    }
+}

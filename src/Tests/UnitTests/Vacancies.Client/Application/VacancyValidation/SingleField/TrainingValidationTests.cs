@@ -1,0 +1,94 @@
+using Recruit.Vacancies.Client.Application.Validation;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Xunit;
+
+namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.VacancyValidation.SingleField;
+
+public class TrainingValidationTests : VacancyValidationTestsBase
+{
+    [Fact]
+    public void ErrorWhenProgrammeIsNull()
+    {
+        var vacancy = new Vacancy
+        {
+            ProgrammeId = null
+        };
+
+        var result = Validator.Validate(vacancy, VacancyRuleSet.TrainingProgramme);
+
+        result.HasErrors.Should().BeTrue();
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].PropertyName.Should().Be($"{nameof(vacancy.ProgrammeId)}");
+        result.Errors[0].ErrorCode.Should().Be("25");
+        result.Errors[0].RuleId.Should().Be((long)VacancyRuleSet.TrainingProgramme);
+    }
+
+    [Fact]
+    public void NoErrorsWhenClosingDateIsValid()
+    {
+        var vacancy = new Vacancy
+        {
+            ProgrammeId = "123",
+        };
+
+        var result = Validator.Validate(vacancy, VacancyRuleSet.TrainingProgramme);
+
+        result.HasErrors.Should().BeFalse();
+        result.Errors.Should().HaveCount(0);
+    }
+
+    [Fact]
+    public void ErrorWhenDoesNotExist()
+    {
+        var vacancy = new Vacancy
+        {
+            ProgrammeId = "abc"
+        };
+            
+        var result = Validator.Validate(vacancy, VacancyRuleSet.TrainingExpiryDate);
+
+        result.HasErrors.Should().BeTrue();
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].ErrorCode.Should().Be("260");
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(null)]
+    public void IdMustHaveAValue(string idValue)
+    {
+        var vacancy = new Vacancy 
+        {
+            ProgrammeId = idValue
+        };
+            
+        var result = Validator.Validate(vacancy, VacancyRuleSet.TrainingProgramme);
+
+        result.HasErrors.Should().BeTrue();
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].PropertyName.Should().Be($"{nameof(vacancy.ProgrammeId)}");
+        result.Errors[0].ErrorCode.Should().Be("25");
+        result.Errors[0].RuleId.Should().Be((long)VacancyRuleSet.TrainingProgramme);
+    }
+
+    [Fact]
+    public void ErrorWhenTrainingProviderDoesNotTrainTheCourse()
+    {
+        var vacancy = new Vacancy
+        {
+            ProgrammeId = "000",
+            TrainingProvider = new TrainingProvider
+            {
+                Ukprn = 10000000
+            },
+        };
+
+        var result = Validator.Validate(vacancy, VacancyRuleSet.TrainingProviderDeliverCourse);
+
+        result.HasErrors.Should().BeTrue();
+        result.Errors.Should().HaveCount(1);
+        result.Errors[0].PropertyName.Should().Be("Provider");
+        result.Errors[0].ErrorCode.Should().Be("106");
+        result.Errors[0].RuleId.Should().Be((long)VacancyRuleSet.TrainingProviderDeliverCourse);
+    }
+}
