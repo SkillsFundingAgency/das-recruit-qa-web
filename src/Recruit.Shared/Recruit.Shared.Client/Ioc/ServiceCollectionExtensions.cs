@@ -118,11 +118,6 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ITimeProvider, CurrentUtcTimeProvider>();
 
         // Application Service
-        services.AddTransient<IGenerateVacancyNumbers, MongoSequenceStore>();
-        services.AddTransient<ISlaService, SlaService>();
-        services.AddTransient<IVacancyService, VacancyService>();
-        services.AddTransient<IVacancyTransferService, VacancyTransferService>();
-        services.AddTransient<IVacancyReviewTransferService, VacancyReviewTransferService>();
         services.AddTransient<INextVacancyReviewService, NextVacancyReviewService>();
         services.AddTransient<IVacancyComparerService, VacancyComparerService>();
         services.AddTransient<ICache, Cache>();
@@ -283,7 +278,6 @@ public static class ServiceCollectionExtensions
         services
             .AddTransient<IRecruitVacancyClient, VacancyClient>()
             .AddTransient<IEmployerVacancyClient, VacancyClient>()
-            .AddTransient<IProviderVacancyClient, VacancyClient>()
             .AddTransient<IQaVacancyClient, QaVacancyClient>()
             .AddTransient<IRecruitOuterApiVacancyClient, RecruitOuterApiVacancyClient>()
             .AddTransient<IRecruitQaOuterApiVacancyClient, RecruitQaOuterApiVacancyClient>()

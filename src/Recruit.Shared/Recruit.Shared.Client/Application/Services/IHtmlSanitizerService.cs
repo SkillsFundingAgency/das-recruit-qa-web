@@ -3,5 +3,4 @@
 public interface IHtmlSanitizerService
 {
     bool IsValid(string html);
-    string Sanitize(string html);
 }

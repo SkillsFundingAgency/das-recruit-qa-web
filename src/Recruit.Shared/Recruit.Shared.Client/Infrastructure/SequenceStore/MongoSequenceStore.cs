@@ -1,15 +1,14 @@
-using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Application.Services;
-using Recruit.Vacancies.Client.Infrastructure.Exceptions;
-using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Polly;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Infrastructure.Mongo;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.SequenceStore;
 
-internal sealed class MongoSequenceStore : MongoDbCollectionBase, IGenerateVacancyNumbers
+internal sealed class MongoSequenceStore : MongoDbCollectionBase
 {
     private const string VacancyNumberSequenceName = "Sequence_Vacancy";
 

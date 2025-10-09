@@ -25,6 +25,7 @@
     <ProjectReference Include="..\..\Recruit.Shared\Recruit.Shared.Web\Recruit.Shared.Web.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Shared.Web\Domain\" />
     <Folder Include="Vacancies.Client\Infrastructure\ApplicationReview\" />
     <Folder Include="Vacancies.Client\Infrastructure\Services\ProviderVacancyClient\" />
   </ItemGroup>
