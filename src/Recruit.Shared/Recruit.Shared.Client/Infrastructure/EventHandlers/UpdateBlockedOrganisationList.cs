@@ -6,15 +6,11 @@ using MediatR;
 
 namespace Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 
-public class UpdateBlockedOrganisationList : INotificationHandler<ProviderBlockedEvent>
+public class UpdateBlockedOrganisationList(IBlockedOrganisationsProjectionService projectionService)
+    : INotificationHandler<ProviderBlockedEvent>
 {
-    private readonly IBlockedOrganisationsProjectionService _projectionService;
-    public UpdateBlockedOrganisationList(IBlockedOrganisationsProjectionService projectionService)
-    {
-        _projectionService = projectionService;
-    }
     public Task Handle(ProviderBlockedEvent notification, CancellationToken cancellationToken)
     {
-        return _projectionService.RebuildAllBlockedOrganisationsAsync();
+        return projectionService.RebuildAllBlockedOrganisationsAsync();
     }
 }

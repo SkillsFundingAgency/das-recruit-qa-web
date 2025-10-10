@@ -8,14 +8,10 @@ using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.SequenceStore;
 
-internal sealed class MongoSequenceStore : MongoDbCollectionBase
+internal sealed class MongoSequenceStore(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Sequences, details)
 {
     private const string VacancyNumberSequenceName = "Sequence_Vacancy";
-
-    public MongoSequenceStore(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Sequences, details)
-    {
-    }
 
     public async Task<long> GenerateAsync()
     {

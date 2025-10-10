@@ -2,22 +2,20 @@
 
 namespace Recruit.Communication.Types;
 
-public class AggregateCommunicationRequest
+public class AggregateCommunicationRequest(
+    Guid requestId,
+    string requestType,
+    DeliveryFrequency frequency,
+    DateTime requestDateTime,
+    DateTime fromDateTime,
+    DateTime toDateTime)
 {
-    public Guid RequestId { get; }
-    public DateTime RequestDateTime { get; }
-    public DeliveryFrequency Frequency { get; }
-    public string RequestType { get; }
-    public DateTime FromDateTime { get; }
-    public DateTime ToDateTime { get; }
+    public Guid RequestId { get; } = requestId;
+    public DateTime RequestDateTime { get; } = requestDateTime;
+    public DeliveryFrequency Frequency { get; } = frequency;
+    public string RequestType { get; } = requestType;
+    public DateTime FromDateTime { get; } = fromDateTime;
+    public DateTime ToDateTime { get; } = toDateTime;
 
-    public AggregateCommunicationRequest(Guid requestId, string requestType, DeliveryFrequency frequency, DateTime requestDateTime, DateTime fromDateTime, DateTime toDateTime) // end time
-    {
-        RequestId = requestId;
-        RequestType = requestType;
-        Frequency = frequency;
-        RequestDateTime = requestDateTime;
-        FromDateTime = fromDateTime;
-        ToDateTime = toDateTime;
-    }
+    // end time
 }

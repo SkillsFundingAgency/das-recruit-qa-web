@@ -9,15 +9,10 @@ using Recruit.Qa.Web.ViewModels.Reports.ReportDashboard;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;
 
-public class ReportDashboardOrchestrator : ReportOrchestratorBase
+public class ReportDashboardOrchestrator(ILogger<ReportDashboardOrchestrator> logger, IQaVacancyClient vacancyClient)
+    : ReportOrchestratorBase(logger, vacancyClient)
 {
-    private readonly IQaVacancyClient _vacancyClient;
-
-    public ReportDashboardOrchestrator(ILogger<ReportDashboardOrchestrator> logger, IQaVacancyClient vacancyClient)
-        : base(logger, vacancyClient)
-    {
-        _vacancyClient = vacancyClient;
-    }
+    private readonly IQaVacancyClient _vacancyClient = vacancyClient;
 
     public async Task<ReportsDashboardViewModel> GetDashboardViewModel()
     {

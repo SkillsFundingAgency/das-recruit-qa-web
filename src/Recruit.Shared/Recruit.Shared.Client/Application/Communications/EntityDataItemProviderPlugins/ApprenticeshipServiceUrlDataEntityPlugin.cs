@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Recruit.Client.Application.Communications;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Options;
@@ -11,16 +10,13 @@ using Recruit.Communication.Types.Interfaces;
 
 namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
-public class ApprenticeshipServiceUrlDataEntityPlugin : IEntityDataItemProvider
+public class ApprenticeshipServiceUrlDataEntityPlugin(
+    IVacancyRepository vacancyRepository,
+    IOptions<CommunicationsConfiguration> communicationsConfiguration)
+    : IEntityDataItemProvider
 {
-    private readonly CommunicationsConfiguration _communicationsConfiguration;
-    private readonly IVacancyRepository _vacancyRepository;
+    private readonly CommunicationsConfiguration _communicationsConfiguration = communicationsConfiguration.Value;
     public string EntityType => CommunicationConstants.EntityTypes.ApprenticeshipServiceUrl;
-    public ApprenticeshipServiceUrlDataEntityPlugin(IVacancyRepository vacancyRepository, IOptions<CommunicationsConfiguration> communicationsConfiguration)
-    {
-        _vacancyRepository = vacancyRepository;
-        _communicationsConfiguration = communicationsConfiguration.Value;
-    }
 
     public async Task<IEnumerable<CommunicationDataItem>> GetDataItemsAsync(object entityId)
     {
@@ -29,7 +25,7 @@ public class ApprenticeshipServiceUrlDataEntityPlugin : IEntityDataItemProvider
             throw new InvalidEntityIdException(EntityType, nameof(ApprenticeshipServiceUrlDataEntityPlugin));
         }
 
-        var vacancy = await _vacancyRepository.GetVacancyAsync(vacancyReference);
+        var vacancy = await vacancyRepository.GetVacancyAsync(vacancyReference);
 
             
         return new [] { GetApplicationUrlDataItem(vacancy) };

@@ -8,6 +8,11 @@
     <NoWarn>1701;1702;1006</NoWarn>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Shared.Web\Domain\**" />
+    <EmbeddedResource Remove="Shared.Web\Domain\**" />
+    <None Remove="Shared.Web\Domain\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoFixture" Version="4.18.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
     <PackageReference Include="xunit" Version="2.9.3" />
@@ -25,7 +30,6 @@
     <ProjectReference Include="..\..\Recruit.Shared\Recruit.Shared.Web\Recruit.Shared.Web.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Shared.Web\Domain\" />
     <Folder Include="Vacancies.Client\Infrastructure\ApplicationReview\" />
     <Folder Include="Vacancies.Client\Infrastructure\Services\ProviderVacancyClient\" />
   </ItemGroup>

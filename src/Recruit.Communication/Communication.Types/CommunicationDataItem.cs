@@ -1,13 +1,7 @@
 ﻿namespace Recruit.Communication.Types;
 
-public class CommunicationDataItem
+public class CommunicationDataItem(string key, string value)
 {
-    public string Key { get; }
-    public string Value { get; }
-
-    public CommunicationDataItem(string key, string value)
-    {
-        Key = key;
-        Value = value;
-    }
+    public string Key { get; } = key;
+    public string Value { get; } = value;
 }

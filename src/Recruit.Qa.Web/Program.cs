@@ -1,5 +1,4 @@
-﻿using Recruit.Qa.Web;
-using Recruit.Vacancies.Client.Ioc;
+﻿using Recruit.Vacancies.Client.Ioc;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 

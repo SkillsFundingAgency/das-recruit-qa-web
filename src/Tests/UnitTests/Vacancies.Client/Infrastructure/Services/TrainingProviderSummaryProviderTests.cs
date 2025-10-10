@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using Recruit.Vacancies.Client.Application.Configuration;
+﻿using Recruit.Vacancies.Client.Application.Configuration;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProviderSummaryProvider;
@@ -42,33 +40,5 @@ public class TrainingProviderSummaryProviderTests
 
         provider.Ukprn.Should().Be(88888888);
         provider.ProviderName.Should().Be("provider 1");
-    }
-
-    [Fact]
-    public async Task GetAll_ShouldGetAllTrainingProviders()
-    {
-        var providerClientMock = new Mock<ITrainingProviderService>();
-        providerClientMock.Setup(p => p.FindAllAsync())
-            .ReturnsAsync(new List<TrainingProvider>
-            {
-                new TrainingProvider
-                {
-                    Ukprn = 88888888, 
-                    Name = "provider 1"
-                },
-                new TrainingProvider
-                {
-                    Ukprn = 88888888, 
-                    Name = "provider 1"
-                }
-                    
-            });
-
-        var sut = new TrainingProviderSummaryProvider(providerClientMock.Object);
-
-        var providers = await sut.FindAllAsync();
-
-        providers.Count().Should().Be(2);
-        providers.All(c => c.Ukprn.Equals(88888888) && c.ProviderName.Equals("provider 1")).Should().BeTrue();
     }
 }

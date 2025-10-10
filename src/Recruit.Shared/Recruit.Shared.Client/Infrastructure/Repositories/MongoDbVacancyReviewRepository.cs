@@ -13,15 +13,14 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal sealed class MongoDbVacancyReviewRepository : MongoDbCollectionBase, IVacancyReviewRepository, IVacancyReviewQuery
+internal sealed class MongoDbVacancyReviewRepository(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.VacancyReviews, details),
+        IVacancyReviewRepository, IVacancyReviewQuery
 {
     private const string StatusFieldName = "status";
     private const string ManualOutcomeFieldName = "manualOutcome";
-
-    public MongoDbVacancyReviewRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.VacancyReviews, details)
-    {
-    }
 
     public async Task<Domain.Entities.VacancyReview> GetLatestReviewByReferenceAsync(long vacancyReference)
     {
@@ -87,29 +86,6 @@ internal sealed class MongoDbVacancyReviewRepository : MongoDbCollectionBase, IV
             new Context(nameof(GetByStatusAsync)));
 
         return result;
-    }
-
-    public async Task<List<VacancyReviewSummary>> GetActiveAsync()
-    {
-        var filterBuilder = Builders<VacancyReviewSummary>.Filter;
-
-        var filter = filterBuilder.Eq(StatusFieldName, ReviewStatus.PendingReview.ToString())
-                     | filterBuilder.Eq(StatusFieldName, ReviewStatus.UnderReview.ToString());
-
-        var collection = GetCollection<VacancyReviewSummary>();
-
-        var result = await RetryPolicy.ExecuteAsync(_ =>
-                collection.Find(filter)
-                    .Project<VacancyReviewSummary>(GetProjection<VacancyReviewSummary>())
-                    .ToListAsync()
-            , new Context(nameof(GetActiveAsync)));
-
-        return result;
-    }
-
-    public Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary()
-    {
-        throw new NotImplementedException();//Purposefully left not implemented
     }
 
     public Task UpdateAsync(Domain.Entities.VacancyReview review)

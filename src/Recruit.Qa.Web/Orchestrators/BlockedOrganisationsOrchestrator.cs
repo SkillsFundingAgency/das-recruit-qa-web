@@ -14,28 +14,17 @@ using System.Threading.Tasks;
 
 namespace Recruit.Qa.Web.Orchestrators;
 
-public class BlockedOrganisationsOrchestrator
+public class BlockedOrganisationsOrchestrator(
+    IBlockedOrganisationQuery blockedOrganisationQuery,
+    IQueryStoreReader queryStore,
+    IMessaging messaging,
+    ITimeProvider timeProvider,
+    ITrainingProviderService trainingProviderService)
 {
-    private readonly IBlockedOrganisationQuery _blockedOrganisationQuery;
-    private readonly IQueryStoreReader _queryStore;
-    private readonly IMessaging _messaging;
-    private readonly ITimeProvider _timeProvider;
-    private readonly ITrainingProviderService _trainingProviderService;
-    public BlockedOrganisationsOrchestrator(
-        IBlockedOrganisationQuery blockedOrganisationQuery, IQueryStoreReader queryStore,
-        IMessaging messaging, ITimeProvider timeProvider, ITrainingProviderService trainingProviderService)
-    {
-        _blockedOrganisationQuery = blockedOrganisationQuery;
-        _queryStore = queryStore;
-        _messaging = messaging;
-        _timeProvider = timeProvider;
-        _trainingProviderService = trainingProviderService;
-    }
-
     public async Task<ConfirmTrainingProviderBlockingViewModel> GetConfirmTrainingProviderBlockingViewModelAsync(long ukprn)
     {
-        var providerDetailTask = _trainingProviderService.GetProviderAsync(ukprn);
-        var providerEditVacancyInfoTask = _queryStore.GetProviderVacancyDataAsync(ukprn);
+        var providerDetailTask = trainingProviderService.GetProviderAsync(ukprn);
+        var providerEditVacancyInfoTask = queryStore.GetProviderVacancyDataAsync(ukprn);
         await Task.WhenAll(providerEditVacancyInfoTask, providerDetailTask);
         var providerDetail = providerDetailTask.Result;             
         var providerVacancyInfo = providerEditVacancyInfoTask.Result;
@@ -50,8 +39,8 @@ public class BlockedOrganisationsOrchestrator
     }
     public async Task<ConsentForProviderBlockingViewModel> GetConsentForProviderBlockingViewModelAsync(long ukprn)
     {
-        var providerDetailTask = _trainingProviderService.GetProviderAsync(ukprn);
-        var providerEditVacancyInfoTask = _queryStore.GetProviderVacancyDataAsync(ukprn);
+        var providerDetailTask = trainingProviderService.GetProviderAsync(ukprn);
+        var providerEditVacancyInfoTask = queryStore.GetProviderVacancyDataAsync(ukprn);
         await Task.WhenAll(providerEditVacancyInfoTask, providerDetailTask);
         var providerDetail = providerDetailTask.Result;             
         var providerVacancyInfo = providerEditVacancyInfoTask.Result;
@@ -67,13 +56,13 @@ public class BlockedOrganisationsOrchestrator
 
     public Task BlockProviderAsync(long ukprn, string reason, VacancyUser user)
     {
-        var command = new BlockProviderCommand(ukprn, user, _timeProvider.Now, reason);
-        return _messaging.SendCommandAsync(command);
+        var command = new BlockProviderCommand(ukprn, user, timeProvider.Now, reason);
+        return messaging.SendCommandAsync(command);
     }
 
     public async Task<ProviderBlockedAcknowledgementViewModel> GetAcknowledgementViewModelAsync(long ukprn)
     {
-        var providerDetail = await _trainingProviderService.GetProviderAsync(ukprn);
+        var providerDetail = await trainingProviderService.GetProviderAsync(ukprn);
 
         return new ProviderBlockedAcknowledgementViewModel 
         {
@@ -84,19 +73,19 @@ public class BlockedOrganisationsOrchestrator
 
     public async Task<bool> IsProviderAlreadyBlocked(long ukprn)
     {
-        var blockedOrganisation = await _blockedOrganisationQuery.GetByOrganisationIdAsync(ukprn.ToString());
+        var blockedOrganisation = await blockedOrganisationQuery.GetByOrganisationIdAsync(ukprn.ToString());
         return blockedOrganisation?.BlockedStatus == BlockedStatus.Blocked;
     }
 
     public async Task<ProviderAlreadyBlockedViewModel> GetProviderAlreadyBlockedViewModelAsync(long ukprn)
     {
-        var provider = await _trainingProviderService.GetProviderAsync(ukprn);
+        var provider = await trainingProviderService.GetProviderAsync(ukprn);
         return new ProviderAlreadyBlockedViewModel{ Ukprn = ukprn, Name = provider.Name };
     }
 
     public async Task<BlockedOrganisationsViewModel> GetBlockedOrganisationsViewModel()
     {
-        var blockedProviders = await _queryStore.GetBlockedProvidersAsync();
+        var blockedProviders = await queryStore.GetBlockedProvidersAsync();
 
         if (blockedProviders?.Data == null) return new BlockedOrganisationsViewModel();
 
@@ -110,7 +99,7 @@ public class BlockedOrganisationsOrchestrator
         foreach( var vm in blockedOrganisationViewModels)
         {
             var ukprn = long.Parse(vm.OrganisationId);
-            var prov = await _trainingProviderService.GetProviderAsync(ukprn);
+            var prov = await trainingProviderService.GetProviderAsync(ukprn);
             vm.OrganisationName = prov?.Name;
             vm.Postcode = prov?.Address?.Postcode;
             vm.Ukprn = prov?.Ukprn.ToString();

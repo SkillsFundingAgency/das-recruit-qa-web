@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Recruit.Vacancies.Client.Domain.Entities;
@@ -33,15 +32,6 @@ public static class AddressExtensions
         }.FirstOrDefault(x => !string.IsNullOrWhiteSpace(x));
     }
 
-    public static IOrderedEnumerable<IGrouping<string, KeyValuePair<string, Address>>> GroupByLastFilledAddressLine(this List<Address> addresses)
-    {
-        return addresses?
-            .Select(x => new KeyValuePair<string, Address>(GetLastNonEmptyField(x), x))
-            .Where(x => !string.IsNullOrEmpty(x.Key))
-            .GroupBy(x => x.Key, StringComparer.InvariantCultureIgnoreCase)
-            .OrderBy(x => x.Key);
-    }
-        
     public static string ToSingleLineFullAddress(this Address address)
     {
         string[] addressArray = [address.AddressLine1, address.AddressLine2, address.AddressLine3, address.AddressLine4, address.Postcode];

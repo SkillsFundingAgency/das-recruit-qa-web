@@ -14,21 +14,14 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal sealed class MongoDbApplicationReviewRepository : MongoDbCollectionBase, IApplicationReviewRepository, IApplicationReviewQuery, IApplicationWriteRepository
+internal sealed class MongoDbApplicationReviewRepository(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.ApplicationReviews, details),
+        IApplicationReviewRepository, IApplicationReviewQuery, IApplicationWriteRepository
 {
-    private class WrappedVacancyReference
-    {
-        public long VacancyReference { get; set; }
-    }
-
     private const string VacancyReference = "vacancyReference";
-    private const string CandidateId = "candidateId";
     private const string Id = "_id";
-
-    public MongoDbApplicationReviewRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.ApplicationReviews, details)
-    {
-    }
 
     public Task CreateAsync(Domain.Entities.ApplicationReview review)
     {
@@ -261,18 +254,6 @@ internal sealed class MongoDbApplicationReviewRepository : MongoDbCollectionBase
         return sortedResult.ToList();
     }
 
-    public async Task<List<Domain.Entities.ApplicationReview>> GetForCandidateAsync(Guid candidateId)
-    {
-        var filter = Builders<Domain.Entities.ApplicationReview>.Filter.Eq(CandidateId, candidateId);
-        var collection = GetCollection<Domain.Entities.ApplicationReview>();
-
-        var result = await RetryPolicy.ExecuteAsync(_ =>
-                collection.Find(filter).ToListAsync(),
-            new Context(nameof(GetForCandidateAsync)));
-
-        return result;
-    }
-        
     public Task HardDelete(Guid applicationReviewId)
     {
         var filter = Builders<Domain.Entities.ApplicationReview>.Filter.Eq(Id, applicationReviewId);
@@ -281,46 +262,5 @@ internal sealed class MongoDbApplicationReviewRepository : MongoDbCollectionBase
         return RetryPolicy.ExecuteAsync(_ =>
                 collection.DeleteOneAsync(filter),
             new Context(nameof(HardDelete)));
-    }
-
-    public async Task<IEnumerable<long>> GetAllVacancyReferencesAsync()
-    {
-        var filter = Builders<Domain.Entities.ApplicationReview>.Filter.Empty;
-
-        var collection = GetCollection<Domain.Entities.ApplicationReview>();
-
-        var result = await RetryPolicy.ExecuteAsync(async _ =>
-            {
-                var pipeline = GetDistinctVacancyReferencesPipeline();
-                var aggResults = await collection.AggregateAsync<WrappedVacancyReference>(pipeline);
-                return (await aggResults.ToListAsync()).Select(x => x.VacancyReference).ToList();
-            },
-            new Context(nameof(GetForVacancyAsync)));
-
-        return result;
-    }
-
-    private BsonDocument[] GetDistinctVacancyReferencesPipeline()
-    {
-        const string FieldName = "vacancyReference";
-
-        return new[]
-        {
-            new BsonDocument().Add("$group", new BsonDocument
-            {
-                {
-                    "_id", new BsonDocument
-                    {
-                        { FieldName, $"${FieldName}" }
-                    }
-                },
-                { FieldName, new BsonDocument().Add("$first", $"${FieldName}") }
-            }),
-            new BsonDocument().Add("$project", new BsonDocument
-            {
-                { "_id", 0 },
-                { FieldName, 1 }
-            })
-        };
     }
 }

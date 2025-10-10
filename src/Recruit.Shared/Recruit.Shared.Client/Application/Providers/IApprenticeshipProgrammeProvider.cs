@@ -9,6 +9,4 @@ public interface IApprenticeshipProgrammeProvider
     Task<IEnumerable<IApprenticeshipProgramme>> GetApprenticeshipProgrammesAsync(bool includeExpired = false);
 
     Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId);
-
-    Task<ApprenticeshipStandard> GetApprenticeshipStandardVacancyPreviewData(int programmedId);
 }

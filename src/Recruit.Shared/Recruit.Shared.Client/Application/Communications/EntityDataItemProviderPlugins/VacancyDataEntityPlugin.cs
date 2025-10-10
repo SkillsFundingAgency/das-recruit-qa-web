@@ -9,15 +9,9 @@ using static Recruit.Vacancies.Client.Application.Communications.CommunicationCo
 
 namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
-public class VacancyDataEntityPlugin : IEntityDataItemProvider
+public class VacancyDataEntityPlugin(IVacancyRepository vacancyRepository) : IEntityDataItemProvider
 {
-    private readonly IVacancyRepository _vacancyRepository;
     public string EntityType => CommunicationConstants.EntityTypes.Vacancy;
-
-    public VacancyDataEntityPlugin(IVacancyRepository vacancyRepository)
-    {
-        _vacancyRepository = vacancyRepository;
-    }
 
     public async Task<IEnumerable<CommunicationDataItem>> GetDataItemsAsync(object entityId)
     {
@@ -26,7 +20,7 @@ public class VacancyDataEntityPlugin : IEntityDataItemProvider
             throw new InvalidEntityIdException(EntityType, nameof(VacancyDataEntityPlugin));
         }
 
-        var vacancy = await _vacancyRepository.GetVacancyAsync(vacancyReference);
+        var vacancy = await vacancyRepository.GetVacancyAsync(vacancyReference);
 
         var employerName = vacancy.EmployerNameOption ==  EmployerNameOption.TradingName ? vacancy.EmployerName : vacancy.LegalEntityName;
 

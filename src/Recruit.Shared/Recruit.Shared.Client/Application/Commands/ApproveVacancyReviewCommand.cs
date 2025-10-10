@@ -6,20 +6,17 @@ using MediatR;
 
 namespace Recruit.Vacancies.Client.Application.Commands;
 
-public class ApproveVacancyReviewCommand : ICommand, IRequest<Unit>
+public class ApproveVacancyReviewCommand(
+    Guid reviewId,
+    string manualQaComment,
+    List<ManualQaFieldIndicator> manualQaFieldIndicators,
+    List<Guid> selectedAutomatedQaRuleOutcomeIds,
+    List<ManualQaFieldEditIndicator> manualQaFieldEditIndicators)
+    : ICommand, IRequest<Unit>
 {
-    public Guid ReviewId { get; }
-    public string ManualQaComment { get; }
-    public List<ManualQaFieldIndicator> ManualQaFieldIndicators { get; }
-    public List<Guid> SelectedAutomatedQaRuleOutcomeIds { get; }
-    public List<ManualQaFieldEditIndicator> ManualQaFieldEditIndicators { get; }
-
-    public ApproveVacancyReviewCommand(Guid reviewId, string manualQaComment, List<ManualQaFieldIndicator> manualQaFieldIndicators, List<Guid> selectedAutomatedQaRuleOutcomeIds, List<ManualQaFieldEditIndicator> manualQaFieldEditIndicators)
-    {
-        ReviewId = reviewId;
-        ManualQaComment = manualQaComment;
-        ManualQaFieldIndicators = manualQaFieldIndicators;
-        SelectedAutomatedQaRuleOutcomeIds = selectedAutomatedQaRuleOutcomeIds;
-        ManualQaFieldEditIndicators = manualQaFieldEditIndicators;
-    }
+    public Guid ReviewId { get; } = reviewId;
+    public string ManualQaComment { get; } = manualQaComment;
+    public List<ManualQaFieldIndicator> ManualQaFieldIndicators { get; } = manualQaFieldIndicators;
+    public List<Guid> SelectedAutomatedQaRuleOutcomeIds { get; } = selectedAutomatedQaRuleOutcomeIds;
+    public List<ManualQaFieldEditIndicator> ManualQaFieldEditIndicators { get; } = manualQaFieldEditIndicators;
 }

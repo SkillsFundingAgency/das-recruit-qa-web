@@ -18,25 +18,19 @@ public interface IVacancyReviewRepositoryRunner
     Task UpdateAsync(Domain.Entities.VacancyReview review);
 }
 
-public class VacancyReviewRepositoryRunner : IVacancyReviewRepositoryRunner
+public class VacancyReviewRepositoryRunner(IEnumerable<IVacancyReviewRepository> reviewResolver)
+    : IVacancyReviewRepositoryRunner
 {
-    private readonly IEnumerable<IVacancyReviewRepository> _vacancyReviewResolver;
-
-    public VacancyReviewRepositoryRunner(IEnumerable<IVacancyReviewRepository> vacancyReviewResolver)
-    {
-        _vacancyReviewResolver = vacancyReviewResolver;
-    }
-
     public async Task UpdateAsync(Domain.Entities.VacancyReview vacancyReview)
     {
-        foreach (var vacancyReviewResolver in _vacancyReviewResolver)
+        foreach (var vacancyReviewResolver in reviewResolver)
         {
             await vacancyReviewResolver.UpdateAsync(vacancyReview);
         }
     }
     public async Task CreateAsync(Domain.Entities.VacancyReview vacancyReview)
     {
-        foreach (var vacancyReviewResolver in _vacancyReviewResolver)
+        foreach (var vacancyReviewResolver in reviewResolver)
         {
             await vacancyReviewResolver.CreateAsync(vacancyReview);
         }
@@ -66,16 +60,6 @@ public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodi
     public async Task UpdateAsync(Domain.Entities.VacancyReview review)
     {
         await outerApiClient.Post(new PostVacancyReviewRequest(review.Id,VacancyReviewDto.MapVacancyReviewDto(review, encodingService)), false);
-    }
-
-    public async Task<List<VacancyReviewSummary>> GetActiveAsync()
-    {
-        throw new NotImplementedException();
-    }
-
-    public async Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary()
-    {
-        return await outerApiClient.Get<GetVacancyReviewSummaryResponse>(new GetVacancyReviewSummaryRequest());
     }
 
     public async Task<List<Domain.Entities.VacancyReview>> GetForVacancyAsync(long vacancyReference)

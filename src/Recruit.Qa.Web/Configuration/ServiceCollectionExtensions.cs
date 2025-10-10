@@ -1,5 +1,4 @@
 using System.Linq;
-using Recruit.Qa.Web;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Authorization;

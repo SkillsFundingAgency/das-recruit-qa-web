@@ -4,19 +4,12 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Recruit.Qa.Web.Security;
 
-public class UserAuthorizationService 
+public class UserAuthorizationService(IAuthorizationService authorizationService)
 {
-    private readonly IAuthorizationService _authorizationService;
-
-    public UserAuthorizationService(IAuthorizationService authorizationService)
-    {
-        _authorizationService = authorizationService;
-    }
-
     public async Task<bool> IsTeamLeadAsync(ClaimsPrincipal user)
     {
         var authResult =
-            await _authorizationService.AuthorizeAsync(user, AuthorizationPolicyNames.TeamLeadUserPolicyName);
+            await authorizationService.AuthorizeAsync(user, AuthorizationPolicyNames.TeamLeadUserPolicyName);
 
         return authResult.Succeeded;
     }

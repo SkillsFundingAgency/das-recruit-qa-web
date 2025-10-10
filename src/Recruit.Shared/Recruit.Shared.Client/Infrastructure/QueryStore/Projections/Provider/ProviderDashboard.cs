@@ -4,12 +4,8 @@ using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 
-public class ProviderDashboard : QueryProjectionBase
+public class ProviderDashboard() : QueryProjectionBase(QueryViewType.ProviderDashboard.TypeName)
 {
-    public ProviderDashboard() : base(QueryViewType.ProviderDashboard.TypeName)
-    {
-    }
-
     public IEnumerable<VacancySummary> Vacancies { get; set; }
     public int? TotalVacancies { get; set; } = null;
 

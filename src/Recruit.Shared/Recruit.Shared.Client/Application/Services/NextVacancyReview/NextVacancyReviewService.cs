@@ -8,24 +8,19 @@ using Microsoft.Extensions.Options;
 
 namespace Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
 
-public class NextVacancyReviewService : INextVacancyReviewService
+public class NextVacancyReviewService(
+    IOptions<NextVacancyReviewServiceConfiguration> config,
+    ITimeProvider timeProvider,
+    IVacancyReviewQuery vacancyReviewQuery)
+    : INextVacancyReviewService
 {
-    private readonly ITimeProvider _timeProvider;
-    private readonly IVacancyReviewQuery _vacancyReviewQuery;
-    private readonly NextVacancyReviewServiceConfiguration _config;
-
-    public NextVacancyReviewService(IOptions<NextVacancyReviewServiceConfiguration> config, ITimeProvider timeProvider, IVacancyReviewQuery vacancyReviewQuery)
-    {
-        _timeProvider = timeProvider;   
-        _vacancyReviewQuery = vacancyReviewQuery;
-        _config = config.Value;
-    }
+    private readonly NextVacancyReviewServiceConfiguration _config = config.Value;
 
     public async Task<VacancyReview> GetNextVacancyReviewAsync(string userId)
     {
-        var assignationExpiryTime = _timeProvider.Now.AddMinutes(_config.VacancyReviewAssignationTimeoutMinutes * -1);
+        var assignationExpiryTime = timeProvider.Now.AddMinutes(_config.VacancyReviewAssignationTimeoutMinutes * -1);
 
-        var assignedReviews = await _vacancyReviewQuery.GetByStatusAsync(ReviewStatus.UnderReview);
+        var assignedReviews = await vacancyReviewQuery.GetByStatusAsync(ReviewStatus.UnderReview);
 
         //Get the oldest unexpired review assigned to the user
         var nextVacancyReview = assignedReviews.Where(r => 
@@ -47,7 +42,7 @@ public class NextVacancyReviewService : INextVacancyReviewService
             return nextVacancyReview;
 
         //Get the oldest unassigned review
-        var pendingReviews = await _vacancyReviewQuery.GetByStatusAsync(ReviewStatus.PendingReview);
+        var pendingReviews = await vacancyReviewQuery.GetByStatusAsync(ReviewStatus.PendingReview);
         nextVacancyReview = pendingReviews
             .OrderBy(r => r.CreatedDate)
             .FirstOrDefault();
@@ -57,7 +52,7 @@ public class NextVacancyReviewService : INextVacancyReviewService
 
     public DateTime GetExpiredAssignationDateTime()
     {
-        return _timeProvider.Now.AddMinutes(_config.VacancyReviewAssignationTimeoutMinutes * -1);
+        return timeProvider.Now.AddMinutes(_config.VacancyReviewAssignationTimeoutMinutes * -1);
     }
 
     public bool VacancyReviewCanBeAssigned(ReviewStatus reviewStatus, DateTime? reviewedDate)

@@ -12,13 +12,10 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal sealed class MongoDbUserRepository : MongoDbCollectionBase, IUserRepository, IUserWriteRepository
+internal sealed class MongoDbUserRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Users, details),
+        IUserRepository, IUserWriteRepository
 {
-    public MongoDbUserRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Users, details)
-    {
-    }
-
     public async Task<Domain.Entities.User> GetAsync(string idamsUserId)
     {
         var filter = Builders<Domain.Entities.User>.Filter.Regex(v => v.IdamsUserId, 

@@ -7,9 +7,6 @@ namespace Recruit.Shared.Web.Services;
 
 public interface IReviewSummaryService
 {
-    Task<ReviewSummaryViewModel> GetReviewSummaryViewModelAsync(long vacancyReference,
-        ReviewFieldMappingLookupsForPage fieldMappingsLookup);
-
     Task<ReviewSummaryViewModel> GetReviewSummaryViewModelAsync(Guid reviewId,
         ReviewFieldMappingLookupsForPage reviewFieldIndicatorsForPage);
 }

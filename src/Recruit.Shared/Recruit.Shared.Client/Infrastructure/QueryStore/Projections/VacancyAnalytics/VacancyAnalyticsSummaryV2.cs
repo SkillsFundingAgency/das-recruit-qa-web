@@ -3,11 +3,8 @@ using System.Collections.Generic;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
 
-public class VacancyAnalyticsSummaryV2 : QueryProjectionBase
+public class VacancyAnalyticsSummaryV2() : QueryProjectionBase(QueryViewType.VacancyAnalyticsSummaryV2.TypeName)
 {
-    public VacancyAnalyticsSummaryV2() : base(QueryViewType.VacancyAnalyticsSummaryV2.TypeName)
-    {
-    }
     public string VacancyReference { get; set; }
     public List<VacancyAnalytics> VacancyAnalytics { get; set; }
 }

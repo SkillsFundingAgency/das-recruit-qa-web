@@ -1,11 +1,7 @@
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
 
-public class VacancyAnalyticsSummary : QueryProjectionBase
+public class VacancyAnalyticsSummary() : QueryProjectionBase(QueryViewType.VacancyAnalyticsSummary.TypeName)
 {
-    public VacancyAnalyticsSummary() : base(QueryViewType.VacancyAnalyticsSummary.TypeName)
-    {
-    }
-
     public long VacancyReference { get; set; }
 
     public int NoOfApprenticeshipSearches { get; set; }

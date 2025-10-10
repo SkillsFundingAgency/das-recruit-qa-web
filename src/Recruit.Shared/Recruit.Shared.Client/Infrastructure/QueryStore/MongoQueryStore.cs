@@ -14,13 +14,10 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
-internal sealed class MongoQueryStore : MongoDbCollectionBase, IQueryStore, IQueryStoreHouseKeepingService
+internal sealed class MongoQueryStore(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.QueryStore, details),
+        IQueryStore, IQueryStoreHouseKeepingService
 {
-    public MongoQueryStore(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.QueryStore, details)
-    {
-    }
-
     Task IQueryStore.DeleteAsync<T>(string typeName, string key)
     {
         var collection = GetCollection<T>();

@@ -1,11 +1,4 @@
-using System.Collections.Generic;
-
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-
-public class GetProvidersResponse
-{
-    public IEnumerable<GetProviderResponseItem> Providers { get; set; }
-}
 
 public class GetProviderResponseItem
 {

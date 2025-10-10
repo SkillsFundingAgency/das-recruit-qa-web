@@ -9,26 +9,21 @@ namespace Recruit.Vacancies.Client.Application.Validation.Fluent;
 /// Unconditionally validates a <see cref="Qualification"/>.
 /// <seealso cref="VacancyQualificationsValidator"/>
 /// </summary>
-internal class QualificationValidator : QualificationValidatorBase
-{
-    public QualificationValidator(IQualificationsProvider qualificationsProvider, IProfanityListProvider profanityListProvider)
-        : base(qualificationsProvider,profanityListProvider)
-    {
-    }
-}
+internal class QualificationValidator(
+    IQualificationsProvider qualificationsProvider,
+    IProfanityListProvider profanityListProvider)
+    : QualificationValidatorBase(qualificationsProvider, profanityListProvider);
 
 /// <summary>
 /// Registers validation with a specific rule ID.
 /// This is used by the <see cref="FluentVacancyValidator"/> to conditionally validate every
 /// <see cref="Qualification"/> in a vacancy.
 /// </summary>
-internal class VacancyQualificationsValidator : QualificationValidatorBase
-{
-    public VacancyQualificationsValidator(long ruleId, IQualificationsProvider qualificationsProvider, IProfanityListProvider profanityListProvider)
-        : base(ruleId, qualificationsProvider,profanityListProvider)
-    {
-    }
-}
+internal class VacancyQualificationsValidator(
+    long ruleId,
+    IQualificationsProvider qualificationsProvider,
+    IProfanityListProvider profanityListProvider)
+    : QualificationValidatorBase(ruleId, qualificationsProvider, profanityListProvider);
 
 /// <summary>
 /// Validates a <see cref="Qualification"/>.

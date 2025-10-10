@@ -289,27 +289,6 @@ public class VacancyReviewServiceTests
         actual.Should().BeNull();
     }
 
-    [Test(Description = "Should throw as implemented by GetVacancyReviewSummary. To be removed when migration complete."), MoqAutoData]
-    public void When_Calling_GetActiveAsync_Should_Throw_NotImplementedException(
-        VacancyReviewService service)
-    {
-        Assert.ThrowsAsync<NotImplementedException>(service.GetActiveAsync);
-    }
-
-    [Test, MoqAutoData]
-    public async Task When_Calling_GetVacancyReviewSummary_The_ApiClient_Is_Called_And_Response_Returned(
-        GetVacancyReviewSummaryResponse apiResponse,
-        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
-        VacancyReviewService service)
-    {
-        outerApiClient.Setup(x => x.Get<GetVacancyReviewSummaryResponse>(It.IsAny<GetVacancyReviewSummaryRequest>()))
-            .ReturnsAsync(apiResponse);
-
-        var actual = await service.GetVacancyReviewSummary();
-        
-        actual.Should().BeEquivalentTo(apiResponse);
-    }
-    
     [Test, MoqAutoData]
     public async Task When_Calling_GetApprovedCountAsync_The_ApiClient_Is_Called_And_Response_Returned(
         string userId,

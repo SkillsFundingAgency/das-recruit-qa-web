@@ -5,19 +5,14 @@ using Recruit.Communication.Types;
 
 namespace Communication.Core;
 
-public class AggregateCommunicationComposeQueuePublisher : IAggregateCommunicationComposeQueuePublisher
+public class AggregateCommunicationComposeQueuePublisher(string storageConnectionString)
+    : IAggregateCommunicationComposeQueuePublisher
 {
     private const string QueueName = "aggregate-communication-composer-requests-queue";
-    private readonly string _storageConnectionString;
-
-    public AggregateCommunicationComposeQueuePublisher(string storageConnectionString)
-    {
-        _storageConnectionString = storageConnectionString;
-    }
 
     public async Task AddMessageAsync(AggregateCommunicationComposeRequest message)
     {
-        var client = new QueueClient(_storageConnectionString, QueueName);
+        var client = new QueueClient(storageConnectionString, QueueName);
             
         await client.CreateIfNotExistsAsync();
 

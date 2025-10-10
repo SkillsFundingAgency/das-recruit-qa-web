@@ -14,17 +14,17 @@ public interface IRecruitOuterApiVacancyClient
 
 public class RecruitOuterApiVacancyClient(
     IEncodingService encodingService,
-    IRecruitOuterApiClient recruitOuterApimClient): IRecruitOuterApiVacancyClient
+    IRecruitOuterApiClient recruitOuterApiClient): IRecruitOuterApiVacancyClient
 {
     public async Task CreateAsync(Vacancy vacancy)
     {
         // TODO: we'll want the returned data here at some point
-        await recruitOuterApimClient.Post(new PostVacancyRequest(vacancy.Id, VacancyDto.From(vacancy, encodingService)));
+        await recruitOuterApiClient.Post(new PostVacancyRequest(vacancy.Id, VacancyDto.From(vacancy, encodingService)));
     }
 
     public async Task UpdateAsync(Vacancy vacancy)
     {
         // TODO: we'll want the returned data here at some point
-        await recruitOuterApimClient.Post(new PostVacancyRequest(vacancy.Id, VacancyDto.From(vacancy, encodingService)));
+        await recruitOuterApiClient.Post(new PostVacancyRequest(vacancy.Id, VacancyDto.From(vacancy, encodingService)));
     }
 }

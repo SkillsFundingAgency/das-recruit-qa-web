@@ -10,36 +10,25 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
-public class BlockProviderCommandHandler : IRequestHandler<BlockProviderCommand, Unit>
+public class BlockProviderCommandHandler(
+    ILogger<BlockProviderCommandHandler> logger,
+    IBlockedOrganisationQuery blockedOrganisationQuery,
+    IBlockedOrganisationRepository blockedOrganisationRepository,
+    IMessaging messaging)
+    : IRequestHandler<BlockProviderCommand, Unit>
 {
-    private readonly ILogger<BlockProviderCommandHandler> _logger;
-    private readonly IBlockedOrganisationQuery _blockedOrganisationQuery;
-    private readonly IBlockedOrganisationRepository _blockedOrganisationRepository;
-    private readonly IMessaging _messaging;
-    public BlockProviderCommandHandler(
-        ILogger<BlockProviderCommandHandler> logger,
-        IBlockedOrganisationQuery blockedOrganisationQuery,
-        IBlockedOrganisationRepository blockedOrganisationRepository,
-        IMessaging messaging)
-    {
-        _logger = logger;
-        _blockedOrganisationQuery = blockedOrganisationQuery;
-        _blockedOrganisationRepository = blockedOrganisationRepository;
-        _messaging = messaging;
-    }
-        
     public async Task<Unit> Handle(BlockProviderCommand message, CancellationToken cancellationToken)
     {
-        var blockedOrg = await _blockedOrganisationQuery.GetByOrganisationIdAsync(message.Ukprn.ToString());
+        var blockedOrg = await blockedOrganisationQuery.GetByOrganisationIdAsync(message.Ukprn.ToString());
         if (blockedOrg?.BlockedStatus == BlockedStatus.Blocked)
         {
-            _logger.LogWarning($"Ignoring request to block provider with ukprn {message.Ukprn} as the provider is already blocked.");
+            logger.LogWarning($"Ignoring request to block provider with ukprn {message.Ukprn} as the provider is already blocked.");
             return Unit.Value;
         }
 
-        await _blockedOrganisationRepository.CreateAsync(ConvertToBlockedOrganisation(message));
+        await blockedOrganisationRepository.CreateAsync(ConvertToBlockedOrganisation(message));
 
-        await _messaging.PublishEvent(new ProviderBlockedEvent()
+        await messaging.PublishEvent(new ProviderBlockedEvent()
         {
             Ukprn = message.Ukprn,
             BlockedDate = message.BlockedDate,

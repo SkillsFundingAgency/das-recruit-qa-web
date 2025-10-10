@@ -8,8 +8,6 @@ namespace Recruit.Vacancies.Client.Domain.Repositories;
 
 public interface IVacancyReviewQuery
 {
-    Task<List<VacancyReviewSummary>> GetActiveAsync();
-    Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary();
     Task<List<VacancyReview>> GetForVacancyAsync(long vacancyReference);
     Task<VacancyReview> GetLatestReviewByReferenceAsync(long vacancyReference);
     Task<List<VacancyReview>> GetByStatusAsync(ReviewStatus status);

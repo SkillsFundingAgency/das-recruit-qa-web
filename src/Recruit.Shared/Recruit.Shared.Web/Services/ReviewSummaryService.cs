@@ -8,32 +8,15 @@ using System.Threading.Tasks;
 
 namespace Recruit.Shared.Web.Services;
 
-public class ReviewSummaryService : IReviewSummaryService
+public class ReviewSummaryService(
+    ReviewFieldIndicatorMapper fieldMappingsLookup,
+    IQaVacancyClient qaVacancyClient)
+    : IReviewSummaryService
 {
-    private readonly IRecruitVacancyClient _vacancyClient;
-    private readonly ReviewFieldIndicatorMapper _fieldMappingsLookup;
-    private readonly IQaVacancyClient _qaVacancyClient;
-
-    public ReviewSummaryService(IRecruitVacancyClient vacancyClient, 
-        ReviewFieldIndicatorMapper fieldMappingsLookup, IQaVacancyClient qaVacancyClient)
-    {
-        _vacancyClient = vacancyClient;
-        _fieldMappingsLookup = fieldMappingsLookup;
-        _qaVacancyClient = qaVacancyClient;
-    }
-
-    public async Task<ReviewSummaryViewModel> GetReviewSummaryViewModelAsync(long vacancyReference, 
-        ReviewFieldMappingLookupsForPage reviewFieldIndicatorsForPage)
-    {
-        var review = await _vacancyClient.GetCurrentReferredVacancyReviewAsync(vacancyReference);
-
-        return ConvertToReviewSummaryViewModel(reviewFieldIndicatorsForPage, review);
-    }
-
     public async Task<ReviewSummaryViewModel> GetReviewSummaryViewModelAsync(Guid reviewId,
         ReviewFieldMappingLookupsForPage reviewFieldIndicatorsForPage)
     {
-        var review = await _qaVacancyClient.GetVacancyReviewAsync(reviewId);
+        var review = await qaVacancyClient.GetVacancyReviewAsync(reviewId);
 
         return ConvertToReviewSummaryViewModel(reviewFieldIndicatorsForPage, review);
     }
@@ -44,7 +27,7 @@ public class ReviewSummaryService : IReviewSummaryService
         if (review != null)
         {
             var fieldIndicators =
-                _fieldMappingsLookup.MapFromFieldIndicators(reviewFieldIndicatorsForPage, review).ToList();
+                fieldMappingsLookup.MapFromFieldIndicators(reviewFieldIndicatorsForPage, review).ToList();
 
             return new ReviewSummaryViewModel
             {
