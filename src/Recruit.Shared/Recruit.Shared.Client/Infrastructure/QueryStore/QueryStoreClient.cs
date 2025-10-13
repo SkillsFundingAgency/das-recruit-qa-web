@@ -1,70 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Employer;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.QA;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyApplications;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyAnalytics;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
-using Recruit.Vacancies.Client.Domain.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancySummary;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider) : IQueryStoreReader, IQueryStoreWriter
 {
-    public Task<EmployerDashboard> GetEmployerDashboardAsync(string employerAccountId)
-    {
-        var key = QueryViewType.EmployerDashboard.GetIdValue(employerAccountId);
-
-        return queryStore.GetAsync<EmployerDashboard>(QueryViewType.EmployerDashboard.TypeName, key);
-    }
-
-    public Task<ProviderDashboard> GetProviderDashboardAsync(long ukprn)
-    {
-        var key = QueryViewType.ProviderDashboard.GetIdValue(ukprn);
-        var typeName = QueryViewType.ProviderDashboard.TypeName;
-        
-        return queryStore.GetAsync<ProviderDashboard>(typeName, key);
-    }
-
-    public Task<VacancyAnalyticsSummary> GetVacancyAnalyticsSummaryAsync(long vacancyReference)
-    {
-        var key = QueryViewType.VacancyAnalyticsSummary.GetIdValue(vacancyReference);
-
-        return queryStore.GetAsync<VacancyAnalyticsSummary>(QueryViewType.VacancyAnalyticsSummary.TypeName, key);
-    }
-
-    public Task<VacancyAnalyticsSummaryV2> GetVacancyAnalyticsSummaryV2Async(string vacancyReference)
-    {
-        var key = QueryViewType.VacancyAnalyticsSummaryV2.GetIdValue(vacancyReference);
-
-        return queryStore.GetAsync<VacancyAnalyticsSummaryV2>(QueryViewType.VacancyAnalyticsSummaryV2.TypeName, key);
-    }
-    public Task<BlockedProviderOrganisations> GetBlockedProviders()
-    {
-        var key = QueryViewType.BlockedProviderOrganisations.GetIdValue();
-
-        return queryStore.GetAsync<BlockedProviderOrganisations>(key);
-    }
-
-    public Task UpdateEmployerDashboardAsync(string employerAccountId, IEnumerable<VacancySummary> vacancySummaries)
-    {
-        var dashboardItem = new EmployerDashboard
-        {
-            Id = QueryViewType.EmployerDashboard.GetIdValue(employerAccountId),
-            Vacancies = vacancySummaries,
-            LastUpdated = timeProvider.Now
-        };
-
-        return queryStore.UpsertAsync(dashboardItem);
-    }
-
     public Task UpdateProviderDashboardAsync(long ukprn, IEnumerable<VacancySummary> vacancySummaries, IEnumerable<ProviderDashboardTransferredVacancy> transferredVacancies)
     {
         var dashboardItem = new ProviderDashboard
@@ -103,39 +51,11 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
         return queryStore.UpsertAsync(providerVacancyDataItem);
     }
 
-    public Task<EmployerEditVacancyInfo> GetEmployerVacancyDataAsync(string employerAccountId)
-    {
-        var key = QueryViewType.EditVacancyInfo.GetIdValue(employerAccountId);
-
-        return queryStore.GetAsync<EmployerEditVacancyInfo>(QueryViewType.EditVacancyInfo.TypeName, key);
-    }
-
     public Task<ProviderEditVacancyInfo> GetProviderVacancyDataAsync(long ukprn)
     {
         var key = QueryViewType.EditVacancyInfo.GetIdValue(ukprn);
 
         return queryStore.GetAsync<ProviderEditVacancyInfo>(QueryViewType.EditVacancyInfo.TypeName, key);
-    }
-
-    public async Task<EmployerInfo> GetProviderEmployerVacancyDataAsync(long ukprn, string employerAccountId)
-    {
-        var key = QueryViewType.EditVacancyInfo.GetIdValue(ukprn);
-        var providerInfo = await queryStore.GetAsync<ProviderEditVacancyInfo>(QueryViewType.EditVacancyInfo.TypeName, key);
-        return providerInfo?.Employers.FirstOrDefault(e => e.EmployerAccountId == employerAccountId);
-    }
-
-    public async Task<IEnumerable<EmployerInfo>> GetProviderEmployerVacancyDatasAsync(long ukprn, IList<string> employerAccountIds)
-    {
-        var key = QueryViewType.EditVacancyInfo.GetIdValue(ukprn);
-        var providerInfo = await queryStore.GetAsync<ProviderEditVacancyInfo>(QueryViewType.EditVacancyInfo.TypeName, key);
-        return providerInfo?.Employers.Where(e => employerAccountIds.Contains(e.EmployerAccountId));
-    }
-
-    public Task<VacancyApplications> GetVacancyApplicationsAsync(string vacancyReference)
-    {
-        var key = QueryViewType.VacancyApplications.GetIdValue(vacancyReference);
-
-        return queryStore.GetAsync<VacancyApplications>(QueryViewType.VacancyApplications.TypeName, key);
     }
 
     public Task UpdateLiveVacancyAsync(LiveVacancy vacancy)
@@ -155,11 +75,6 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
         return queryStore.GetAsync<ClosedVacancy>(QueryViewType.ClosedVacancy.TypeName, key);
     }
 
-    public async Task<IEnumerable<ClosedVacancy>> GetClosedVacancies(IList<long> vacancyReferences)
-    {
-        return await queryStore.GetClosedVacancies(vacancyReferences);
-    }
-
     public Task<long> DeleteAllLiveVacancies()
     {
         return queryStore.DeleteAllAsync<LiveVacancy>(QueryViewType.LiveVacancy.TypeName);
@@ -170,11 +85,6 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
         return queryStore.DeleteAllAsync<ClosedVacancy>(QueryViewType.ClosedVacancy.TypeName);
     }
 
-    public Task<IEnumerable<LiveVacancy>> GetLiveExpiredVacancies(DateTime closingDate)
-    {
-        return queryStore.GetAllLiveExpired(closingDate);
-    }
-
     public Task UpdateVacancyApplicationsAsync(VacancyApplications vacancyApplications)
     {
         vacancyApplications.Id = QueryViewType.VacancyApplications.GetIdValue(vacancyApplications.VacancyReference.ToString());
@@ -183,51 +93,9 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
         return queryStore.UpsertAsync(vacancyApplications);
     }
 
-    public Task<QaDashboard> GetQaDashboardAsync()
-    {
-        var key = QueryViewType.QaDashboard.GetIdValue();
-
-        return queryStore.GetAsync<QaDashboard>(QueryViewType.QaDashboard.TypeName, key);
-    }
-
-    public Task UpdateQaDashboardAsync(QaDashboard qaDashboard)
-    {
-        qaDashboard.Id = QueryViewType.QaDashboard.GetIdValue();
-        qaDashboard.LastUpdated = timeProvider.Now;
-
-        return queryStore.UpsertAsync(qaDashboard);
-    }
-
     public Task UpdateClosedVacancyAsync(ClosedVacancy closedVacancy)
     {
         return queryStore.UpsertAsync(closedVacancy);
-    }
-
-    public Task<long> RemoveOldEmployerDashboards(DateTime oldestLastUpdatedDate)
-    {
-        return queryStore.DeleteManyLessThanAsync<EmployerDashboard, DateTime>(QueryViewType.EmployerDashboard.TypeName, x => x.LastUpdated, oldestLastUpdatedDate);
-    }
-
-    public Task<long> RemoveOldProviderDashboards(DateTime oldestLastUpdatedDate)
-    {
-        //TODO
-        return queryStore.DeleteManyLessThanAsync<ProviderDashboard, DateTime>(QueryViewType.ProviderDashboard.TypeName, x => x.LastUpdated, oldestLastUpdatedDate);
-    }
-
-    public async Task UpsertVacancyAnalyticSummaryAsync(VacancyAnalyticsSummary summary)
-    {
-        summary.Id = QueryViewType.VacancyAnalyticsSummary.GetIdValue(summary.VacancyReference.ToString());
-        summary.LastUpdated = timeProvider.Now;
-
-        await queryStore.UpsertAsync(summary);
-    }
-        
-    public async Task UpsertVacancyAnalyticSummaryV2Async(VacancyAnalyticsSummaryV2 summary)
-    {
-        summary.Id = QueryViewType.VacancyAnalyticsSummaryV2.GetIdValue(summary.VacancyReference.ToString());
-        summary.LastUpdated = timeProvider.Now;
-
-        await queryStore.UpsertAsync(summary);
     }
 
     private string GetLiveVacancyId(long vacancyReference)
@@ -262,39 +130,5 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
     public Task<BlockedProviderOrganisations> GetBlockedProvidersAsync()
     {
         return queryStore.GetAsync<BlockedProviderOrganisations>(QueryViewType.BlockedProviderOrganisations.GetIdValue());
-    }
-
-    public Task<IEnumerable<LiveVacancy>> GetAllLiveVacancies(int vacanciesToSkip, int vacanciesToGet)
-    {
-        return queryStore.GetAllLiveVacancies(vacanciesToSkip, vacanciesToGet);
-    }
-
-    public Task<IEnumerable<LiveVacancy>> GetAllLiveVacanciesOnClosingDate(int vacanciesToSkip, int vacanciesToGet, DateTime closingDate)
-    {
-        return queryStore.GetAllLiveVacanciesOnClosingDate(vacanciesToSkip, vacanciesToGet, closingDate);
-    }
-
-    public Task<long> GetAllLiveVacanciesCount()
-    {
-        return queryStore.GetAllLiveVacanciesCount();
-    }
-
-    public Task<long> GetTotalPositionsAvailableCount()
-    {
-        return queryStore.GetTotalPositionsAvailableCount();
-    }
-
-    public Task<long> GetAllLiveVacanciesOnClosingDateCount(DateTime closingDate)
-    {
-        return queryStore.GetAllLiveVacanciesOnClosingDateCount(closingDate);
-    }
-    public Task<LiveVacancy> GetLiveVacancy(long vacancyReference)
-    {
-        return queryStore.GetLiveVacancy(vacancyReference);
-    }
-
-    public Task<LiveVacancy> GetLiveExpiredVacancy(long vacancyReference)
-    {
-        return queryStore.GetLiveExpiredVacancy(vacancyReference);
     }
 }

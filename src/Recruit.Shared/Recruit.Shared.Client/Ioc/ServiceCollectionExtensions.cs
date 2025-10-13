@@ -42,7 +42,6 @@ using Recruit.Vacancies.Client.Infrastructure.Services.Projections;
 using Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProviderSummaryProvider;
-using Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.User;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;

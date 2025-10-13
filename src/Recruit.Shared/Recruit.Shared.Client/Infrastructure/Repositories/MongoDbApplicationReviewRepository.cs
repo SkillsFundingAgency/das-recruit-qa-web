@@ -8,7 +8,6 @@ using Recruit.Vacancies.Client.Infrastructure.Extensions;
 using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using Polly;
 

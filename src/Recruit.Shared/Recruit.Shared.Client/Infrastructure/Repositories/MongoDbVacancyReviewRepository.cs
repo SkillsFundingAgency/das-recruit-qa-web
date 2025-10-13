@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Mongo;
-using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
