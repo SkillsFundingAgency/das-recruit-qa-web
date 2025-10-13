@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 
-namespace Communication.Core;
+namespace Recruit.Communication.Core;
 
 public abstract class CommunicationProcessorBase
 {

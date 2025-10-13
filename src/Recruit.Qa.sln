@@ -15,8 +15,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{02EA681E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "Tests\UnitTests\UnitTests.csproj", "{203FF640-E62E-5B6B-98A1-94CECD1F460F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Recruit.Communication.Core", "Recruit.Communication\Communication.Core\Recruit.Communication.Core.csproj", "{95ABF146-3219-6CB5-32C2-3BF29476BE44}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{203FF640-E62E-5B6B-98A1-94CECD1F460F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{95ABF146-3219-6CB5-32C2-3BF29476BE44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{95ABF146-3219-6CB5-32C2-3BF29476BE44}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{95ABF146-3219-6CB5-32C2-3BF29476BE44}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{95ABF146-3219-6CB5-32C2-3BF29476BE44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
