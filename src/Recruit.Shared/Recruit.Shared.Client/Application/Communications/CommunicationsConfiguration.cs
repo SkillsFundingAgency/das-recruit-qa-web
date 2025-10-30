@@ -1,4 +1,4 @@
-namespace Recruit.Client.Application.Communications;
+namespace Recruit.Vacancies.Client.Application.Communications;
 
 public class CommunicationsConfiguration
 {

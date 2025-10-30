@@ -2,16 +2,9 @@
 
 namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
-public class ReportStrategyResult
+public class ReportStrategyResult(IEnumerable<KeyValuePair<string, string>> headers, string data, string query)
 {
-    public IEnumerable<KeyValuePair<string, string>> Headers { get; set; }
-    public string Data { get; set; }
-    public string Query { get; set; }
-
-    public ReportStrategyResult(IEnumerable<KeyValuePair<string, string>> headers, string data, string query)
-    {
-        Headers = headers;
-        Data = data;
-        Query = query;
-    }
+    public IEnumerable<KeyValuePair<string, string>> Headers { get; set; } = headers;
+    public string Data { get; set; } = data;
+    public string Query { get; set; } = query;
 }

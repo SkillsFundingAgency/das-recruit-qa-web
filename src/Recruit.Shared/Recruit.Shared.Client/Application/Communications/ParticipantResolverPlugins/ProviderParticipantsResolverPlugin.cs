@@ -9,28 +9,23 @@ using Recruit.Communication.Types.Interfaces;
 
 namespace Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
 
-public class ProviderParticipantsResolverPlugin : IParticipantResolver
+public class ProviderParticipantsResolverPlugin(
+    IUserRepository userRepository,
+    ILogger<ProviderParticipantsResolverPlugin> logger)
+    : IParticipantResolver
 {
-    private readonly IUserRepository _userRepository;
-    private readonly ILogger<ProviderParticipantsResolverPlugin> _logger;
     public string ParticipantResolverName => CommunicationConstants.ParticipantResolverNames.ProviderParticipantsResolverName;
-
-    public ProviderParticipantsResolverPlugin(IUserRepository userRepository, ILogger<ProviderParticipantsResolverPlugin> logger)
-    {
-        _userRepository = userRepository;
-        _logger = logger;
-    }
 
     public async Task<IEnumerable<CommunicationUser>> GetParticipantsAsync(CommunicationRequest request)
     {
-        _logger.LogInformation($"Resolving participants for RequestType: '{request.RequestType}'");
+        logger.LogInformation($"Resolving participants for RequestType: '{request.RequestType}'");
         var entityId = request.Entities.Single(e => e.EntityType == CommunicationConstants.EntityTypes.Provider).EntityId.ToString();
         if(long.TryParse(entityId, out var ukprn) == false)
         {
-            _logger.LogInformation($"entity id: {entityId} is invalid ukprn for RequestType: '{request.RequestType}' and request id: {request.RequestId}");
+            logger.LogInformation($"entity id: {entityId} is invalid ukprn for RequestType: '{request.RequestType}' and request id: {request.RequestId}");
             return Array.Empty<CommunicationUser>();
         }
-        var users = await _userRepository.GetProviderUsersAsync(ukprn);
+        var users = await userRepository.GetProviderUsersAsync(ukprn);
         return ParticipantResolverPluginHelper.ConvertToCommunicationUsers(users, null);
     }
 

@@ -8,15 +8,10 @@ using static Recruit.Vacancies.Client.Application.Communications.CommunicationCo
 
 namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
-public class ProviderDataEntityPlugin : IEntityDataItemProvider
+public class ProviderDataEntityPlugin(ITrainingProviderSummaryProvider trainingProviderSummaryProvider)
+    : IEntityDataItemProvider
 {
     public string EntityType => CommunicationConstants.EntityTypes.Provider;
-    public ITrainingProviderSummaryProvider _trainingProviderSummaryProvider;
-
-    public ProviderDataEntityPlugin(ITrainingProviderSummaryProvider trainingProviderSummaryProvider)
-    {
-        _trainingProviderSummaryProvider = trainingProviderSummaryProvider;
-    }
 
     public async Task<IEnumerable<CommunicationDataItem>> GetDataItemsAsync(object entityId)
     {
@@ -25,7 +20,7 @@ public class ProviderDataEntityPlugin : IEntityDataItemProvider
             throw new InvalidEntityIdException(EntityType, nameof(ApprenticeshipServiceUrlDataEntityPlugin));
         }
             
-        var summary = await _trainingProviderSummaryProvider.GetAsync(ukprn);
+        var summary = await trainingProviderSummaryProvider.GetAsync(ukprn);
 
         return new [] { new CommunicationDataItem(DataItemKeys.Provider.ProviderName, summary.ProviderName ) };
     }

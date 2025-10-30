@@ -38,12 +38,6 @@ public static class EnumExtensions
         return displayName ?? enumValue.ToString();
     }
 
-    public static bool IsInLiveVacancyOptions(this FilteringOptions enumValue)
-    {
-        return enumValue == FilteringOptions.ClosingSoon ||
-               enumValue == FilteringOptions.ClosingSoonWithNoApplications;
-    }
-
     private static readonly Dictionary<Enum, string> DisplayNames = new()
     {
         { WageType.FixedWage, "Fixed wage" },

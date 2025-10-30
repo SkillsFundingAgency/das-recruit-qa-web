@@ -1,9 +1,7 @@
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
@@ -19,14 +17,4 @@ public interface IQueryStore
     Task<long> DeleteManyLessThanAsync<T, T1>(string typeName, Expression<Func<T, T1>> property, T1 value) where T : QueryProjectionBase;
 
     Task<long> DeleteAllAsync<T>(string typeName) where T : QueryProjectionBase;
-    Task<IEnumerable<LiveVacancy>> GetAllLiveExpired(DateTime? closingDate);
-    Task<IEnumerable<LiveVacancy>> GetAllLiveVacancies(int vacanciesToSkip, int vacanciesToGet);
-    Task<IEnumerable<LiveVacancy>> GetAllLiveVacanciesOnClosingDate(int vacanciesToSkip, int vacanciesToGet, DateTime closingDate);
-    Task<long> GetAllLiveVacanciesCount();
-    Task<long> GetTotalPositionsAvailableCount();
-    Task<long> GetAllLiveVacanciesOnClosingDateCount(DateTime closingDate);
-    Task<LiveVacancy> GetLiveVacancy(long vacancyReference);
-    Task<LiveVacancy> GetLiveExpiredVacancy(long vacancyReference);
-        
-    Task<IEnumerable<ClosedVacancy>> GetClosedVacancies(IList<long> vacancyReferences);
 }

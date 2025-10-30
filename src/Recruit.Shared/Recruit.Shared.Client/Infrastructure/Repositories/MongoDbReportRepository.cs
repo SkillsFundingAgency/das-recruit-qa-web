@@ -11,15 +11,11 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal class MongoDbReportRepository : MongoDbCollectionBase, IReportRepository
+internal class MongoDbReportRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Reports, details),
+        IReportRepository
 {
     private const string OwnerTypeFieldName = "owner.ownerType";
-    private const string OwnerUkprnFieldName = "owner.ukprn";
-
-    public MongoDbReportRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details) 
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Reports, details)
-    {
-    }
 
     public Task CreateAsync(Report report)
     {
@@ -38,23 +34,7 @@ internal class MongoDbReportRepository : MongoDbCollectionBase, IReportRepositor
             new Context(nameof(UpdateAsync)));
     }
 
-    public async Task<List<T>> GetReportsForProviderAsync<T>(long ukprn)
-    {
-        var builder = Builders<T>.Filter;
-        var filter = builder.Eq(OwnerTypeFieldName, ReportOwnerType.Provider.ToString()) &
-                     builder.Eq(OwnerUkprnFieldName, ukprn);
-
-        var collection = GetCollection<T>();
-
-        var result = await RetryPolicy.ExecuteAsync(_ =>
-                collection.Find(filter)
-                    .Project<T>(GetProjection<T>())
-                    .ToListAsync(),
-            new Context(nameof(GetReportsForProviderAsync)));
-
-        return result;
-    }
-
+   
     public async Task<List<T>> GetReportsForQaAsync<T>()
     {
         var builder = Builders<T>.Filter;
@@ -66,7 +46,7 @@ internal class MongoDbReportRepository : MongoDbCollectionBase, IReportRepositor
                 collection.Find(filter)
                     .Project<T>(GetProjection<T>())
                     .ToListAsync(),
-            new Context(nameof(GetReportsForProviderAsync)));
+            new Context(nameof(GetReportsForQaAsync)));
 
         return result;
     }
@@ -81,18 +61,6 @@ internal class MongoDbReportRepository : MongoDbCollectionBase, IReportRepositor
             new Context(nameof(GetReportAsync)));
 
         return result;
-    }
-
-    public async Task<int> DeleteReportsCreatedBeforeAsync(DateTime requestedOn)
-    {
-        var filter = Builders<Report>.Filter.Lt(r => r.RequestedOn, requestedOn);
-        var collection = GetCollection<Report>();
-
-        var result = await RetryPolicy.ExecuteAsync(async _ =>
-                await collection.DeleteManyAsync(filter),
-            new Context(nameof(GetReportAsync)));
-
-        return (int)result.DeletedCount;
     }
 
     public Task IncrementReportDownloadCountAsync(Guid reportId)

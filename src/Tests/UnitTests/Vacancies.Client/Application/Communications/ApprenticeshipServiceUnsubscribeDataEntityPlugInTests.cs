@@ -1,5 +1,4 @@
 using System.Linq;
-using Recruit.Client.Application.Communications;
 using Recruit.Vacancies.Client.Application.Communications;
 using Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 using Recruit.Vacancies.Client.Domain.Entities;

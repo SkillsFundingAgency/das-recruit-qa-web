@@ -1,8 +1,3 @@
 ﻿namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
-public class LiveVacancy : VacancyProjectionBase
-{
-    public LiveVacancy() : base(QueryViewType.LiveVacancy.TypeName)
-    {
-    }
-}
+public class LiveVacancy() : VacancyProjectionBase(QueryViewType.LiveVacancy.TypeName);

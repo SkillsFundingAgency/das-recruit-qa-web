@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Razor.TagHelpers;
 namespace Recruit.Shared.Web.TagHelpers;
 
 [HtmlTargetElement("span", Attributes = ValidationForAttributeName)]
-public class EsfaValidationMessageForTagHelper : ValidationMessageTagHelper
+public class EsfaValidationMessageForTagHelper(IHtmlGenerator generator) : ValidationMessageTagHelper(generator)
 {
     private const string ValidationForAttributeName = "esfa-validation-message-for";
 
@@ -17,8 +17,6 @@ public class EsfaValidationMessageForTagHelper : ValidationMessageTagHelper
 
     [HtmlAttributeName("show-all")]
     public bool ShowAll { get; set; } = false;
-
-    public EsfaValidationMessageForTagHelper(IHtmlGenerator generator) : base(generator) { }
 
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {

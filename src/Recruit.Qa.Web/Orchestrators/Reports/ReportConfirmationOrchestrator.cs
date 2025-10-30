@@ -9,12 +9,9 @@ using Recruit.Qa.Web.ViewModels.Reports.ReportConfirmation;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;
 
-public class ReportConfirmationOrchestrator : ReportOrchestratorBase
+public class ReportConfirmationOrchestrator(ILogger<ReportConfirmationOrchestrator> logger, IQaVacancyClient client)
+    : ReportOrchestratorBase(logger, client)
 {
-    public ReportConfirmationOrchestrator(ILogger<ReportConfirmationOrchestrator> logger, IQaVacancyClient client) : base(logger, client)
-    {
-    }
-
     public async Task<ConfirmationViewModel> GetConfirmationViewModelAsync(ReportRouteModel rrm)
     {
         var report = await GetReportAsync(rrm.ReportId);

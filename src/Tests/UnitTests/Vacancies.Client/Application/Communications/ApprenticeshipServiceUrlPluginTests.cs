@@ -1,9 +1,9 @@
 using System.Linq;
-using Recruit.Client.Application.Communications;
 using Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Microsoft.Extensions.Options;
+using Recruit.Vacancies.Client.Application.Communications;
 using Xunit;
 using static Recruit.Vacancies.Client.Application.Communications.CommunicationConstants;
 

@@ -59,53 +59,6 @@ public class TrainingProviderService(
         return result;
     }
 
-    public async Task<GetApplicationReviewStatsResponse> GetProviderDashboardApplicationReviewStats(long ukprn, List<long> vacancyReferences)
-    {
-        logger.LogTrace("Getting Provider Application Review Stats from Outer Api");
-
-        var retryPolicy = PollyRetryPolicy.GetPolicy();
-
-        return await retryPolicy.Execute(_ => outerApiClient.Post<GetApplicationReviewStatsResponse>(
-                new GetProviderApplicationReviewsCountApiRequest(ukprn,
-                    vacancyReferences)),
-            new Dictionary<string, object>
-            {
-                {
-                    "apiCall", "Providers"
-                }
-            });
-    }
-
-    public async Task<GetDashboardCountApiResponse> GetProviderDashboardStats(long ukprn)
-    {
-        logger.LogTrace("Getting Provider Dashboard Stats from Outer Api");
-
-        var retryPolicy = PollyRetryPolicy.GetPolicy();
-
-        return await retryPolicy.Execute(_ => outerApiClient.Get<GetDashboardCountApiResponse>(
-                new GetProviderDashboardCountApiRequest(ukprn)),
-            new Dictionary<string, object>
-            {
-                {
-                    "apiCall", "Providers"
-                }
-            });
-    }
-
-    public async Task<GetVacanciesDashboardResponse> GetProviderDashboardVacanciesByApplicationReviewStatuses(long ukprn, List<ApplicationReviewStatus> vacancyReferences, int pageNumber)
-    {
-        var retryPolicy = PollyRetryPolicy.GetPolicy();
-
-        return await retryPolicy.Execute(_ => outerApiClient.Get<GetVacanciesDashboardResponse>(
-                new GetProviderDashboardVacanciesApiRequest(ukprn,pageNumber,vacancyReferences)),
-            new Dictionary<string, object>
-            {
-                {
-                    "apiCall", "Providers"
-                }
-            });
-    }
-
     public async Task<IEnumerable<TrainingProviderSummary>> GetCourseProviders(int programmeId)
     {
         var result = await outerApiClient.Get<GetCourseProvidersResponse>(new GetCourseProvidersRequest(programmeId));

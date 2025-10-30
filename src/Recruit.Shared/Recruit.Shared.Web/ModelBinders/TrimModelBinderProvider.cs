@@ -5,15 +5,8 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Shared.Web.ModelBinders;
 
-public class TrimModelBinderProvider : IModelBinderProvider
+public class TrimModelBinderProvider(ILoggerFactory loggerFactory) : IModelBinderProvider
 {
-    private readonly ILoggerFactory _loggerFactory;
-
-    public TrimModelBinderProvider(ILoggerFactory loggerFactory)
-    {
-        _loggerFactory = loggerFactory;
-    }
-
     public IModelBinder GetBinder(ModelBinderProviderContext context)
     {
         if (context == null)
@@ -22,7 +15,7 @@ public class TrimModelBinderProvider : IModelBinderProvider
         }
         if (!context.Metadata.IsComplexType && context.Metadata.ModelType == typeof(string))
         {
-            return new TrimModelBinder(new SimpleTypeModelBinder(context.Metadata.ModelType, _loggerFactory));
+            return new TrimModelBinder(new SimpleTypeModelBinder(context.Metadata.ModelType, loggerFactory));
         }
         return null;
     }

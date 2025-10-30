@@ -9,22 +9,16 @@ using NotificationScope = Recruit.Communication.Types.NotificationScope;
 
 namespace Recruit.Vacancies.Client.Application.Communications;
 
-public class UserPreferencesProviderPlugin : IUserPreferencesProvider
+public class UserPreferencesProviderPlugin(IUserNotificationPreferencesRepository repository) : IUserPreferencesProvider
 {
-    private readonly IUserNotificationPreferencesRepository _repository;
     public string UserType => CommunicationConstants.UserType;
-
-    public UserPreferencesProviderPlugin(IUserNotificationPreferencesRepository repository)
-    {
-        _repository = repository;
-    }
 
     public async Task<CommunicationUserPreference> GetUserPreferenceAsync(string requestType, CommunicationUser user)
     {
         var userPref = new CommunicationUserPreference() { Channels = DeliveryChannelPreferences.None };
 
-        var userPreference = await _repository.GetByDfeUserId(user.DfEUserId) 
-                             ?? await _repository.GetAsync(user.UserId);
+        var userPreference = await repository.GetByDfeUserId(user.DfEUserId) 
+                             ?? await repository.GetAsync(user.UserId);
 
         switch (requestType)
         {

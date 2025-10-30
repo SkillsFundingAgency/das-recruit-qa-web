@@ -16,17 +16,9 @@ using Recruit.Qa.Web.ViewModels;
 namespace Recruit.Qa.Web.Controllers;
 
 [AllowAnonymous]
-public class ErrorController : Controller
+public class ErrorController(ILogger<ErrorController> logger, IConfiguration configuration)
+    : Controller
 {
-    private readonly ILogger<ErrorController> _logger;
-    private readonly IConfiguration _configuration;
-
-    public ErrorController(ILogger<ErrorController> logger, IConfiguration configuration)
-    {
-        _logger = logger;
-        _configuration = configuration;
-    }
-
     [Route("error/{id?}")]
     public IActionResult Error(int id)
     {
@@ -53,7 +45,7 @@ public class ErrorController : Controller
             switch (exception)
             {
                 case NotFoundException _:
-                    _logger.LogError(exception, "Exception on path: {route}", exceptionFeature.Path);
+                    logger.LogError(exception, "Exception on path: {route}", exceptionFeature.Path);
                     Response.StatusCode = (int)HttpStatusCode.NotFound;
                     return View(ViewNames.ErrorView, GetViewModel(HttpStatusCode.NotFound));
 
@@ -70,7 +62,7 @@ public class ErrorController : Controller
                     break;
             }
 
-            _logger.LogError(exception, "Unhandled exception on path: {route}", exceptionFeature.Path);
+            logger.LogError(exception, "Unhandled exception on path: {route}", exceptionFeature.Path);
         }
 
         return View(ViewNames.ErrorView, GetViewModel(HttpStatusCode.InternalServerError));
@@ -83,9 +75,9 @@ public class ErrorController : Controller
 
     private IActionResult AccessDenied()
     {
-        bool isDfESignInAllowed = _configuration.GetValue<bool>("UseDfESignIn");
+        bool isDfESignInAllowed = configuration.GetValue<bool>("UseDfESignIn");
         Response.StatusCode = (int) HttpStatusCode.Forbidden;
-        return View(ViewNames.AccessDenied, new Error403ViewModel(_configuration.GetValue<string>("ResourceEnvironmentName"))
+        return View(ViewNames.AccessDenied, new Error403ViewModel(configuration.GetValue<string>("ResourceEnvironmentName"))
         {
             UseDfESignIn = isDfESignInAllowed
         });

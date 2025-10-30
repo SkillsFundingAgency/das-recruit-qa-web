@@ -2,19 +2,13 @@ using Recruit.Vacancies.Client.Application.Validation;
 
 namespace Recruit.Shared.Web.Orchestrators;
 
-public class OrchestratorResponse
+public class OrchestratorResponse(bool isSuccessful)
 {
-    public OrchestratorResponse(bool isSuccessful)
-    {
-        Success = isSuccessful;
-        Errors = new EntityValidationResult();
-    }
-
     public OrchestratorResponse(EntityValidationResult errorResult) : this(false)
     {
         Errors = errorResult;
     }
 
-    public bool Success { get; set; }
-    public EntityValidationResult Errors { get; set; }
+    public bool Success { get; set; } = isSuccessful;
+    public EntityValidationResult Errors { get; set; } = new();
 }

@@ -14,19 +14,12 @@ namespace Recruit.Qa.Web.Controllers;
 
 [Authorize(Policy = AuthorizationPolicyNames.TeamLeadUserPolicyName)]
 [Route(RoutePaths.WithdrawVacancyPath)]
-public class WithdrawVacancyController : Controller
+public class WithdrawVacancyController(WithdrawVacancyOrchestrator orchestrator) : Controller
 {
-    private readonly WithdrawVacancyOrchestrator _orchestrator;
-
-    public WithdrawVacancyController(WithdrawVacancyOrchestrator orchestrator)
-    {
-        _orchestrator = orchestrator;
-    }
-
     [HttpGet(Name = RouteNames.WithdrawVacancy_FindVacancy_Get)]
     public IActionResult FindVacancy(string searchAgain = null)
     {
-        var vm = _orchestrator.GetFindVacancyViewModel();
+        var vm = orchestrator.GetFindVacancyViewModel();
 
         if (!string.IsNullOrWhiteSpace(searchAgain) && GetVacancyReference().HasValue)
             vm.VacancyReference = $"VAC{GetVacancyReference()}";
@@ -39,7 +32,7 @@ public class WithdrawVacancyController : Controller
     {
         if (ModelState.IsValid)
         {
-            var result = await _orchestrator.PostFindVacancyEditModelAsync(m);
+            var result = await orchestrator.PostFindVacancyEditModelAsync(m);
 
             TempData[TempDataKeys.WithdrawVacancyReference] = result.VacancyReference;
 
@@ -64,7 +57,7 @@ public class WithdrawVacancyController : Controller
             }
         }
 
-        var vm = _orchestrator.GetFindVacancyViewModel(m);
+        var vm = orchestrator.GetFindVacancyViewModel(m);
         return View(vm);
     }
 
@@ -76,7 +69,7 @@ public class WithdrawVacancyController : Controller
         AlreadyClosedViewModel vm = null;
 
         if (vacancyReference.HasValue)
-            vm = await _orchestrator.GetAlreadyClosedViewModelAsync(vacancyReference.Value);
+            vm = await orchestrator.GetAlreadyClosedViewModelAsync(vacancyReference.Value);
 
         if (vm == null)
             return RedirectToRoute(RouteNames.WithdrawVacancy_FindVacancy_Get);
@@ -92,7 +85,7 @@ public class WithdrawVacancyController : Controller
         ConfirmViewModel vm = null;
 
         if(vacancyReference.HasValue)
-            vm = await _orchestrator.GetConfirmViewModelAsync(vacancyReference.Value);
+            vm = await orchestrator.GetConfirmViewModelAsync(vacancyReference.Value);
 
         if (vm == null)
             return RedirectToRoute(RouteNames.WithdrawVacancy_FindVacancy_Get);
@@ -108,7 +101,7 @@ public class WithdrawVacancyController : Controller
         ConsentViewModel vm = null;
 
         if (vacancyReference.HasValue)
-            vm = await _orchestrator.GetConsentViewModelAsync(vacancyReference.Value);
+            vm = await orchestrator.GetConsentViewModelAsync(vacancyReference.Value);
 
         if (vm == null)
             return RedirectToRoute(RouteNames.WithdrawVacancy_FindVacancy_Get);
@@ -126,7 +119,7 @@ public class WithdrawVacancyController : Controller
 
         if (ModelState.IsValid)
         {
-            var success = await _orchestrator.PostConsentEditModelAsync(m, vacancyReference.Value, User.GetVacancyUser());
+            var success = await orchestrator.PostConsentEditModelAsync(m, vacancyReference.Value, User.GetVacancyUser());
 
             if (success)
                 return RedirectToRoute(RouteNames.WithdrawVacancy_Acknowledgement_Get);
@@ -134,7 +127,7 @@ public class WithdrawVacancyController : Controller
             return RedirectToRoute(RouteNames.WithdrawVacancy_FindVacancy_Get);
         }
 
-        var vm = await _orchestrator.GetConsentViewModelAsync(vacancyReference.Value);
+        var vm = await orchestrator.GetConsentViewModelAsync(vacancyReference.Value);
         return View(vm);
     }
 
@@ -146,7 +139,7 @@ public class WithdrawVacancyController : Controller
         AcknowledgementViewModel vm = null;
 
         if (vacancyReference.HasValue)
-            vm = await _orchestrator.GetAcknowledgementViewModelAsync(vacancyReference.Value);
+            vm = await orchestrator.GetAcknowledgementViewModelAsync(vacancyReference.Value);
 
         if (vm == null)
             return RedirectToRoute(RouteNames.WithdrawVacancy_FindVacancy_Get);

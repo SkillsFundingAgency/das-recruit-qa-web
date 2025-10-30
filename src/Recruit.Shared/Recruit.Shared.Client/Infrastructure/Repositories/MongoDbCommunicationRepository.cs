@@ -10,13 +10,13 @@ using Recruit.Communication.Types;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-public sealed class MongoDbCommunicationRepository : MongoDbCollectionBase, ICommunicationRepository
+public sealed class MongoDbCommunicationRepository(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, CommunicationMessagesCollectionName, details),
+        ICommunicationRepository
 {
     private const string CommunicationMessagesCollectionName = "communicationMessages";
-    public MongoDbCommunicationRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, CommunicationMessagesCollectionName, details)
-    {
-    }
 
     public Task InsertAsync(CommunicationMessage msg)
     {

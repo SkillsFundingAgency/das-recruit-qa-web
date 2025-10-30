@@ -12,19 +12,12 @@ namespace Recruit.Qa.Web.Controllers.Reports;
 
 [Authorize(Policy = AuthorizationPolicyNames.TeamLeadUserPolicyName)]
 [Route(RoutePaths.ApplicationsReportRoutePath)]
-public class ApplicationsReportController : Controller
+public class ApplicationsReportController(ApplicationsReportOrchestrator orchestrator) : Controller
 {
-    private readonly ApplicationsReportOrchestrator _orchestrator;
-
-    public ApplicationsReportController(ApplicationsReportOrchestrator orchestrator)
-    {
-        _orchestrator = orchestrator;
-    }
-
     [HttpGet("create", Name = RouteNames.ApplicationsReportCreate_Get)]
     public IActionResult Create()
     {
-        var vm = _orchestrator.GetCreateViewModel();
+        var vm = orchestrator.GetCreateViewModel();
 
         return View(vm);
     }
@@ -34,12 +27,12 @@ public class ApplicationsReportController : Controller
     {
         if (ModelState.IsValid == false)
         {
-            var vm = _orchestrator.GetCreateViewModel(m);
+            var vm = orchestrator.GetCreateViewModel(m);
 
             return View(vm);
         }
 
-        var reportId = await _orchestrator.PostCreateViewModelAsync(m, User.GetVacancyUser());
+        var reportId = await orchestrator.PostCreateViewModelAsync(m, User.GetVacancyUser());
 
         return RedirectToRoute(RouteNames.ReportConfirmation_Get, new ReportRouteModel { ReportId = reportId });
     }

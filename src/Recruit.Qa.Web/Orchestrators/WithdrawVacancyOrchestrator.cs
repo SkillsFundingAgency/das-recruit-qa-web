@@ -11,17 +11,8 @@ using Recruit.Qa.Web.ViewModels.WithdrawVacancy;
 
 namespace Recruit.Qa.Web.Orchestrators;
 
-public class WithdrawVacancyOrchestrator
+public class WithdrawVacancyOrchestrator(IQaVacancyClient vacancyClient, IMessaging messaging)
 {
-    private readonly IQaVacancyClient _vacancyClient;
-    private readonly IMessaging _messaging;
-
-    public WithdrawVacancyOrchestrator(IQaVacancyClient vacancyClient, IMessaging messaging)
-    {
-        _vacancyClient = vacancyClient;
-        _messaging = messaging;
-    }
-
     public FindVacancyViewModel GetFindVacancyViewModel()
     {
         return new FindVacancyViewModel();
@@ -115,7 +106,7 @@ public class WithdrawVacancyOrchestrator
         if (vacancy == null || vacancy.CanClose == false)
             return false;
 
-        await _messaging.SendCommandAsync(new CloseVacancyCommand(vacancy.Id, user, ClosureReason.WithdrawnByQa));
+        await messaging.SendCommandAsync(new CloseVacancyCommand(vacancy.Id, user, ClosureReason.WithdrawnByQa));
 
         return true;
     }
@@ -138,7 +129,7 @@ public class WithdrawVacancyOrchestrator
     {
         try
         {
-            return await _vacancyClient.GetVacancyAsync(vacancyReference);
+            return await vacancyClient.GetVacancyAsync(vacancyReference);
         }
         catch (VacancyNotFoundException)
         {

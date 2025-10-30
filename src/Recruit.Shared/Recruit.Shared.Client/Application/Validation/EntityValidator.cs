@@ -6,15 +6,9 @@ using FluentValidation.Results;
 
 namespace Recruit.Vacancies.Client.Application.Validation;
 
-public sealed class EntityValidator<T, TRules> : IEntityValidator<T, TRules> where TRules : struct, IComparable, IConvertible, IFormattable 
+public sealed class EntityValidator<T, TRules>(AbstractValidator<T> fluentValidator) : IEntityValidator<T, TRules>
+    where TRules : struct, IComparable, IConvertible, IFormattable
 {
-    private readonly AbstractValidator<T> _validator;
-    
-    public EntityValidator(AbstractValidator<T> fluentValidator)
-    {
-        _validator = fluentValidator;
-    }
-
     public void ValidateAndThrow(T entity, TRules rules)
     {
         var validationResult = ValidateEntity(entity, rules).Result;
@@ -36,7 +30,7 @@ public sealed class EntityValidator<T, TRules> : IEntityValidator<T, TRules> whe
 
         context.RootContextData.Add(ValidationConstants.ValidationsRulesKey, rules);
 
-        var fluentResult = await _validator.ValidateAsync(context);
+        var fluentResult = await fluentValidator.ValidateAsync(context);
 
         if (!fluentResult.IsValid)
         {

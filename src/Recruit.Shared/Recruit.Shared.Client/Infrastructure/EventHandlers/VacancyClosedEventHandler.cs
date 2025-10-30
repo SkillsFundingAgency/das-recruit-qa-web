@@ -17,59 +17,46 @@ using Recruit.Communication.Types;
 
 namespace Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 
-public class VacancyClosedEventHandler : INotificationHandler<VacancyClosedEvent>
+public class VacancyClosedEventHandler(
+    ILogger<VacancyClosedEventHandler> logger,
+    IQueryStoreWriter queryStore,
+    IVacancyRepository repository,
+    IApprenticeshipProgrammeProvider apprenticeshipProgrammeProvider,
+    ITimeProvider timeProvider,
+    ICommunicationQueueService communicationQueueService,
+    IQueryStoreReader queryStoreReader)
+    : INotificationHandler<VacancyClosedEvent>
 {
-    private readonly ILogger<VacancyClosedEventHandler> _logger;
-    private readonly IQueryStoreWriter _queryStore;
-    private readonly IVacancyRepository _repository;
-    private readonly IApprenticeshipProgrammeProvider _apprenticeshipProgrammeProvider;
-    private readonly ITimeProvider _timeProvider;
-    private readonly ICommunicationQueueService _communicationQueueService;
-    private readonly IQueryStoreReader _queryStoreReader;
-
-    public VacancyClosedEventHandler(
-        ILogger<VacancyClosedEventHandler> logger, IQueryStoreWriter queryStore,
-        IVacancyRepository repository, IApprenticeshipProgrammeProvider apprenticeshipProgrammeProvider, ITimeProvider timeProvider, ICommunicationQueueService communicationQueueService, IQueryStoreReader queryStoreReader)
-    {
-        _logger = logger;
-        _queryStore = queryStore;
-        _repository = repository;
-        _apprenticeshipProgrammeProvider = apprenticeshipProgrammeProvider;
-        _timeProvider = timeProvider;
-        _communicationQueueService = communicationQueueService;
-        _queryStoreReader = queryStoreReader;
-    }
-
     public async Task Handle(VacancyClosedEvent notification, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Deleting LiveVacancy {vacancyReference} from query store.",
+        logger.LogInformation("Deleting LiveVacancy {vacancyReference} from query store.",
             notification.VacancyReference);
             
-        await _queryStore.DeleteLiveVacancyAsync(notification.VacancyReference);
+        await queryStore.DeleteLiveVacancyAsync(notification.VacancyReference);
         await CreateClosedVacancyProjection(notification.VacancyId);
     }
 
     private async Task CreateClosedVacancyProjection(Guid vacancyId)
     {
-        var vacancy = await _repository.GetVacancyAsync(vacancyId);
+        var vacancy = await repository.GetVacancyAsync(vacancyId);
             
-        var queryResult = await _queryStoreReader.GetClosedVacancy(vacancy.VacancyReference.Value);
+        var queryResult = await queryStoreReader.GetClosedVacancy(vacancy.VacancyReference.Value);
 
         if (queryResult != null)
         {
-            _logger.LogInformation($"Vacancy {vacancy.VacancyReference} already closed. Skipping notification.");
+            logger.LogInformation($"Vacancy {vacancy.VacancyReference} already closed. Skipping notification.");
             return;
         }
             
-        var programme = await _apprenticeshipProgrammeProvider.GetApprenticeshipProgrammeAsync(vacancy.ProgrammeId);
+        var programme = await apprenticeshipProgrammeProvider.GetApprenticeshipProgrammeAsync(vacancy.ProgrammeId);
 
-        await _queryStore.UpdateClosedVacancyAsync(vacancy.ToVacancyProjectionBase<ClosedVacancy>((ApprenticeshipProgramme)programme, () => QueryViewType.ClosedVacancy.GetIdValue(vacancy.VacancyReference.ToString()), _timeProvider));
+        await queryStore.UpdateClosedVacancyAsync(vacancy.ToVacancyProjectionBase<ClosedVacancy>((ApprenticeshipProgramme)programme, () => QueryViewType.ClosedVacancy.GetIdValue(vacancy.VacancyReference.ToString()), timeProvider));
 
         if (vacancy.ClosureReason == ClosureReason.WithdrawnByQa)
         {
-            _logger.LogInformation($"Queuing up withdrawn notification message for vacancy {vacancy.VacancyReference}");
+            logger.LogInformation($"Queuing up withdrawn notification message for vacancy {vacancy.VacancyReference}");
             var communicationRequest = GetVacancyWithdrawnByQaCommunicationRequest(vacancy.VacancyReference.Value);
-            await _communicationQueueService.AddMessageAsync(communicationRequest);
+            await communicationQueueService.AddMessageAsync(communicationRequest);
         }
     }
 

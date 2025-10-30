@@ -9,29 +9,21 @@ using Recruit.Qa.Web.Orchestrators;
 namespace Recruit.Qa.Web.Controllers;
 
 [Route("[controller]")]
-public class DashboardController : Controller
+public class DashboardController(DashboardOrchestrator orchestrator, IConfiguration configuration)
+    : Controller
 {
-    private readonly DashboardOrchestrator _orchestrator;
-    private readonly IConfiguration _configuration;
-
-    public DashboardController(DashboardOrchestrator orchestrator, IConfiguration configuration)
-    {
-        _orchestrator = orchestrator;
-        _configuration = configuration;
-    }
-
     [HttpGet]
     [Route("",Name = RouteNames.Dashboard_Index_Get)]
     public async Task<IActionResult> Index([FromQuery]string searchTerm)
     {
-        bool isDfESignInAllowed = _configuration.GetValue<bool>("UseDfESignIn");
+        bool isDfESignInAllowed = configuration.GetValue<bool>("UseDfESignIn");
         if (isDfESignInAllowed && User.Identity is { IsAuthenticated: false })
         {
             // if the user is not authenticated, redirect them back to start now page.
             return RedirectToAction("Index", "Home");
         }
 
-        var vm = await _orchestrator.GetDashboardViewModelAsync(searchTerm, User);
+        var vm = await orchestrator.GetDashboardViewModelAsync(searchTerm, User);
 
         vm.DashboardMessage = TempData[TempDataKeys.DashboardMessage]?.ToString();
             
@@ -42,7 +34,7 @@ public class DashboardController : Controller
     [Route("next-vacancy",Name = RouteNames.Dashboard_Next_Vacancy_Post)]
     public async Task<IActionResult> NextVacancy()
     {
-        var vacancyReviewId = await _orchestrator.AssignNextVacancyReviewAsync(User.GetVacancyUser());
+        var vacancyReviewId = await orchestrator.AssignNextVacancyReviewAsync(User.GetVacancyUser());
 
         if (vacancyReviewId == null)
             return RedirectToRoute(RouteNames.Dashboard_Index_Get);

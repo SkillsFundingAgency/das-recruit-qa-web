@@ -8,27 +8,19 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Services.Projections;
 
-public class VacancyApplicationsProjectionService : IVacancyApplicationsProjectionService
+public class VacancyApplicationsProjectionService(
+    ILogger<VacancyApplicationsProjectionService> logger,
+    IVacancyRepository vacancyRepository,
+    IApplicationReviewQuery applicationReviewQuery,
+    IQueryStoreWriter writer)
+    : IVacancyApplicationsProjectionService
 {
-    private readonly ILogger<VacancyApplicationsProjectionService> _logger;
-    private readonly IVacancyRepository _vacancyRepository;
-    private readonly IApplicationReviewQuery _applicationReviewQuery;
-    private readonly IQueryStoreWriter _writer;
-
-    public VacancyApplicationsProjectionService(ILogger<VacancyApplicationsProjectionService> logger, IVacancyRepository vacancyRepository, IApplicationReviewQuery applicationReviewQuery, IQueryStoreWriter writer)
-    {
-        _logger = logger;
-        _vacancyRepository = vacancyRepository;
-        _applicationReviewQuery = applicationReviewQuery;
-        _writer = writer;
-    }
-
     public async Task UpdateVacancyApplicationsAsync(long vacancyReference)
     {
-        _logger.LogInformation("Updating vacancyApplications projection for vacancyReference: {vacancyReference}", vacancyReference);
+        logger.LogInformation("Updating vacancyApplications projection for vacancyReference: {vacancyReference}", vacancyReference);
 
-        var vacancy = await _vacancyRepository.GetVacancyAsync(vacancyReference);
-        var vacancyApplicationReviews = await _applicationReviewQuery.GetForVacancyAsync<Domain.Entities.ApplicationReview>(vacancy.VacancyReference.Value);
+        var vacancy = await vacancyRepository.GetVacancyAsync(vacancyReference);
+        var vacancyApplicationReviews = await applicationReviewQuery.GetForVacancyAsync<Domain.Entities.ApplicationReview>(vacancy.VacancyReference.Value);
 
         var vacancyApplications = new VacancyApplications
         {
@@ -36,7 +28,7 @@ public class VacancyApplicationsProjectionService : IVacancyApplicationsProjecti
             Applications = vacancyApplicationReviews.Select(MapToVacancyApplication).ToList()
         };
 
-        await _writer.UpdateVacancyApplicationsAsync(vacancyApplications);
+        await writer.UpdateVacancyApplicationsAsync(vacancyApplications);
     }
 
     private VacancyApplication MapToVacancyApplication(Domain.Entities.ApplicationReview review)

@@ -1,6 +1,5 @@
 ﻿using Recruit.Vacancies.Client.Application.Providers;
 using FluentValidation;
-using Recruit.Qa.Web.ViewModels.Reports;
 using Recruit.Shared.Web.Extensions;
 
 namespace Recruit.Qa.Web.ViewModels.Reports.ApplicationsReport;

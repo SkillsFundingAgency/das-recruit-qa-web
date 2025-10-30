@@ -15,7 +15,14 @@ using JsonConvert = Newtonsoft.Json.JsonConvert;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
-internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IReportStrategy
+internal class ProviderApplicationsReportStrategy(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> details,
+    IApprenticeshipProgrammeProvider programmeProvider,
+    ITimeProvider timeProvider,
+    ILogger<ProviderApplicationsReportStrategy> logger)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Vacancies, details),
+        IReportStrategy
 {
     private const string QueryUkprn = "_ukprn_";
     private const string QueryFromDate = "_fromDate_";
@@ -32,10 +39,6 @@ internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IRepo
     private const string ColumnStandardStatus = "Standard_Status";
     private const string ColumnCandidateId = "Candidate_Id";
     private const string ColumnApplicantId = "Applicant_Id";
-
-    private readonly IApprenticeshipProgrammeProvider _programmeProvider;
-    private readonly ITimeProvider _timeProvider;
-    private readonly ILogger<ProviderApplicationsReportStrategy> _logger;
 
     private const string QueryFormat = @"[
             { $match: {'trainingProvider.ukprn' : _ukprn_, 'ownerType' : 'Provider', 'isDeleted' : false, 'status' : {$in : ['Live','Closed']}}},
@@ -68,19 +71,6 @@ internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IRepo
                     'Application_LastUpdatedDate' : { $ifNull: ['$ar.statusUpdatedDate', null]}
                 }},
             { $sort : {Vacancy_Reference_Number : 1, Application_Date : 1}}]";
-
-    public ProviderApplicationsReportStrategy(
-        ILoggerFactory loggerFactory, 
-        IOptions<MongoDbConnectionDetails> details,
-        IApprenticeshipProgrammeProvider programmeProvider,
-        ITimeProvider timeProvider,
-        ILogger<ProviderApplicationsReportStrategy> logger) 
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Vacancies, details)
-    {
-        _programmeProvider = programmeProvider;
-        _timeProvider = timeProvider;
-        _logger = logger;
-    }
 
     public Task<ReportStrategyResult> GetReportDataAsync(Dictionary<string,object> parameters)
     {
@@ -126,14 +116,14 @@ internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IRepo
 
         await ProcessResultsAsync(results);
 
-        _logger.LogInformation($"Report parameters ukprn:{ukprn} fromDate:{fromDate} toDate:{toDate} returned {results.Count} results");
+        logger.LogInformation($"Report parameters ukprn:{ukprn} fromDate:{fromDate} toDate:{toDate} returned {results.Count} results");
 
         var dotNetFriendlyResults = results.Select(BsonTypeMapper.MapToDotNetValue);
         var data = JsonConvert.SerializeObject(dotNetFriendlyResults);
 
         var headers = new List<KeyValuePair<string, string>>
         {
-            new("Date", _timeProvider.Now.ToUkTime().ToString("dd/MM/yyyy HH:mm:ss")),
+            new("Date", timeProvider.Now.ToUkTime().ToString("dd/MM/yyyy HH:mm:ss")),
             new("Total_Number_Of_Applications", results.Count.ToString())
         };
         return new ReportStrategyResult(headers, data,"");
@@ -165,7 +155,7 @@ internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IRepo
             result.Remove(ColumnProgramme);
             return;
         }
-        var programme = await _programmeProvider.GetApprenticeshipProgrammeAsync(programmeId);
+        var programme = await programmeProvider.GetApprenticeshipProgrammeAsync(programmeId);
 
         var programmeValue = $"{programme.Id} {programme.Title}";
         var programmeStatus = programme.IsActive ? "Active" : "Inactive";
@@ -208,7 +198,7 @@ internal class ProviderApplicationsReportStrategy : MongoDbCollectionBase, IRepo
         var statusDate = result[ColumnApplicationLastUpdatedDate].ToNullableUniversalTime() ?? 
                          result[ColumnApplicationDate].ToUniversalTime();
 
-        var statusTimespan = _timeProvider.Now.Subtract(statusDate);
+        var statusTimespan = timeProvider.Now.Subtract(statusDate);
 
         result.InsertAt(result.IndexOfName(ColumnApplicationLastUpdatedDate), 
             new BsonElement(ColumnNumberOfDaysAppAtThisStatus, statusTimespan.Days));

@@ -3,12 +3,9 @@ using System.Text;
 
 namespace Recruit.Communication.Types.Exceptions;
 
-public class TemplateIdNotFoundException : Exception
+public class TemplateIdNotFoundException(CommunicationMessage communicationMessage)
+    : Exception(GetErrorMessage(communicationMessage))
 {
-    public TemplateIdNotFoundException(CommunicationMessage communicationMessage)
-        : base(GetErrorMessage(communicationMessage))
-    {}
-
     private static string GetErrorMessage(CommunicationMessage message)
     {
         var builder = new StringBuilder();

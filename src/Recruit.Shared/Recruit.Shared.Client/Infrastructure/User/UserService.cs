@@ -11,18 +11,11 @@ public interface IUserRepositoryRunner
     Task UpsertUserAsync(Domain.Entities.User user);
 }
 
-public class UserRepositoryRunner : IUserRepositoryRunner
+public class UserRepositoryRunner(IEnumerable<IUserWriteRepository> reviewResolver) : IUserRepositoryRunner
 {
-    private readonly IEnumerable<IUserWriteRepository> _vacancyReviewResolver;
-
-    public UserRepositoryRunner(IEnumerable<IUserWriteRepository> vacancyReviewResolver)
-    {
-        _vacancyReviewResolver = vacancyReviewResolver;
-    }
-
     public async Task UpsertUserAsync(Domain.Entities.User user)
     {
-        foreach (var vacancyReviewResolver in _vacancyReviewResolver)
+        foreach (var vacancyReviewResolver in reviewResolver)
         {
             await vacancyReviewResolver.UpsertUserAsync(user);
         }

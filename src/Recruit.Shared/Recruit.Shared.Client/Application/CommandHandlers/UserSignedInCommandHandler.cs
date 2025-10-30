@@ -13,31 +13,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
-public class UserSignedInCommandHandler : IRequestHandler<UserSignedInCommand, Unit>
+public class UserSignedInCommandHandler(
+    ILogger<UserSignedInCommandHandler> logger,
+    IUserRepositoryRunner userWriteRepository,
+    IUserRepository userRepository,
+    IUserNotificationPreferencesRepository userNotificationPreferencesRepository,
+    ITimeProvider timeProvider,
+    IRecruitQueueService queueService)
+    : IRequestHandler<UserSignedInCommand, Unit>
 {
-    private readonly ILogger<UserSignedInCommandHandler> _logger;
-    private readonly IUserRepositoryRunner _userWriteRepository;
-    private readonly IUserRepository _userRepository;
-    private readonly IUserNotificationPreferencesRepository _userNotificationPreferencesRepository;
-    private readonly ITimeProvider _timeProvider;
-    private readonly IRecruitQueueService _queueService;
-
-    public UserSignedInCommandHandler(
-        ILogger<UserSignedInCommandHandler> logger,
-        IUserRepositoryRunner userWriteRepository, 
-        IUserRepository userRepository, 
-        IUserNotificationPreferencesRepository userNotificationPreferencesRepository,
-        ITimeProvider timeProvider, 
-        IRecruitQueueService queueService)
-    {
-        _userRepository = userRepository;
-        _userNotificationPreferencesRepository = userNotificationPreferencesRepository;
-        _timeProvider = timeProvider;
-        _queueService = queueService;
-        _logger = logger;
-        _userWriteRepository = userWriteRepository;
-    }
-
     public async Task<Unit> Handle(UserSignedInCommand message, CancellationToken cancellationToken)
     {
         await UpsertUserAsync(message.User, message.UserType);
@@ -46,18 +30,18 @@ public class UserSignedInCommandHandler : IRequestHandler<UserSignedInCommand, U
 
     private async Task UpsertUserAsync(VacancyUser user, UserType userType)
     {
-        _logger.LogInformation("Upserting user {name} of type {userType}.", user.Name, userType.ToString());
+        logger.LogInformation("Upserting user {name} of type {userType}.", user.Name, userType.ToString());
 
         if (userType == UserType.Provider)
         {
-            _logger.LogInformation("Provider {dfEUserId}", user.DfEUserId);
+            logger.LogInformation("Provider {dfEUserId}", user.DfEUserId);
         }
             
-        var now = _timeProvider.Now;
+        var now = timeProvider.Now;
 
         var existingUser = userType == UserType.Provider
-            ? await _userRepository.GetByDfEUserId(user.DfEUserId) ?? await _userRepository.GetUserByEmail(user.Email, UserType.Provider)
-            : await _userRepository.GetAsync(user.UserId);
+            ? await userRepository.GetByDfEUserId(user.DfEUserId) ?? await userRepository.GetUserByEmail(user.Email, UserType.Provider)
+            : await userRepository.GetAsync(user.UserId);
             
         var userEntity = existingUser ?? new User
         {
@@ -69,8 +53,8 @@ public class UserSignedInCommandHandler : IRequestHandler<UserSignedInCommand, U
         };
 
         var userNotificationPreferences = userType == UserType.Provider 
-            ? await _userNotificationPreferencesRepository.GetByDfeUserId(userEntity.DfEUserId) ?? await _userNotificationPreferencesRepository.GetAsync(userEntity.IdamsUserId)
-            : await _userNotificationPreferencesRepository.GetAsync(userEntity.IdamsUserId);
+            ? await userNotificationPreferencesRepository.GetByDfeUserId(userEntity.DfEUserId) ?? await userNotificationPreferencesRepository.GetAsync(userEntity.IdamsUserId)
+            : await userNotificationPreferencesRepository.GetAsync(userEntity.IdamsUserId);
 
         userNotificationPreferences ??= new UserNotificationPreferences
         {
@@ -100,12 +84,12 @@ public class UserSignedInCommandHandler : IRequestHandler<UserSignedInCommand, U
             }
         }
 
-        await _userWriteRepository.UpsertUserAsync(userEntity);
-        await _userNotificationPreferencesRepository.UpsertAsync(userNotificationPreferences);
+        await userWriteRepository.UpsertUserAsync(userEntity);
+        await userNotificationPreferencesRepository.UpsertAsync(userNotificationPreferences);
 
         if (userType == UserType.Employer)
-            await _queueService.AddMessageAsync(new UpdateEmployerUserAccountQueueMessage { IdamsUserId = user.UserId });
+            await queueService.AddMessageAsync(new UpdateEmployerUserAccountQueueMessage { IdamsUserId = user.UserId });
 
-        _logger.LogInformation("Finished upserting user {name}.", user.Name);
+        logger.LogInformation("Finished upserting user {name}.", user.Name);
     }
 }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Esfa.QA.Core.Extensions;
 using Recruit.Vacancies.Client.Application.Rules.Engine;
 using Recruit.Vacancies.Client.Application.Rules.Extensions;
 using Recruit.Vacancies.Client.Domain.Entities;
@@ -10,18 +9,13 @@ using Newtonsoft.Json;
 
 namespace Recruit.Vacancies.Client.Application.Rules.BaseRules;
 
-public class BaseBannedPhraseChecksRule : Rule
+public class BaseBannedPhraseChecksRule(
+    RuleId ruleId,
+    ConsolidationOption consolidationOption,
+    decimal weighting = 1.0m)
+    : Rule(ruleId, weighting)
 {
-    private readonly ConsolidationOption _consolidationOption;
-
     protected IEnumerable<string> BannedPhrases { get; set; } = new List<string>();
-
-    public BaseBannedPhraseChecksRule(
-        RuleId ruleId, ConsolidationOption consolidationOption, decimal weighting = 1.0m) 
-        : base(ruleId, weighting)
-    {
-        _consolidationOption = consolidationOption;
-    }
 
     protected IEnumerable<RuleOutcome> BannedPhraseCheck(Expression<Func<string>> property, string relatedFieldId = null)
     {
@@ -30,7 +24,7 @@ public class BaseBannedPhraseChecksRule : Rule
         var foundBannedPhrases = FindOccurrences(property);
 
         if (foundBannedPhrases.Values.Sum() > 0)
-            switch (_consolidationOption)
+            switch (consolidationOption)
             {
                 case ConsolidationOption.NoConsolidation:
                     return CreateUnconsolidatedOutcomes(foundBannedPhrases, fieldId);

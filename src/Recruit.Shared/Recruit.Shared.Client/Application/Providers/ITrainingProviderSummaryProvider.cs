@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Vacancies.Client.Application.Providers;
 
 public interface ITrainingProviderSummaryProvider
 {
-    Task<IEnumerable<TrainingProviderSummary>> FindAllAsync();
     Task<TrainingProviderSummary> GetAsync(long ukprn);
     /// <summary>
     /// Contract to check if the given ukprn is a valid training provider.

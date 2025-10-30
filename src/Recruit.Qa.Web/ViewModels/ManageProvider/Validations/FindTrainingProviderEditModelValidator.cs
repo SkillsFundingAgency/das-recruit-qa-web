@@ -3,7 +3,6 @@ using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using FluentValidation;
 using Recruit.Vacancies.Client.Application.Validation.Fluent;
 using Recruit.Vacancies.Client.Application.Validation;
-using Recruit.Qa.Web.ViewModels.ManageProvider;
 using Recruit.Shared.Web.Extensions;
 
 namespace Recruit.Qa.Web.ViewModels.ManageProvider.Validations;

@@ -6,20 +6,14 @@ using Recruit.Communication.Types;
 
 namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 
-internal class CommunicationStorageQueueService : StorageQueueServiceBase, ICommunicationQueueService
+internal class CommunicationStorageQueueService(string connString) : StorageQueueServiceBase, ICommunicationQueueService
 {
     private readonly IDictionary<Type, string> _messageToCommunicationStorageQueueMapper = new Dictionary<Type, string>
     {
         { typeof(CommunicationRequest), "communication-requests-queue" },
-        { typeof(AggregateCommunicationRequest), "aggregate-communication-requests-queue" }
     };
 
-    protected override string ConnectionString { get; }
-
-    public CommunicationStorageQueueService(string connString)
-    {
-        ConnectionString = connString;
-    }
+    protected override string ConnectionString { get; } = connString;
 
     public override async Task AddMessageAsync<T>(T message)
     {

@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Application.Commands;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
@@ -11,58 +5,43 @@ using Recruit.Vacancies.Client.Application.Services.Reports;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
-public class QaVacancyClient : IQaVacancyClient
+public class QaVacancyClient(
+    IVacancyReviewQuery vacancyReviewQuery,
+    IVacancyRepository vacancyRepository,
+    IApprenticeshipProgrammeProvider apprenticeshipProgrammesProvider,
+    IMessaging messaging,
+    INextVacancyReviewService nextVacancyReviewService,
+    IReportRepository reportRepository,
+    IReportService reportService,
+    IQualificationsProvider qualificationsProvider)
+    : IQaVacancyClient
 {
-    private readonly IVacancyReviewQuery _vacancyReviewQuery;
-    private readonly IVacancyRepository _vacancyRepository;
-    private readonly IApprenticeshipProgrammeProvider _apprenticeshipProgrammesProvider;
-    private readonly IQualificationsProvider _qualificationsProvider;
-    private readonly IMessaging _messaging;
-    private readonly INextVacancyReviewService _nextVacancyReviewService;
-    private readonly IReportService _reportService;
-    private readonly IReportRepository _reportRepository;
-    private ManualQaOutcome[] _displayableReviewOutcomes = new ManualQaOutcome[] { ManualQaOutcome.Approved, ManualQaOutcome.Referred };
-
-    public QaVacancyClient(
-        IQueryStoreReader queryStoreReader,
-        IVacancyReviewQuery vacancyReviewQuery,
-        IVacancyRepository vacancyRepository,
-        IApprenticeshipProgrammeProvider apprenticeshipProgrammesProvider,
-        IMessaging messaging,
-        INextVacancyReviewService nextVacancyReviewService,
-        IReportRepository reportRepository,
-        IReportService reportService, 
-        IQualificationsProvider qualificationsProvider)
-    {
-        _vacancyReviewQuery = vacancyReviewQuery;
-        _vacancyRepository = vacancyRepository;
-        _apprenticeshipProgrammesProvider = apprenticeshipProgrammesProvider;
-        _messaging = messaging;
-        _nextVacancyReviewService = nextVacancyReviewService;
-        _reportService = reportService;
-        _qualificationsProvider = qualificationsProvider;
-        _reportRepository = reportRepository;
-    }
+    private readonly ManualQaOutcome[] _displayableReviewOutcomes = [ManualQaOutcome.Approved, ManualQaOutcome.Referred];
 
     public Task ReferVacancyReviewAsync(Guid reviewId, string manualQaComment, List<ManualQaFieldIndicator> manualQaFieldIndicators, List<Guid> selectedAutomatedQaRuleOutcomeIds)
     {
-        return _messaging.SendCommandAsync(new ReferVacancyReviewCommand(reviewId, manualQaComment, manualQaFieldIndicators, selectedAutomatedQaRuleOutcomeIds));
+        return messaging.SendCommandAsync(new ReferVacancyReviewCommand(reviewId, manualQaComment, manualQaFieldIndicators, selectedAutomatedQaRuleOutcomeIds));
     }
 
     public Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId)
     {
-        return _apprenticeshipProgrammesProvider.GetApprenticeshipProgrammeAsync(programmeId);
+        return apprenticeshipProgrammesProvider.GetApprenticeshipProgrammeAsync(programmeId);
     }
         
 
     public async Task<Qualifications> GetCandidateQualificationsAsync()
     {
-        var qualification = await _qualificationsProvider.GetQualificationsAsync();
+        var qualification = await qualificationsProvider.GetQualificationsAsync();
         return new Qualifications
         {
             QualificationTypes = qualification.ToList()
@@ -73,7 +52,7 @@ public class QaVacancyClient : IQaVacancyClient
     {
         if (TryGetVacancyReference(searchTerm, out var vacancyReference) == false) return null;
 
-        var review = await _vacancyReviewQuery.GetLatestReviewByReferenceAsync(vacancyReference);
+        var review = await vacancyReviewQuery.GetLatestReviewByReferenceAsync(vacancyReference);
 
         if (review != null)
         {
@@ -104,22 +83,22 @@ public class QaVacancyClient : IQaVacancyClient
 
     public Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewsInProgressAsync()
     {
-        return _vacancyReviewQuery.GetVacancyReviewsInProgressAsync(_nextVacancyReviewService.GetExpiredAssignationDateTime());
+        return vacancyReviewQuery.GetVacancyReviewsInProgressAsync(nextVacancyReviewService.GetExpiredAssignationDateTime());
     }
 
     public Task<Vacancy> GetVacancyAsync(long vacancyReference)
     {
-        return _vacancyRepository.GetVacancyAsync(vacancyReference);
+        return vacancyRepository.GetVacancyAsync(vacancyReference);
     }
 
     public Task<Domain.Entities.VacancyReview> GetVacancyReviewAsync(Guid reviewId)
     {
-        return _vacancyReviewQuery.GetAsync(reviewId);
+        return vacancyReviewQuery.GetAsync(reviewId);
     }
 
     public Task AssignNextVacancyReviewAsync(VacancyUser user)
     {
-        return _messaging.SendCommandAsync(new AssignVacancyReviewCommand
+        return messaging.SendCommandAsync(new AssignVacancyReviewCommand
         {
             User = user
         });
@@ -127,7 +106,7 @@ public class QaVacancyClient : IQaVacancyClient
 
     public Task AssignVacancyReviewAsync(VacancyUser user, Guid reviewId)
     {
-        return _messaging.SendCommandAsync(new AssignVacancyReviewCommand
+        return messaging.SendCommandAsync(new AssignVacancyReviewCommand
         {
             User = user,
             ReviewId = reviewId
@@ -136,17 +115,17 @@ public class QaVacancyClient : IQaVacancyClient
 
     public Task<int> GetApprovedCountAsync(string submittedByUserId)
     {
-        return _vacancyReviewQuery.GetApprovedCountAsync(submittedByUserId);
+        return vacancyReviewQuery.GetApprovedCountAsync(submittedByUserId);
     }
 
     public Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId)
     {
-        return _vacancyReviewQuery.GetApprovedFirstTimeCountAsync(submittedByUserId);
+        return vacancyReviewQuery.GetApprovedFirstTimeCountAsync(submittedByUserId);
     }
 
     public Task<List<Domain.Entities.VacancyReview>> GetAssignedVacancyReviewsForUserAsync(string userId)
     {
-        return _vacancyReviewQuery.GetAssignedForUserAsync(userId, _nextVacancyReviewService.GetExpiredAssignationDateTime());
+        return vacancyReviewQuery.GetAssignedForUserAsync(userId, nextVacancyReviewService.GetExpiredAssignationDateTime());
     }
 
     public bool VacancyReviewCanBeAssigned(Domain.Entities.VacancyReview review)
@@ -156,22 +135,22 @@ public class QaVacancyClient : IQaVacancyClient
 
     public bool VacancyReviewCanBeAssigned(ReviewStatus status, DateTime? reviewedDate)
     {
-        return _nextVacancyReviewService.VacancyReviewCanBeAssigned(status, reviewedDate);
+        return nextVacancyReviewService.VacancyReviewCanBeAssigned(status, reviewedDate);
     }
 
     public Task UnassignVacancyReviewAsync(Guid reviewId)
     {
-        return _messaging.SendCommandAsync(new UnassignVacancyReviewCommand { ReviewId = reviewId });
+        return messaging.SendCommandAsync(new UnassignVacancyReviewCommand { ReviewId = reviewId });
     }
 
     public Task<Domain.Entities.VacancyReview> GetCurrentReferredVacancyReviewAsync(long vacancyReference)
     {
-        return _vacancyReviewQuery.GetCurrentReferredVacancyReviewAsync(vacancyReference);
+        return vacancyReviewQuery.GetCurrentReferredVacancyReviewAsync(vacancyReference);
     }
 
     public async Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewHistoryAsync(long vacancyReference)
     {
-        var allVacancyReviews = await _vacancyReviewQuery.GetForVacancyAsync(vacancyReference);
+        var allVacancyReviews = await vacancyReviewQuery.GetForVacancyAsync(vacancyReference);
 
         return allVacancyReviews.Where(r => r.Status == ReviewStatus.Closed && _displayableReviewOutcomes.Contains(r.ManualOutcome.Value))
             .OrderByDescending(r => r.ReviewedDate)
@@ -180,7 +159,7 @@ public class QaVacancyClient : IQaVacancyClient
 
     public Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId)
     {
-        return _vacancyReviewQuery.GetAnonymousApprovedCountAsync(accountLegalEntityPublicHashedId);
+        return vacancyReviewQuery.GetAnonymousApprovedCountAsync(accountLegalEntityPublicHashedId);
     }
 
     public async Task<Guid> CreateApplicationsReportAsync(DateTime fromDate, DateTime toDate, VacancyUser user, string reportName)
@@ -192,7 +171,7 @@ public class QaVacancyClient : IQaVacancyClient
             OwnerType = ReportOwnerType.Qa
         };
 
-        await _messaging.SendCommandAsync(new CreateReportCommand(
+        await messaging.SendCommandAsync(new CreateReportCommand(
             reportId,
             owner,
             ReportType.QaApplications,
@@ -209,22 +188,22 @@ public class QaVacancyClient : IQaVacancyClient
 
     public Task<List<ReportSummary>> GetReportsAsync()
     {
-        return _reportRepository.GetReportsForQaAsync<ReportSummary>();
+        return reportRepository.GetReportsForQaAsync<ReportSummary>();
     }
 
     public Task<Report> GetReportAsync(Guid reportId)
     {
-        return _reportRepository.GetReportAsync(reportId);
+        return reportRepository.GetReportAsync(reportId);
     }
 
     public async Task WriteReportAsCsv(Stream stream, Report report)
     {
-        await _reportService.WriteReportAsCsv(stream, report);
+        await reportService.WriteReportAsCsv(stream, report);
     }
 
     public Task IncrementReportDownloadCountAsync(Guid reportId)
     {
-        return _reportRepository.IncrementReportDownloadCountAsync(reportId);
+        return reportRepository.IncrementReportDownloadCountAsync(reportId);
     }
 
     public Task UpdateDraftVacancyAsync(Vacancy vacancy, VacancyUser user)
@@ -235,6 +214,6 @@ public class QaVacancyClient : IQaVacancyClient
             User = user
         };
 
-        return _messaging.SendCommandAsync(command);
+        return messaging.SendCommandAsync(command);
     }
 }

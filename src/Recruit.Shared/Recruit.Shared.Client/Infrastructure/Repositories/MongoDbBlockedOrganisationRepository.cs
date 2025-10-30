@@ -10,17 +10,15 @@ using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using Polly;
-using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal sealed class MongoDbBlockedOrganisationRepository : MongoDbCollectionBase, IBlockedOrganisationRepository, IBlockedOrganisationQuery
+internal sealed class MongoDbBlockedOrganisationRepository(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.BlockedOrganisations,
+        details), IBlockedOrganisationRepository, IBlockedOrganisationQuery
 {
-    public MongoDbBlockedOrganisationRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.BlockedOrganisations, details)
-    {
-    }
-
     public Task CreateAsync(BlockedOrganisation organisation)
     {
         var collection = GetCollection<BlockedOrganisation>();

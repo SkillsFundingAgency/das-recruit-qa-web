@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Esfa.QA.Core.Extensions;
+using Recruit.Vacancies.Client.Application.Rules.Extensions;
 using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Vacancies.Client.Application.Services;

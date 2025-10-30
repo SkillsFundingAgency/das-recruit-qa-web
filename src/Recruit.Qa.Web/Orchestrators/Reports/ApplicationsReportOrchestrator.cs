@@ -10,17 +10,8 @@ using Recruit.Shared.Web.Extensions;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;
 
-public class ApplicationsReportOrchestrator
+public class ApplicationsReportOrchestrator(IQaVacancyClient client, ITimeProvider timeProvider)
 {
-    private readonly IQaVacancyClient _client;
-    private readonly ITimeProvider _timeProvider;
-
-    public ApplicationsReportOrchestrator(IQaVacancyClient client, ITimeProvider timeProvider)
-    {
-        _client = client;
-        _timeProvider = timeProvider;
-    }
-
     public ApplicationsReportCreateViewModel GetCreateViewModel()
     {
         return new ApplicationsReportCreateViewModel();
@@ -44,18 +35,18 @@ public class ApplicationsReportOrchestrator
     public Task<Guid> PostCreateViewModelAsync(ApplicationsReportCreateEditModel model, VacancyUser user)
     {
         DateTime fromDate;
-        DateTime toDate = _timeProvider.Today;
+        DateTime toDate = timeProvider.Today;
 
         switch (model.DateRange)
         {
             case DateRangeType.Last7Days:
-                fromDate = _timeProvider.Today.AddDays(-7);
+                fromDate = timeProvider.Today.AddDays(-7);
                 break;
             case DateRangeType.Last14Days:
-                fromDate = _timeProvider.Today.AddDays(-14);
+                fromDate = timeProvider.Today.AddDays(-14);
                 break;
             case DateRangeType.Last30Days:
-                fromDate = _timeProvider.Today.AddDays(-30);
+                fromDate = timeProvider.Today.AddDays(-30);
                 break;
             case DateRangeType.Custom:
                 fromDate = model.FromDate.AsDateTimeUk().Value.ToUniversalTime();
@@ -69,6 +60,6 @@ public class ApplicationsReportOrchestrator
 
         DateTime toDateInclusive = toDate.AddDays(1).AddTicks(-1);
 
-        return _client.CreateApplicationsReportAsync(fromDate, toDateInclusive, user, reportName);
+        return client.CreateApplicationsReportAsync(fromDate, toDateInclusive, user, reportName);
     }
 }

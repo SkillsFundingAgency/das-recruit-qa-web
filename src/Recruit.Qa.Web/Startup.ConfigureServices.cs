@@ -61,7 +61,6 @@ public partial class Startup
         _configuration.GetSection("Authentication").Get<AuthenticationConfiguration>();
         _legacyAuthorizationConfig = _configuration.GetSection("LegacyAuthorization").Get<AuthorizationConfiguration>();
         _authorizationConfig = _configuration.GetSection("Authorization").Get<AuthorizationConfiguration>();
-        _configuration.GetSection("ExternalLinks").Get<ExternalLinksConfiguration>();
         _dfEOidcConfig = _configuration.GetSection("DfEOidcConfiguration").Get<DfEOidcConfiguration>(); // read the configuration from SFA.DAS.Provider.DfeSignIn
         _loggerFactory = loggerFactory;
         _logger = logger;

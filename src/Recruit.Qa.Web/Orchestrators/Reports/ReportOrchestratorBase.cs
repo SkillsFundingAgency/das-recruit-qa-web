@@ -8,24 +8,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;
 
-public abstract class ReportOrchestratorBase
+public abstract class ReportOrchestratorBase(ILogger logger, IQaVacancyClient client)
 {
-    private readonly IQaVacancyClient _client;
-    private readonly ILogger _logger;
-
-    protected ReportOrchestratorBase(ILogger logger, IQaVacancyClient client)
-    {
-        _logger = logger;
-        _client = client;
-    }
-
     protected async Task<Report> GetReportAsync(Guid reportId)
     {
-        var report = await _client.GetReportAsync(reportId);
+        var report = await client.GetReportAsync(reportId);
 
         if (report == null)
         {
-            _logger.LogInformation("Cannot find report: {reportId}", reportId);
+            logger.LogInformation("Cannot find report: {reportId}", reportId);
             throw new ReportNotFoundException($"Cannot find report: {reportId}");
         }
 
@@ -34,7 +25,7 @@ public abstract class ReportOrchestratorBase
             return report;
         }
 
-        _logger.LogWarning("QA user does not have access to report: {reportId}", reportId);
+        logger.LogWarning("QA user does not have access to report: {reportId}", reportId);
         throw new AuthorisationException($"QA user does not have access to report: {reportId}");
     }
 }

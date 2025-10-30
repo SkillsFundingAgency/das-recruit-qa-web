@@ -12,19 +12,12 @@ namespace Recruit.Qa.Web.Controllers;
 
 [Authorize(Policy = AuthorizationPolicyNames.TeamLeadUserPolicyName)]
 [Route(RoutePaths.BlockedOrganisations)]
-public class BlockedOrganisationsController : Controller
+public class BlockedOrganisationsController(BlockedOrganisationsOrchestrator orchestrator) : Controller
 {
-    private readonly BlockedOrganisationsOrchestrator _orchestrator;
-
-    public BlockedOrganisationsController(BlockedOrganisationsOrchestrator orchestrator)
-    {
-        _orchestrator = orchestrator;
-    }
-
     [HttpGet("", Name = RouteNames.BlockedOrganisations_Get)]
     public async Task<IActionResult> Index()
     {
-        var vm = await _orchestrator.GetBlockedOrganisationsViewModel();
+        var vm = await orchestrator.GetBlockedOrganisationsViewModel();
         return View(vm);
     }
 
@@ -44,7 +37,7 @@ public class BlockedOrganisationsController : Controller
         }
 
         long.TryParse(model.Ukprn, out var ukprn);
-        var isBlocked = await _orchestrator.IsProviderAlreadyBlocked(ukprn);
+        var isBlocked = await orchestrator.IsProviderAlreadyBlocked(ukprn);
 
         TempData[TempDataKeys.BlockProviderUkprnKey] = model.Ukprn;
 
@@ -63,7 +56,7 @@ public class BlockedOrganisationsController : Controller
         if(long.TryParse(data, out var ukprn) == false) return BadRequest();
         TempData.Remove(TempDataKeys.BlockProviderUkprnKey);
 
-        var vm = await _orchestrator.GetProviderAlreadyBlockedViewModelAsync(ukprn);
+        var vm = await orchestrator.GetProviderAlreadyBlockedViewModelAsync(ukprn);
         return View(vm);
     }
 
@@ -73,7 +66,7 @@ public class BlockedOrganisationsController : Controller
         var data = TempData.Peek(TempDataKeys.BlockProviderUkprnKey)?.ToString();
         if(long.TryParse(data, out var ukprn) == false) return BadRequest();
 
-        var vm = await _orchestrator.GetConfirmTrainingProviderBlockingViewModelAsync(ukprn);
+        var vm = await orchestrator.GetConfirmTrainingProviderBlockingViewModelAsync(ukprn);
         return View(vm);
     }
 
@@ -92,7 +85,7 @@ public class BlockedOrganisationsController : Controller
         var data = TempData.Peek(TempDataKeys.BlockProviderUkprnKey)?.ToString();
         if(long.TryParse(data, out var ukprn) == false) return BadRequest();
 
-        var vm = await _orchestrator.GetConsentForProviderBlockingViewModelAsync(ukprn);
+        var vm = await orchestrator.GetConsentForProviderBlockingViewModelAsync(ukprn);
         return View(vm);
     }
 
@@ -104,11 +97,11 @@ public class BlockedOrganisationsController : Controller
 
         if (ModelState.IsValid == false)
         {
-            var vm = await _orchestrator.GetConsentForProviderBlockingViewModelAsync(ukprn);
+            var vm = await orchestrator.GetConsentForProviderBlockingViewModelAsync(ukprn);
             return View(vm);
         }
             
-        await _orchestrator.BlockProviderAsync(ukprn, model.Reason, User.GetVacancyUser());
+        await orchestrator.BlockProviderAsync(ukprn, model.Reason, User.GetVacancyUser());
 
         return RedirectToRoute(RouteNames.BlockProvider_Acknowledgement_Get);
     }
@@ -120,7 +113,7 @@ public class BlockedOrganisationsController : Controller
         if(long.TryParse(data, out var ukprn) == false) return BadRequest();
         TempData.Remove(TempDataKeys.BlockProviderUkprnKey);
 
-        var vm = await _orchestrator.GetAcknowledgementViewModelAsync(ukprn);
+        var vm = await orchestrator.GetAcknowledgementViewModelAsync(ukprn);
         return View(vm);
     }
 }

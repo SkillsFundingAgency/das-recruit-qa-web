@@ -15,46 +15,30 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
-public class ReferVacancyReviewCommandHandler : IRequestHandler<ReferVacancyReviewCommand, Unit>
+public class ReferVacancyReviewCommandHandler(
+    ILogger<ReferVacancyReviewCommandHandler> logger,
+    IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
+    IVacancyReviewQuery vacancyReviewQuery,
+    IMessaging messaging,
+    AbstractValidator<VacancyReview> vacancyReviewValidator,
+    ITimeProvider timeProvider)
+    : IRequestHandler<ReferVacancyReviewCommand, Unit>
 {
-    private readonly ILogger<ReferVacancyReviewCommandHandler> _logger;
-    private readonly IVacancyReviewRepositoryRunner _vacancyReviewRepositoryRunner;
-    private readonly IVacancyReviewQuery _vacancyReviewQuery;
-    private readonly IMessaging _messaging;
-    private readonly AbstractValidator<VacancyReview> _vacancyReviewValidator;
-    private readonly ITimeProvider _timeProvider;
-
-    public ReferVacancyReviewCommandHandler(
-        ILogger<ReferVacancyReviewCommandHandler> logger,
-        IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
-        IVacancyReviewQuery vacancyReviewQuery,
-        IMessaging messaging,
-        AbstractValidator<VacancyReview> vacancyReviewValidator,
-        ITimeProvider timeProvider)
-    {
-        _logger = logger;
-        _vacancyReviewRepositoryRunner = vacancyReviewRepositoryRunner;
-        _vacancyReviewQuery = vacancyReviewQuery;
-        _messaging = messaging;
-        _timeProvider = timeProvider;
-        _vacancyReviewValidator = vacancyReviewValidator;
-    }
-
     public async Task<Unit> Handle(ReferVacancyReviewCommand message, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Referring vacancy review {reviewId}.", message.ReviewId);
+        logger.LogInformation("Referring vacancy review {reviewId}.", message.ReviewId);
 
-        var review = await _vacancyReviewQuery.GetAsync(message.ReviewId);
+        var review = await vacancyReviewQuery.GetAsync(message.ReviewId);
 
         if (!review.CanRefer)
         {
-            _logger.LogWarning($"Unable to refer review {{reviewId}} for vacancy {{vacancyReference}} due to review having a status of {review.Status}.", message.ReviewId, review.VacancyReference);
+            logger.LogWarning($"Unable to refer review {{reviewId}} for vacancy {{vacancyReference}} due to review having a status of {review.Status}.", message.ReviewId, review.VacancyReference);
             return Unit.Value;
         }
 
         review.ManualOutcome = ManualQaOutcome.Referred;
         review.Status = ReviewStatus.Closed;
-        review.ClosedDate = _timeProvider.Now;
+        review.ClosedDate = timeProvider.Now;
         review.ManualQaComment = message.ManualQaComment;
         review.ManualQaFieldIndicators = message.ManualQaFieldIndicators;
 
@@ -81,9 +65,9 @@ public class ReferVacancyReviewCommandHandler : IRequestHandler<ReferVacancyRevi
 
         Validate(review);
 
-        await _vacancyReviewRepositoryRunner.UpdateAsync(review);
+        await vacancyReviewRepositoryRunner.UpdateAsync(review);
 
-        await _messaging.PublishEvent(new VacancyReviewReferredEvent
+        await messaging.PublishEvent(new VacancyReviewReferredEvent
         {
             VacancyReference = review.VacancyReference,
             ReviewId = review.Id
@@ -93,7 +77,7 @@ public class ReferVacancyReviewCommandHandler : IRequestHandler<ReferVacancyRevi
 
     private void Validate(VacancyReview review)
     {
-        var validationResult = _vacancyReviewValidator.Validate(review);
+        var validationResult = vacancyReviewValidator.Validate(review);
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult.Errors);

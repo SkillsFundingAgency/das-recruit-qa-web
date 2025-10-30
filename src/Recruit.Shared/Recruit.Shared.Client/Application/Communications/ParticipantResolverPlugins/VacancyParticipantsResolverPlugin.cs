@@ -10,30 +10,18 @@ using Recruit.Communication.Types.Interfaces;
 
 namespace Recruit.Vacancies.Client.Application.Communications.ParticipantResolverPlugins;
 
-public class VacancyParticipantsResolverPlugin : IParticipantResolver
+public class VacancyParticipantsResolverPlugin(
+    IVacancyRepository vacancyRepository,
+    IUserRepository userRepository,
+    IUserNotificationPreferencesRepository userPreferenceRepository,
+    ILogger<VacancyParticipantsResolverPlugin> logger)
+    : IParticipantResolver
 {
-    private readonly IVacancyRepository _vacancyRepository;
-    private readonly IUserRepository _userRepository;
-    private readonly IUserNotificationPreferencesRepository _userPreferenceRepository;
-    private readonly ILogger<VacancyParticipantsResolverPlugin> _logger;
-
     public string ParticipantResolverName => CommunicationConstants.ParticipantResolverNames.VacancyParticipantsResolverName;
-
-    public VacancyParticipantsResolverPlugin(
-        IVacancyRepository vacancyRepository,
-        IUserRepository userRepository,
-        IUserNotificationPreferencesRepository userPreferenceRepository,
-        ILogger<VacancyParticipantsResolverPlugin> logger)
-    {
-        _userRepository = userRepository;
-        _userPreferenceRepository = userPreferenceRepository;
-        _vacancyRepository = vacancyRepository;
-        _logger = logger;
-    }
 
     public async Task<IEnumerable<CommunicationUser>> GetParticipantsAsync(CommunicationRequest request)
     {
-        _logger.LogDebug($"Resolving participants for RequestType: '{request.RequestType}'");
+        logger.LogDebug($"Resolving participants for RequestType: '{request.RequestType}'");
 
         var entityId = request.Entities.Single(e => e.EntityType == CommunicationConstants.EntityTypes.Vacancy).EntityId.ToString();
         if(long.TryParse(entityId, out var vacancyReference) == false)
@@ -41,15 +29,15 @@ public class VacancyParticipantsResolverPlugin : IParticipantResolver
             return Array.Empty<CommunicationUser>();
         }
 
-        var vacancy = await _vacancyRepository.GetVacancyAsync(vacancyReference);
+        var vacancy = await vacancyRepository.GetVacancyAsync(vacancyReference);
         List<User> users = null;
         if (vacancy.OwnerType == OwnerType.Employer)
         {
-            users = await _userRepository.GetEmployerUsersAsync(vacancy.EmployerAccountId);
+            users = await userRepository.GetEmployerUsersAsync(vacancy.EmployerAccountId);
         }
         else
         {
-            users = await _userRepository.GetProviderUsersAsync(vacancy.TrainingProvider.Ukprn.GetValueOrDefault());
+            users = await userRepository.GetProviderUsersAsync(vacancy.TrainingProvider.Ukprn.GetValueOrDefault());
         }
 
         var primaryUserIdamsId = vacancy.Status == VacancyStatus.Rejected ? vacancy.ReviewByUser?.UserId : vacancy.SubmittedByUser?.UserId;
@@ -68,7 +56,7 @@ public class VacancyParticipantsResolverPlugin : IParticipantResolver
             if (isStillValid)
                 validCommunicationMessages.Add(msg);
             else
-                _logger.LogInformation($"Unable to validate notification recipients of CommunicationMessage {msg.Id.ToString()}");
+                logger.LogInformation($"Unable to validate notification recipients of CommunicationMessage {msg.Id.ToString()}");
         }
 
         return validCommunicationMessages;
@@ -80,15 +68,15 @@ public class VacancyParticipantsResolverPlugin : IParticipantResolver
             
         if (!string.IsNullOrEmpty(msg.Recipient.DfEUserId))
         {
-            user = await _userRepository.GetByDfEUserId(msg.Recipient.DfEUserId);
+            user = await userRepository.GetByDfEUserId(msg.Recipient.DfEUserId);
         }
 
-        user ??= await _userRepository.GetAsync(msg.Recipient.UserId);
+        user ??= await userRepository.GetAsync(msg.Recipient.UserId);
             
 
         if (user == null)
         {
-            _logger.LogWarning($"Unable to locate user associated with the recipients of CommunicationMessage {msg.Id.ToString()}");
+            logger.LogWarning($"Unable to locate user associated with the recipients of CommunicationMessage {msg.Id.ToString()}");
             return false;
         }
 
@@ -99,7 +87,7 @@ public class VacancyParticipantsResolverPlugin : IParticipantResolver
             return false;
         }
 
-        var vacancy = await _vacancyRepository.GetVacancyAsync(vacancyReference);
+        var vacancy = await vacancyRepository.GetVacancyAsync(vacancyReference);
 
         var isUserStillAssociatedToVacancy = false;
         if (vacancy.OwnerType == OwnerType.Employer)
@@ -115,8 +103,8 @@ public class VacancyParticipantsResolverPlugin : IParticipantResolver
 
         if (isUserStillAssociatedToVacancy == false) return false;
 
-        var userPreference = await _userPreferenceRepository.GetByDfeUserId(user.DfEUserId) 
-                             ?? await _userPreferenceRepository.GetAsync(user.IdamsUserId);
+        var userPreference = await userPreferenceRepository.GetByDfeUserId(user.DfEUserId) 
+                             ?? await userPreferenceRepository.GetAsync(user.IdamsUserId);
 
         if (Enum.TryParse<NotificationTypes>(msg.RequestType, out var reqNotificationType))
         {

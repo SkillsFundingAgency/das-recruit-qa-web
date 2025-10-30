@@ -1,6 +1,5 @@
 ﻿using Recruit.Vacancies.Client.Application.Validation.Fluent;
 using FluentValidation;
-using Recruit.Qa.Web.ViewModels;
 
 namespace Recruit.Qa.Web.ViewModels.Validations;
 

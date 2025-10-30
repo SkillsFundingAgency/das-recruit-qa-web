@@ -12,40 +12,26 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
-public class AssignVacancyReviewCommandHandler: IRequestHandler<AssignVacancyReviewCommand, Unit>
+public class AssignVacancyReviewCommandHandler(
+    ILogger<AssignVacancyReviewCommand> logger,
+    IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
+    ITimeProvider timeProvider,
+    INextVacancyReviewService nextVacancyReviewService,
+    IVacancyReviewQuery vacancyReviewQuery)
+    : IRequestHandler<AssignVacancyReviewCommand, Unit>
 {
-    private readonly ILogger<AssignVacancyReviewCommand> _logger;
-    private readonly IVacancyReviewRepositoryRunner _vacancyReviewRepositoryRunner;
-    private readonly IVacancyReviewQuery _vacancyReviewQuery;
-    private readonly ITimeProvider _time;
-    private readonly INextVacancyReviewService _nextVacancyReviewService;
-
-    public AssignVacancyReviewCommandHandler(
-        ILogger<AssignVacancyReviewCommand> logger,
-        IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner, 
-        ITimeProvider timeProvider,
-        INextVacancyReviewService nextVacancyReviewService,
-        IVacancyReviewQuery vacancyReviewQuery)
-    {
-        _logger = logger;
-        _vacancyReviewRepositoryRunner = vacancyReviewRepositoryRunner;
-        _time = timeProvider;
-        _nextVacancyReviewService = nextVacancyReviewService;
-        _vacancyReviewQuery = vacancyReviewQuery;
-    }
-
     public async Task<Unit> Handle(AssignVacancyReviewCommand message, CancellationToken cancellationToken)
     {
         VacancyReview review;
 
         if (message.ReviewId.HasValue)
         {
-            _logger.LogInformation("Starting assignment of review for user {userId} for review {reviewId}", message.User.UserId, message.ReviewId);
+            logger.LogInformation("Starting assignment of review for user {userId} for review {reviewId}", message.User.UserId, message.ReviewId);
             review = await GetVacancyReviewAsync(message.ReviewId.Value);
         }
         else
         {
-            _logger.LogInformation("Starting assignment of next review for user {userId}.", message.User.UserId);
+            logger.LogInformation("Starting assignment of next review for user {userId}.", message.User.UserId);
             review = await GetNextVacancyReviewForUser(message.User.UserId);
         }
 
@@ -54,30 +40,30 @@ public class AssignVacancyReviewCommandHandler: IRequestHandler<AssignVacancyRev
 
         review.Status = ReviewStatus.UnderReview;
         review.ReviewedByUser = message.User;
-        review.ReviewedDate = _time.Now;
+        review.ReviewedDate = timeProvider.Now;
 
-        await _vacancyReviewRepositoryRunner.UpdateAsync(review);
+        await vacancyReviewRepositoryRunner.UpdateAsync(review);
         return Unit.Value;
     }
 
     private async Task<VacancyReview> GetVacancyReviewAsync(Guid reviewId)
     {
-        var review = await _vacancyReviewQuery.GetAsync(reviewId);
+        var review = await vacancyReviewQuery.GetAsync(reviewId);
 
-        if (_nextVacancyReviewService.VacancyReviewCanBeAssigned(review.Status, review.ReviewedDate))
+        if (nextVacancyReviewService.VacancyReviewCanBeAssigned(review.Status, review.ReviewedDate))
             return review;
 
-        _logger.LogWarning($"Unable to assign review {{reviewId}} for vacancy {{vacancyReference}} due to review having a status of {review.Status}.", review.Id, review.VacancyReference);
+        logger.LogWarning($"Unable to assign review {{reviewId}} for vacancy {{vacancyReference}} due to review having a status of {review.Status}.", review.Id, review.VacancyReference);
         return null;
     }
 
     private async Task<VacancyReview> GetNextVacancyReviewForUser(string userId)
     {
-        var review = await _nextVacancyReviewService.GetNextVacancyReviewAsync(userId);
+        var review = await nextVacancyReviewService.GetNextVacancyReviewAsync(userId);
 
         if (review == null)
         {
-            _logger.LogInformation("No reviews to assign to user {userId}.", userId);
+            logger.LogInformation("No reviews to assign to user {userId}.", userId);
         }
 
         return review;
