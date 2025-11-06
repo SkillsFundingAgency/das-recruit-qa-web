@@ -12,10 +12,11 @@ jobs:
   - group: BUILD Management Resources
   steps:
   - template: azure-pipelines-templates/build/step/gitversion.yml@das-platform-building-blocks
-
   - template: azure-pipelines-templates/build/step/app-build.yml@das-platform-building-blocks
     parameters:
       SonarCloudProjectKey: SkillsFundingAgency_das-recruit-qa-web
+      SonarCloudExtraProperties: |
+       sonar.exclusions=**/wwwroot/**
       ContinueOnVulnerablePackageScanError: true
       
   - task: DotNetCoreCLI@2
