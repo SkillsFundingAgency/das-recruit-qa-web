@@ -10,33 +10,22 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
-public class UnblockProviderCommandHandler : IRequestHandler<UnblockProviderCommand, Unit>
+public class UnblockProviderCommandHandler(
+    ILogger<UnblockProviderCommandHandler> logger,
+    IBlockedOrganisationQuery blockedOrganisationQuery,
+    IBlockedOrganisationRepository blockedOrganisationRepository,
+    IMessaging messaging)
+    : IRequestHandler<UnblockProviderCommand, Unit>
 {
-    private readonly ILogger<UnblockProviderCommandHandler> _logger;
-    private readonly IBlockedOrganisationQuery _blockedOrganisationQuery;
-    private readonly IBlockedOrganisationRepository _blockedOrganisationRepository;
-    private readonly IMessaging _messaging;
-    public UnblockProviderCommandHandler(
-        ILogger<UnblockProviderCommandHandler> logger,
-        IBlockedOrganisationQuery blockedOrganisationQuery,
-        IBlockedOrganisationRepository blockedOrganisationRepository,
-        IMessaging messaging)
-    {
-        _logger = logger;
-        _blockedOrganisationQuery = blockedOrganisationQuery;
-        _blockedOrganisationRepository = blockedOrganisationRepository;
-        _messaging = messaging;
-    }
-        
     public async Task<Unit> Handle(UnblockProviderCommand message, CancellationToken cancellationToken)
     {
-        var blockedOrg = await _blockedOrganisationQuery.GetByOrganisationIdAsync(message.Ukprn.ToString());
+        var blockedOrg = await blockedOrganisationQuery.GetByOrganisationIdAsync(message.Ukprn.ToString());
         if (blockedOrg?.BlockedStatus == BlockedStatus.Blocked)
         {
-            _logger.LogInformation($"Request to unblock provider with ukprn {message.Ukprn}.");
-            await _blockedOrganisationRepository.CreateAsync(ConvertToBlockedOrganisation(message));
+            logger.LogInformation($"Request to unblock provider with ukprn {message.Ukprn}.");
+            await blockedOrganisationRepository.CreateAsync(ConvertToBlockedOrganisation(message));
 
-            await _messaging.PublishEvent(new ProviderBlockedEvent()
+            await messaging.PublishEvent(new ProviderBlockedEvent()
             {
                 Ukprn = message.Ukprn,
                 BlockedDate = message.UnblockedDate,

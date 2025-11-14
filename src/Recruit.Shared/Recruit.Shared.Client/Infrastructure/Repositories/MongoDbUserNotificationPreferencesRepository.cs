@@ -11,13 +11,12 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal sealed class MongoDbUserNotificationPreferencesRepository : MongoDbCollectionBase, IUserNotificationPreferencesRepository
+internal sealed class MongoDbUserNotificationPreferencesRepository(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> config)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.UserNotificationPreferences,
+        config), IUserNotificationPreferencesRepository
 {
-    public MongoDbUserNotificationPreferencesRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> config) 
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.UserNotificationPreferences, config)
-    {
-    }
-
     public async Task<UserNotificationPreferences> GetAsync(string idamsUserId)
     {   
         var filter = Builders<UserNotificationPreferences>.Filter.Regex(v => v.Id, 

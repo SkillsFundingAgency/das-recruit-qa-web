@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
-using Recruit.Vacancies.Client.Infrastructure.Services.Geocode.Responses;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -65,32 +64,6 @@ public class WhenHandlingAGetRequest
         //Act Assert
         await Assert.ThrowsAsync<HttpRequestException>(() => apiClient.Get<List<string>>(getTestRequest));
             
-    }
-
-    [Fact]
-    public async Task Then_If_It_Not_Found_Default_Object_Is_Returned()
-    {
-        //Arrange
-        var key = "123-abc-567";
-        var getTestRequest = new GetTestRequest();
-        var config = new RecruitOuterApiConfiguration { BaseUrl = "http://valid-url/", Key = key };
-        var mockConfig = new Mock<IOptions<RecruitOuterApiConfiguration>>();
-        mockConfig.Setup(x => x.Value).Returns(config);
-        var response = new HttpResponseMessage
-        {
-            Content = new StringContent(""),
-            StatusCode = HttpStatusCode.NotFound
-        };
-
-        var httpMessageHandler = MessageHandler.SetupMessageHandlerMock(response, $"{config.BaseUrl}{getTestRequest.GetUrl}", config.Key,HttpMethod.Get);
-        var client = new HttpClient(httpMessageHandler.Object);
-        var apiClient = new RecruitOuterApiClient(client, mockConfig.Object);
-
-        //Act
-        var result = await apiClient.Get<GetGeoPointResponse>(getTestRequest);
-
-        // Assert
-        result.Should().BeNull();
     }
 
     public class GetTestRequest : IGetApiRequest

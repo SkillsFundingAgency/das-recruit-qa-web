@@ -2,14 +2,7 @@ using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
-public class GetAccountLegalEntitiesRequest : IGetApiRequest
+public class GetAccountLegalEntitiesRequest(long accountId) : IGetApiRequest
 {
-    private readonly long _accountId;
-
-    public GetAccountLegalEntitiesRequest(long accountId)
-    {
-        _accountId = accountId;
-    }
-
-    public string GetUrl => $"employeraccounts/{_accountId}/legalentities";
+    public string GetUrl => $"employeraccounts/{accountId}/legalentities";
 }

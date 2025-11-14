@@ -1,5 +1,4 @@
 using FluentValidation;
-using Recruit.Qa.Web.ViewModels.ManageProvider;
 
 namespace Recruit.Qa.Web.ViewModels.ManageProvider.Validations;
 

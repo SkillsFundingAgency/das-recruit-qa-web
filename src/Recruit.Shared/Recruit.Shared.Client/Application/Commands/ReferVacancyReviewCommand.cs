@@ -6,18 +6,15 @@ using MediatR;
 
 namespace Recruit.Vacancies.Client.Application.Commands;
 
-public class ReferVacancyReviewCommand : ICommand, IRequest<Unit>
+public class ReferVacancyReviewCommand(
+    Guid reviewId,
+    string manualQaComment,
+    List<ManualQaFieldIndicator> manualQaFieldIndicators,
+    List<Guid> selectedAutomatedQaRuleOutcomeIds)
+    : ICommand, IRequest<Unit>
 {
-    public Guid ReviewId { get; }
-    public string ManualQaComment { get; }
-    public List<ManualQaFieldIndicator> ManualQaFieldIndicators { get; }
-    public List<Guid> SelectedAutomatedQaRuleOutcomeIds { get; }
-
-    public ReferVacancyReviewCommand(Guid reviewId, string manualQaComment, List<ManualQaFieldIndicator> manualQaFieldIndicators, List<Guid> selectedAutomatedQaRuleOutcomeIds)
-    {
-        ReviewId = reviewId;
-        ManualQaComment = manualQaComment;
-        ManualQaFieldIndicators = manualQaFieldIndicators;
-        SelectedAutomatedQaRuleOutcomeIds = selectedAutomatedQaRuleOutcomeIds;
-    }
+    public Guid ReviewId { get; } = reviewId;
+    public string ManualQaComment { get; } = manualQaComment;
+    public List<ManualQaFieldIndicator> ManualQaFieldIndicators { get; } = manualQaFieldIndicators;
+    public List<Guid> SelectedAutomatedQaRuleOutcomeIds { get; } = selectedAutomatedQaRuleOutcomeIds;
 }

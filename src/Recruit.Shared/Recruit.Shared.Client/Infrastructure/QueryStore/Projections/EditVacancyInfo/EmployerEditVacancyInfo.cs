@@ -2,11 +2,7 @@
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
 
-public class EmployerEditVacancyInfo : QueryProjectionBase
+public class EmployerEditVacancyInfo() : QueryProjectionBase(QueryViewType.EditVacancyInfo.TypeName)
 {
-    public EmployerEditVacancyInfo()  : base(QueryViewType.EditVacancyInfo.TypeName)
-    {
-    }
-
     public IEnumerable<LegalEntity> LegalEntities { get; set; }
 }

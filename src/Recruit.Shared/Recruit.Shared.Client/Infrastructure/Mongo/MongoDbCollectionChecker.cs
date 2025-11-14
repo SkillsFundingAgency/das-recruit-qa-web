@@ -13,26 +13,21 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Mongo;
 
-public class MongoDbCollectionChecker
+public class MongoDbCollectionChecker(
+    ILogger<MongoDbCollectionChecker> logger,
+    IOptions<MongoDbConnectionDetails> config)
 {
-    private readonly ILogger<MongoDbCollectionChecker> _logger;
-    private readonly MongoDbConnectionDetails _config;
-
-    public MongoDbCollectionChecker(ILogger<MongoDbCollectionChecker> logger, IOptions<MongoDbConnectionDetails> config)
-    {
-        _logger = logger;
-        _config = config.Value;
-    }
+    private readonly MongoDbConnectionDetails _config = config.Value;
 
     public void EnsureCollectionsExist()
     {
-        _logger.LogInformation("Ensuring collections have been created");
+        logger.LogInformation("Ensuring collections have been created");
 
         var expectedCollections = GetExpectedCollectionNames();
         if(expectedCollections.Any() == false)
             throw new InfrastructureException("There are no expected collections.");
 
-        var actualCollections = GetMongoCollectionsAsync(_logger).Result;
+        var actualCollections = GetMongoCollectionsAsync(logger).Result;
 
         var missingCollections = expectedCollections.Except(actualCollections).ToList();
 

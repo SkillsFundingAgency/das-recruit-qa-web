@@ -1,20 +1,17 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Recruit.Client.Application.Communications;
 using Microsoft.Extensions.Options;
 using Recruit.Communication.Types;
 using Recruit.Communication.Types.Interfaces;
 
 namespace Recruit.Vacancies.Client.Application.Communications.EntityDataItemProviderPlugins;
 
-public class ApprenticeshipServiceConfigDataEntityPlugin : IEntityDataItemProvider
+public class ApprenticeshipServiceConfigDataEntityPlugin(
+    IOptions<CommunicationsConfiguration> communicationsConfiguration)
+    : IEntityDataItemProvider
 {
-    private readonly CommunicationsConfiguration _communicationsConfiguration;
+    private readonly CommunicationsConfiguration _communicationsConfiguration = communicationsConfiguration.Value;
     public string EntityType => CommunicationConstants.EntityTypes.ApprenticeshipServiceConfig;
-    public ApprenticeshipServiceConfigDataEntityPlugin(IOptions<CommunicationsConfiguration> communicationsConfiguration)
-    {
-        _communicationsConfiguration = communicationsConfiguration.Value;
-    }
 
     public Task<IEnumerable<CommunicationDataItem>> GetDataItemsAsync(object entityId)
     {

@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using AutoFixture.NUnit3;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 using NUnit.Framework;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancySummary;
+using System.Collections.Generic;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.QueryStore;
 

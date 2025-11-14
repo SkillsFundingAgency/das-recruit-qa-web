@@ -15,55 +15,34 @@ using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
-public class ApproveVacancyReviewCommandHandler: IRequestHandler<ApproveVacancyReviewCommand, Unit>
+public class ApproveVacancyReviewCommandHandler(
+    ILogger<ApproveVacancyReviewCommandHandler> logger,
+    IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
+    IVacancyReviewQuery vacancyReviewQuery,
+    IVacancyRepository vacancyRepository,
+    IMessaging messaging,
+    AbstractValidator<VacancyReview> vacancyReviewValidator,
+    ITimeProvider timeProvider,
+    IBlockedOrganisationQuery blockedOrganisationQuery,
+    ICommunicationQueueService communicationQueueService)
+    : IRequestHandler<ApproveVacancyReviewCommand, Unit>
 {
-    private readonly ILogger<ApproveVacancyReviewCommandHandler> _logger;
-    private readonly IVacancyRepository _vacancyRepository;
-    private readonly IVacancyReviewRepositoryRunner _vacancyReviewRepositoryRunner;
-    private readonly IVacancyReviewQuery _vacancyReviewQuery;
-    private readonly IMessaging _messaging;
-    private readonly AbstractValidator<VacancyReview> _vacancyReviewValidator;
-    private readonly ITimeProvider _timeProvider;
-    private readonly IBlockedOrganisationQuery _blockedOrganisationQuery;
-    private readonly ICommunicationQueueService _communicationQueueService;
-
-    public ApproveVacancyReviewCommandHandler(ILogger<ApproveVacancyReviewCommandHandler> logger,
-        IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
-        IVacancyReviewQuery vacancyReviewQuery,
-        IVacancyRepository vacancyRepository,
-        IMessaging messaging,
-        AbstractValidator<VacancyReview> vacancyReviewValidator,
-        ITimeProvider timeProvider,
-        IBlockedOrganisationQuery blockedOrganisationQuery, 
-        ICommunicationQueueService communicationQueueService)
-    {
-        _logger = logger;
-        _vacancyRepository = vacancyRepository;
-        _vacancyReviewRepositoryRunner = vacancyReviewRepositoryRunner;
-        _vacancyReviewQuery = vacancyReviewQuery;
-        _messaging = messaging;
-        _vacancyReviewValidator = vacancyReviewValidator;
-        _timeProvider = timeProvider;
-        _blockedOrganisationQuery = blockedOrganisationQuery;
-        _communicationQueueService = communicationQueueService;
-    }
-
     public async Task<Unit> Handle(ApproveVacancyReviewCommand message, CancellationToken cancellationToken)
     {
-        _logger.LogInformation("Approving review {reviewId}.", message.ReviewId);
+        logger.LogInformation("Approving review {reviewId}.", message.ReviewId);
 
-        var review = await _vacancyReviewQuery.GetAsync(message.ReviewId);
-        var vacancy = await _vacancyRepository.GetVacancyAsync(review.VacancyReference);
+        var review = await vacancyReviewQuery.GetAsync(message.ReviewId);
+        var vacancy = await vacancyRepository.GetVacancyAsync(review.VacancyReference);
 
         if (!review.CanApprove)
         {
-            _logger.LogWarning($"Unable to approve review {{reviewId}} due to review having a status of {review.Status}.", message.ReviewId);
+            logger.LogWarning($"Unable to approve review {{reviewId}} due to review having a status of {review.Status}.", message.ReviewId);
             return Unit.Value;
         }
 
         review.ManualOutcome = ManualQaOutcome.Approved;
         review.Status = ReviewStatus.Closed;
-        review.ClosedDate = _timeProvider.Now;
+        review.ClosedDate = timeProvider.Now;
         review.ManualQaComment = message.ManualQaComment;
         review.ManualQaFieldIndicators = message.ManualQaFieldIndicators;
         review.ManualQaFieldEditIndicators = message.ManualQaFieldEditIndicators;
@@ -75,7 +54,7 @@ public class ApproveVacancyReviewCommandHandler: IRequestHandler<ApproveVacancyR
 
         Validate(review);
 
-        await _vacancyReviewRepositoryRunner.UpdateAsync(review);
+        await vacancyReviewRepositoryRunner.UpdateAsync(review);
 
         var closureReason = await TryGetReasonToCloseVacancy(review, vacancy);
 
@@ -94,7 +73,7 @@ public class ApproveVacancyReviewCommandHandler: IRequestHandler<ApproveVacancyR
     {
         var communicationRequest = CommunicationRequestFactory.GetProviderBlockedEmployerNotificationForLiveVacanciesRequest(ukprn, employerAccountId);
 
-        return _communicationQueueService.AddMessageAsync(communicationRequest);
+        return communicationQueueService.AddMessageAsync(communicationRequest);
     }
 
     private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
@@ -113,7 +92,7 @@ public class ApproveVacancyReviewCommandHandler: IRequestHandler<ApproveVacancyR
 
     private void Validate(VacancyReview review)
     {
-        var validationResult = _vacancyReviewValidator.Validate(review);
+        var validationResult = vacancyReviewValidator.Validate(review);
         if (!validationResult.IsValid)
         {
             throw new ValidationException(validationResult.Errors);
@@ -127,22 +106,22 @@ public class ApproveVacancyReviewCommandHandler: IRequestHandler<ApproveVacancyR
 
     private async Task<bool> HasProviderBeenBlockedSinceReviewWasCreatedAsync(Vacancy vacancy)
     {
-        var blockedProvider = await _blockedOrganisationQuery.GetByOrganisationIdAsync(vacancy.TrainingProvider.Ukprn.ToString());
+        var blockedProvider = await blockedOrganisationQuery.GetByOrganisationIdAsync(vacancy.TrainingProvider.Ukprn.ToString());
         return blockedProvider?.BlockedStatus == BlockedStatus.Blocked;
     }
 
     private Task CloseVacancyAsync(Vacancy vacancy, ClosureReason closureReason)
     {
         vacancy.Status = VacancyStatus.Closed;
-        vacancy.ClosedDate = _timeProvider.Now;
+        vacancy.ClosedDate = timeProvider.Now;
         vacancy.ClosedByUser = vacancy.TransferInfo?.TransferredByUser;
         vacancy.ClosureReason = closureReason;
-        return _vacancyRepository.UpdateAsync(vacancy);
+        return vacancyRepository.UpdateAsync(vacancy);
     }
 
     private Task PublishVacancyReviewApprovedEventAsync(ApproveVacancyReviewCommand message, VacancyReview review)
     {
-        return _messaging.PublishEvent(new VacancyReviewApprovedEvent
+        return messaging.PublishEvent(new VacancyReviewApprovedEvent
         {
             ReviewId = message.ReviewId,
             VacancyReference = review.VacancyReference

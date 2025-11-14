@@ -1,5 +1,5 @@
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancySummary;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 

@@ -8,19 +8,13 @@ using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 
-public class UpdateQaDashboardOnReview : INotificationHandler<VacancyReviewApprovedEvent>,
-    INotificationHandler<VacancyReviewReferredEvent>,
-    INotificationHandler<VacancyReviewWithdrawnEvent>
+public class UpdateQaDashboardOnReview(
+    ILogger<UpdateQaDashboardOnReview> logger,
+    IQaDashboardProjectionService qaDashboardService)
+    : INotificationHandler<VacancyReviewApprovedEvent>,
+        INotificationHandler<VacancyReviewReferredEvent>,
+        INotificationHandler<VacancyReviewWithdrawnEvent>
 {
-    private readonly ILogger<UpdateQaDashboardOnReview> _logger;
-    private readonly IQaDashboardProjectionService _qaDashboardService;
-        
-    public UpdateQaDashboardOnReview(ILogger<UpdateQaDashboardOnReview> logger, IQaDashboardProjectionService qaDashboardService)
-    {
-        _logger = logger;
-        _qaDashboardService = qaDashboardService;
-    }
-
     public Task Handle(VacancyReviewCreatedEvent notification, CancellationToken cancellationToken)
     {
         return Handle(notification);
@@ -43,8 +37,8 @@ public class UpdateQaDashboardOnReview : INotificationHandler<VacancyReviewAppro
 
     private Task Handle(IVacancyReviewEvent notification)
     {
-        _logger.LogInformation("Handling {notificationType}", notification.GetType().Name);
+        logger.LogInformation("Handling {notificationType}", notification.GetType().Name);
 
-        return _qaDashboardService.RebuildQaDashboardAsync();
+        return qaDashboardService.RebuildQaDashboardAsync();
     }
 }

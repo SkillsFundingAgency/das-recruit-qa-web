@@ -9,25 +9,15 @@ using Recruit.Qa.Web.ViewModels.ManageProvider;
 
 namespace Recruit.Qa.Web.Orchestrators;
 
-public class UnblockOrganisationOrchestrator
+public class UnblockOrganisationOrchestrator(
+    IBlockedOrganisationQuery blockedOrganisationQuery,
+    IMessaging messaging,
+    ITimeProvider timeProvider,
+    ITrainingProviderService trainingProviderService)
 {
-    private readonly IBlockedOrganisationQuery _blockedOrganisationQuery;
-    private readonly IMessaging _messaging;
-    private readonly ITimeProvider _timeProvider;
-    private readonly ITrainingProviderService _trainingProviderService;
-    public UnblockOrganisationOrchestrator(
-        IBlockedOrganisationQuery blockedOrganisationQuery,
-        IMessaging messaging, ITimeProvider timeProvider, ITrainingProviderService trainingProviderService)
-    {
-        _blockedOrganisationQuery = blockedOrganisationQuery;
-        _messaging = messaging;
-        _timeProvider = timeProvider;
-        _trainingProviderService = trainingProviderService;
-    }
-
     public async Task<ProviderUnblockedAcknowledgementViewModel> GetAcknowledgementViewModelAsync(long ukprn)
     {
-        var providerDetail = await _trainingProviderService.GetProviderAsync(ukprn);
+        var providerDetail = await trainingProviderService.GetProviderAsync(ukprn);
 
         return new ProviderUnblockedAcknowledgementViewModel
         {
@@ -38,19 +28,19 @@ public class UnblockOrganisationOrchestrator
 
     public async Task<bool> IsProviderAlreadyBlocked(long ukprn)
     {
-        var blockedOrganisation = await _blockedOrganisationQuery.GetByOrganisationIdAsync(ukprn.ToString());
+        var blockedOrganisation = await blockedOrganisationQuery.GetByOrganisationIdAsync(ukprn.ToString());
         return blockedOrganisation?.BlockedStatus == BlockedStatus.Blocked;
     }
 
     public Task UnblockProviderAsync(long ukprn, VacancyUser user)
     {
-        var command = new UnblockProviderCommand(ukprn, user, _timeProvider.Now);
-        return _messaging.SendCommandAsync(command);
+        var command = new UnblockProviderCommand(ukprn, user, timeProvider.Now);
+        return messaging.SendCommandAsync(command);
     }
 
     public async Task<ConfirmTrainingProviderUnblockingEditModel> GetConfirmTrainingProviderUnblockingViewModel(long ukprn)
     {
-        var provider = await _trainingProviderService.GetProviderAsync(ukprn);
+        var provider = await trainingProviderService.GetProviderAsync(ukprn);
         return ConvertToConfirmViewModel(provider);
     }
 

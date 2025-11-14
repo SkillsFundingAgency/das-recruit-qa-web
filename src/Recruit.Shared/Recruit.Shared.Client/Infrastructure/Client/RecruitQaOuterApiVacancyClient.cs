@@ -12,11 +12,11 @@ public interface IRecruitQaOuterApiVacancyClient
 }
 
 public class RecruitQaOuterApiVacancyClient(
-    IRecruitQaOuterApiClient recruitQaOuterApimClient): IRecruitQaOuterApiVacancyClient
+    IRecruitQaOuterApiClient recruitQaOuterApiClient): IRecruitQaOuterApiVacancyClient
 {
     public async Task<QaDashboard> GetDashboardAsync()
     {
-        var response = await recruitQaOuterApimClient.Get<GetQaDashboardApiResponse>(new GetQaDashboardApiRequest());
+        var response = await recruitQaOuterApiClient.Get<GetQaDashboardApiResponse>(new GetQaDashboardApiRequest());
 
         return QaDashboard.FromApiResponse(response);
     }

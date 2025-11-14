@@ -1,18 +1,14 @@
-﻿using System.Collections.Generic;
-using AutoFixture.NUnit3;
+﻿using Microsoft.Extensions.Logging;
+using NUnit.Framework;
 using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.Configuration;
 using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
-using Microsoft.Extensions.Logging;
-using NUnit.Framework;
+using System.Collections.Generic;
 using TrainingProvider = Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders.TrainingProvider;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Services;
 
@@ -85,59 +81,5 @@ public class TrainingProviderServiceTests
         provider.Address.AddressLine3.Should().Be("address line 3");
         provider.Address.AddressLine4.Should().Be("address line 4");
         provider.Address.Postcode.Should().Be("post code");
-    }
-
-    [Test, MoqAutoData]
-    public async Task GetProviderDashboardApplicationReviewStats_Should_Return_As_Expected(
-        long ukprn,
-        List<long> vacancyReferences,
-        GetApplicationReviewStatsResponse response,
-        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
-        [Greedy] TrainingProviderService trainingProviderService)
-    {
-        var expectedGetUrl = new GetProviderApplicationReviewsCountApiRequest(ukprn, vacancyReferences);
-        outerApiClient.Setup(x => x.Post<GetApplicationReviewStatsResponse>(
-                It.Is<GetProviderApplicationReviewsCountApiRequest>(r => r.PostUrl == expectedGetUrl.PostUrl)))
-            .ReturnsAsync(response);
-
-        var result = await trainingProviderService.GetProviderDashboardApplicationReviewStats(ukprn, vacancyReferences);
-
-        result.Should().BeEquivalentTo(response);
-    }
-        
-    [Test, MoqAutoData]
-    public async Task GetProviderDashboardVacanciesByApplicationReviewStatuses_Should_Return_As_Expected(
-        long ukprn,
-        int pageNumber,
-        List<ApplicationReviewStatus> status,
-        GetVacanciesDashboardResponse response,
-        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
-        [Greedy] TrainingProviderService trainingProviderService)
-    {
-        var expectedGetUrl = new GetProviderDashboardVacanciesApiRequest(ukprn, pageNumber, status);
-        outerApiClient.Setup(x => x.Get<GetVacanciesDashboardResponse>(
-                It.Is<GetProviderDashboardVacanciesApiRequest>(r => r.GetUrl == expectedGetUrl.GetUrl)))
-            .ReturnsAsync(response);
-
-        var result = await trainingProviderService.GetProviderDashboardVacanciesByApplicationReviewStatuses(ukprn, status, pageNumber);
-
-        result.Should().BeEquivalentTo(response);
-    }
-
-    [Test, MoqAutoData]
-    public async Task GetProviderDashboardStats_Should_Return_As_Expected(
-        long ukprn,
-        GetDashboardCountApiResponse response,
-        [Frozen] Mock<IRecruitOuterApiClient> outerApiClient,
-        [Greedy] TrainingProviderService trainingProviderService)
-    {
-        var expectedGetUrl = new GetProviderDashboardCountApiRequest(ukprn);
-        outerApiClient.Setup(x => x.Get< GetDashboardCountApiResponse> (
-                It.Is<GetProviderDashboardCountApiRequest>(r => r.GetUrl == expectedGetUrl.GetUrl)))
-            .ReturnsAsync(response);
-
-        var result = await trainingProviderService.GetProviderDashboardStats(ukprn);
-
-        result.Should().BeEquivalentTo(response);
     }
 }

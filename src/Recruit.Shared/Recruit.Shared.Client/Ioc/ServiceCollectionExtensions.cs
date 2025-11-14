@@ -1,4 +1,8 @@
-﻿using System;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Recruit.Vacancies.Client.Application.Aspects;
 using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.CommandHandlers;
@@ -8,7 +12,6 @@ using Recruit.Vacancies.Client.Application.Queues;
 using Recruit.Vacancies.Client.Application.Rules.Engine;
 using Recruit.Vacancies.Client.Application.Services;
 using Recruit.Vacancies.Client.Application.Services.NextVacancyReview;
-using Recruit.Vacancies.Client.Application.Services.ReferenceData;
 using Recruit.Vacancies.Client.Application.Services.Reports;
 using Recruit.Vacancies.Client.Application.Services.VacancyComparer;
 using Recruit.Vacancies.Client.Application.Validation;
@@ -23,41 +26,30 @@ using Recruit.Vacancies.Client.Infrastructure.HttpRequestHandlers;
 using Recruit.Vacancies.Client.Infrastructure.Messaging;
 using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.BankHolidays;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.BannedPhrases;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Skills;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using Recruit.Vacancies.Client.Infrastructure.Reports;
 using Recruit.Vacancies.Client.Infrastructure.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.SequenceStore;
 using Recruit.Vacancies.Client.Infrastructure.Services;
 using Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
-using Recruit.Vacancies.Client.Infrastructure.Services.Geocode;
-using Recruit.Vacancies.Client.Infrastructure.Services.PasAccount;
 using Recruit.Vacancies.Client.Infrastructure.Services.Projections;
 using Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProviderSummaryProvider;
-using Recruit.Vacancies.Client.Infrastructure.Services.VacancySummariesProvider;
 using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.User;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
-using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using SFA.DAS.EAS.Account.Api.Client;
 using SFA.DAS.Http.MessageHandlers;
 using SFA.DAS.Http.TokenGenerators;
+using System;
 using VacancyRuleSet = Recruit.Vacancies.Client.Application.Rules.VacancyRules.VacancyRuleSet;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Ioc;
 
@@ -110,7 +102,6 @@ public static class ServiceCollectionExtensions
         // Configuration
         services.AddSingleton(configuration);
         services.Configure<NextVacancyReviewServiceConfiguration>(o => o.VacancyReviewAssignationTimeoutMinutes = configuration.GetValue<int>("RecruitConfiguration:VacancyReviewAssignationTimeoutMinutes"));
-        services.Configure<PasAccountApiConfiguration>(configuration.GetSection("PasAccountApiConfiguration"));
         services.Configure<RecruitOuterApiConfiguration>(configuration.GetSection("OuterApiConfiguration"));
         services.Configure<RecruitQaOuterApiConfiguration>(configuration.GetSection("RecruitQaOuterApiConfiguration"));
 
@@ -118,16 +109,10 @@ public static class ServiceCollectionExtensions
         services.AddTransient<ITimeProvider, CurrentUtcTimeProvider>();
 
         // Application Service
-        services.AddTransient<IGenerateVacancyNumbers, MongoSequenceStore>();
-        services.AddTransient<ISlaService, SlaService>();
-        services.AddTransient<IVacancyService, VacancyService>();
-        services.AddTransient<IVacancyTransferService, VacancyTransferService>();
-        services.AddTransient<IVacancyReviewTransferService, VacancyReviewTransferService>();
         services.AddTransient<INextVacancyReviewService, NextVacancyReviewService>();
         services.AddTransient<IVacancyComparerService, VacancyComparerService>();
         services.AddTransient<ICache, Cache>();
         services.AddTransient<IHtmlSanitizerService, HtmlSanitizerService>();
-        services.AddTransient<IEmployerService, EmployerService>();
 
         //Reporting Service
         services.AddTransient<ICsvBuilder, CsvBuilder>();
@@ -151,9 +136,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IEmployerAccountProvider, EmployerAccountProvider>();
         services.AddTransient<ITrainingProviderService, TrainingProviderService>();
         services.AddTransient<ITrainingProviderSummaryProvider, TrainingProviderSummaryProvider>();
-        services.AddTransient<IPasAccountProvider, PasAccountProvider>();
         services.AddHttpClient<IRecruitOuterApiClient, RecruitOuterApiClient>();
-        services.AddTransient<IOuterApiGeocodeService, OuterApiGeocodeService>();
 
         // Projection services
         services.AddTransient<IQaDashboardProjectionService, QaDashboardProjectionService>();
@@ -166,18 +149,8 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IMinimumWageProvider, NationalMinimumWageProvider>();
         services.AddTransient<IApprenticeshipProgrammeProvider, ApprenticeshipProgrammeProvider>();
         services.AddTransient<IQualificationsProvider, QualificationsProvider>();
-        services.AddTransient<ICandidateSkillsProvider, CandidateSkillsProvider>();
         services.AddTransient<IProfanityListProvider, ProfanityListProvider>();
         services.AddTransient<IBannedPhrasesProvider, BannedPhrasesProvider>();
-
-        // Query Data Providers
-        services.AddTransient<IVacancySummariesProvider, VacancySummariesProvider>();
-
-        // Reference Data update services
-        services.AddTransient<ITrainingProvidersUpdateService, TrainingProvidersUpdateService>();
-        services.AddTransient<IBankHolidayUpdateService, BankHolidayUpdateService>();
-        services.AddTransient<IBankHolidayProvider, BankHolidayProvider>();
-
     }
 
     private static void RegisterRepositories(IServiceCollection services, IConfiguration configuration)
@@ -282,8 +255,6 @@ public static class ServiceCollectionExtensions
     {
         services
             .AddTransient<IRecruitVacancyClient, VacancyClient>()
-            .AddTransient<IEmployerVacancyClient, VacancyClient>()
-            .AddTransient<IProviderVacancyClient, VacancyClient>()
             .AddTransient<IQaVacancyClient, QaVacancyClient>()
             .AddTransient<IRecruitOuterApiVacancyClient, RecruitOuterApiVacancyClient>()
             .AddTransient<IRecruitQaOuterApiVacancyClient, RecruitQaOuterApiVacancyClient>()

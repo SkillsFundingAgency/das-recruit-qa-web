@@ -2,14 +2,9 @@ using System;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
 
-public class QueryProjectionBase
+public class QueryProjectionBase(string viewType)
 {
-    public QueryProjectionBase(string viewType)
-    {
-        ViewType = viewType;
-    }
-
     public string Id { get; set; }
-    public string ViewType { get; set; }
+    public string ViewType { get; set; } = viewType;
     public DateTime LastUpdated { get; set; }
 }

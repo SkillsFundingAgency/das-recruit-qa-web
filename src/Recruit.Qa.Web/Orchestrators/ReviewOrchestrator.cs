@@ -14,33 +14,22 @@ using UnassignedVacancyReviewException = Recruit.Qa.Web.Exceptions.UnassignedVac
 
 namespace Recruit.Qa.Web.Orchestrators;
 
-public class ReviewOrchestrator
+public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper mapper, IMessaging messaging)
 {
-    private readonly IQaVacancyClient _vacancyClient;
-    private readonly ReviewMapper _mapper;
-    private readonly IMessaging _messaging;
-
-    public ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper mapper, IMessaging messaging)
-    {
-        _vacancyClient = vacancyClient;
-        _mapper = mapper;
-        _messaging = messaging;
-    }
-
     public async Task<Guid?> SubmitReviewAsync(ReviewEditModel m, VacancyUser user)
     {
-        var review = await _vacancyClient.GetVacancyReviewAsync(m.ReviewId);
+        var review = await vacancyClient.GetVacancyReviewAsync(m.ReviewId);
             
         await EnsureUserIsAssignedAsync(review, user.UserId);
 
-        var vacancy = await _vacancyClient.GetVacancyAsync(review.VacancyReference);
+        var vacancy = await vacancyClient.GetVacancyAsync(review.VacancyReference);
                 
-        var manualQaFieldIndicators = _mapper.GetManualQaFieldIndicators(m);
+        var manualQaFieldIndicators = mapper.GetManualQaFieldIndicators(m);
         var selectedAutomatedQaRuleOutcomeIds = m.SelectedAutomatedQaResults.Select(Guid.Parse).ToList();
 
         if (m.IsRefer)
         {
-            await _vacancyClient.ReferVacancyReviewAsync(m.ReviewId, m.ReviewerComment, manualQaFieldIndicators, selectedAutomatedQaRuleOutcomeIds);
+            await vacancyClient.ReferVacancyReviewAsync(m.ReviewId, m.ReviewerComment, manualQaFieldIndicators, selectedAutomatedQaRuleOutcomeIds);
         }
         else
         {
@@ -48,10 +37,10 @@ public class ReviewOrchestrator
 
             if (manualQaFieldEditIndicator.Any())
             {
-                await _vacancyClient.UpdateDraftVacancyAsync(vacancy, user);
+                await vacancyClient.UpdateDraftVacancyAsync(vacancy, user);
             }
                 
-            await _messaging.SendCommandAsync(
+            await messaging.SendCommandAsync(
                 new ApproveVacancyReviewCommand(m.ReviewId, m.ReviewerComment, manualQaFieldIndicators, selectedAutomatedQaRuleOutcomeIds, manualQaFieldEditIndicator));
         }
 
@@ -62,21 +51,21 @@ public class ReviewOrchestrator
 
     public async Task<ReviewViewModel> GetReviewViewModelAsync(Guid reviewId, VacancyUser user)
     {
-        var review = await _vacancyClient.GetVacancyReviewAsync(reviewId);
+        var review = await vacancyClient.GetVacancyReviewAsync(reviewId);
         if (review == null)
             throw new NotFoundException($"Unable to find review with id: {reviewId}");
 
         ValidateReviewStateForViewing(review);
 
-        if (_vacancyClient.VacancyReviewCanBeAssigned(review))
+        if (vacancyClient.VacancyReviewCanBeAssigned(review))
         {
-            await _vacancyClient.AssignVacancyReviewAsync(user, review.Id);
-            review = await _vacancyClient.GetVacancyReviewAsync(reviewId);
+            await vacancyClient.AssignVacancyReviewAsync(user, review.Id);
+            review = await vacancyClient.GetVacancyReviewAsync(reviewId);
         }
 
         await EnsureUserIsAssignedAsync(review, user.UserId);
 
-        var vm = await _mapper.Map(review);
+        var vm = await mapper.Map(review);
 
         if(!string.IsNullOrEmpty(vm?.EmployerWebsiteUrl) && !vm.EmployerWebsiteUrl.StartsWith("http", true, null))
         {
@@ -93,12 +82,12 @@ public class ReviewOrchestrator
 
     public async Task<ReviewViewModel> GetReadonlyReviewViewModelAsync(Guid reviewId)
     {
-        var review = await _vacancyClient.GetVacancyReviewAsync(reviewId);
+        var review = await vacancyClient.GetVacancyReviewAsync(reviewId);
 
         if (review == null)
             throw new NotFoundException($"Unable to find review with id: {reviewId}");
 
-        var vm = await _mapper.Map(review);
+        var vm = await mapper.Map(review);
         vm.ReadOnly = true;
 
         if (!string.IsNullOrEmpty(vm?.EmployerWebsiteUrl) && !vm.EmployerWebsiteUrl.StartsWith("http", true, null))
@@ -144,7 +133,7 @@ public class ReviewOrchestrator
 
     private async Task EnsureUserIsAssignedAsync(VacancyReview review, string userId)
     {
-        var userReviews = await _vacancyClient.GetAssignedVacancyReviewsForUserAsync(userId);
+        var userReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(userId);
 
         if(userReviews.Any(r => r.Id == review.Id) == false)
             throw new UnassignedVacancyReviewException($"You have been unassigned from {review.VacancyReference}");
@@ -152,16 +141,16 @@ public class ReviewOrchestrator
 
     public async Task<Guid?> AssignNextVacancyReviewAsync(VacancyUser user)
     {
-        await _vacancyClient.AssignNextVacancyReviewAsync(user);
+        await vacancyClient.AssignNextVacancyReviewAsync(user);
 
-        var userVacancyReviews = await _vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.UserId);
+        var userVacancyReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.UserId);
 
         return userVacancyReviews.FirstOrDefault()?.Id;
     }
 
     public async Task<UnassignReviewViewModel> GetUnassignReviewViewModelAsync(Guid reviewId)
     {
-        var review = await _vacancyClient.GetVacancyReviewAsync(reviewId);
+        var review = await vacancyClient.GetVacancyReviewAsync(reviewId);
 
         if (review == null)
         {
@@ -177,7 +166,7 @@ public class ReviewOrchestrator
 
     public Task UnassignVacancyReviewAsync(Guid reviewId)
     {
-        return _vacancyClient.UnassignVacancyReviewAsync(reviewId);
+        return vacancyClient.UnassignVacancyReviewAsync(reviewId);
     }
 
     private List<ManualQaFieldEditIndicator> PopulateManualQaFieldEditIndicators(VacancyReview review,

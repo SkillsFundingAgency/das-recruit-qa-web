@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Mongo;
@@ -10,21 +9,12 @@ using Polly;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-internal sealed class MongoDbEmployerProfileRepository : MongoDbCollectionBase, IEmployerProfileRepository
+internal sealed class MongoDbEmployerProfileRepository(
+    ILoggerFactory loggerFactory,
+    IOptions<MongoDbConnectionDetails> details)
+    : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.EmployerProfiles, details),
+        IEmployerProfileRepository
 {
-    public MongoDbEmployerProfileRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details) 
-        : base(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.EmployerProfiles, details)
-    {
-    }
-
-    public async Task CreateAsync(EmployerProfile profile)
-    {
-        var collection = GetCollection<EmployerProfile>();
-        await RetryPolicy.ExecuteAsync(_ => 
-                collection.InsertOneAsync(profile),
-            new Context(nameof(CreateAsync)));
-    }
-
     public async Task<EmployerProfile> GetAsync(string employerAccountId, string accountLegalEntityPublicHashedId)
     {
         var builder = Builders<EmployerProfile>.Filter;
@@ -37,31 +27,5 @@ internal sealed class MongoDbEmployerProfileRepository : MongoDbCollectionBase, 
             new Context(nameof(GetAsync)));
             
         return result;
-    }
-
-    public async Task<IList<EmployerProfile>> GetEmployerProfilesForEmployerAsync(string employerAccountId)
-    {
-        var filter = Builders<EmployerProfile>.Filter.Eq(x => x.EmployerAccountId, employerAccountId);
-
-        var collection = GetCollection<EmployerProfile>();
-
-        var result = await RetryPolicy.ExecuteAsync(_ => 
-                collection.Find(filter).ToListAsync(),
-            new Context(nameof(GetEmployerProfilesForEmployerAsync)));
-    
-        return result;
-    }
-
-    public Task UpdateAsync(EmployerProfile profile)
-    {
-        var builder = Builders<EmployerProfile>.Filter;
-        var filter = builder.Eq(x => x.EmployerAccountId, profile.EmployerAccountId) &
-                     builder.Eq(x => x.AccountLegalEntityPublicHashedId, profile.AccountLegalEntityPublicHashedId);
-
-        var collection = GetCollection<EmployerProfile>();
-
-        return RetryPolicy.ExecuteAsync(_ => 
-                collection.ReplaceOneAsync(filter, profile),
-            new Context(nameof(UpdateAsync)));
     }
 }

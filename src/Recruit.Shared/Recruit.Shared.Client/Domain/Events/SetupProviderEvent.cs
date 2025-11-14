@@ -4,12 +4,7 @@ using MediatR;
 
 namespace Recruit.Vacancies.Client.Domain.Events;
 
-public class SetupProviderEvent : EventBase, INotification, IProviderEvent
+public class SetupProviderEvent(long ukprn) : EventBase, INotification, IProviderEvent
 {
-    public long Ukprn { get; private set; }
-
-    public SetupProviderEvent(long ukprn)
-    {
-        Ukprn = ukprn;
-    }
+    public long Ukprn { get; private set; } = ukprn;
 }

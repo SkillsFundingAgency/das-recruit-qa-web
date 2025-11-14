@@ -9,10 +9,6 @@ public static class Anchors
     public const string ApplicationProcessSection = "applicationProcess";
     public const string TrainingProviderSection = "trainingProvider";
     public const string AdditionalQuestionsSection = "additionalQuestions";
-    public const string TitleSection = "title";
-    public const string NumberOfPositionsSection = "numberofpositions";
-    public const string ShortDescriptionSection = "shortDescription";
-    public const string VacancyDescriptionSection = "vacancyDescription";
 
     //Preview Fields
     public const string Title = "Title";
@@ -29,7 +25,6 @@ public static class Anchors
     public const string AdditionalTrainingDescription = "AdditionalrainingDescription";
     public const string OutcomeDescription = "OutcomeDescription";
     public const string Skills = "Skills";
-    public const string HasOptedToAddQualifications = "HasOptedToAddQualifications";
     public const string Qualifications = "Qualifications";
     public const string ThingsToConsider = "ThingsToConsider";
     public const string EmployerDescription = "EmployerDescription";
@@ -44,20 +39,4 @@ public static class Anchors
     public const string ApplicationMethod = "ApplicationMethod";
     public const string ApplicationUrl = "ApplicationUrl";
     public const string ApplicationInstructions = "ApplicationInstructions";
-    public const string AdditionalQuestion1 = nameof(AdditionalQuestion1);
-    public const string AdditionalQuestion2 = nameof(AdditionalQuestion2);
-
-    //Wage
-    public const string WageTypeHeading = "WageTypeHeading";
-    public const string WageAdditionalInformation = "WageAdditionalInformation";
-    public const string CompanyBenefitsInformation = "CompanyBenefitsInformation";
-
-    //Skills
-    public const string SkillsHeading = "SkillsHeading";
-
-    //Qualifications
-    public const string QualificationsHeading = "QualificationsHeading";
-
-    //Application process
-    public const string ApplicationMethodHeading = "ApplicationMethodHeading";
 }

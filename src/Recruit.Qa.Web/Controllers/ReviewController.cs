@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,22 +11,15 @@ using Recruit.Qa.Web.ViewModels;
 namespace Recruit.Qa.Web.Controllers;
 
 [Route(RoutePaths.VacancyReviewsRoutePath)]
-public class ReviewController : Controller
+public class ReviewController(ReviewOrchestrator orchestrator) : Controller
 {
-    private readonly ReviewOrchestrator _orchestrator;
-
-    public ReviewController(ReviewOrchestrator orchestrator)
-    {
-        _orchestrator = orchestrator;
-    }
-
     [HttpGet(Name = RouteNames.Vacancy_Review_Get)]
     public async Task<IActionResult> Review([FromRoute] Guid reviewId) 
     {
         // if the user is not authenticated, redirect them back to start now page.
         if (User.Identity is {IsAuthenticated: false}) return RedirectToAction("Index", "Home");
 
-        var vm = await _orchestrator.GetReviewViewModelAsync(reviewId, User.GetVacancyUser());
+        var vm = await orchestrator.GetReviewViewModelAsync(reviewId, User.GetVacancyUser());
           
         return View(vm);
     }
@@ -39,13 +31,13 @@ public class ReviewController : Controller
         {
             if (model.IsRefer)
             {
-                var vm = await _orchestrator.GetReviewViewModelAsync(model, User.GetVacancyUser());
+                var vm = await orchestrator.GetReviewViewModelAsync(model, User.GetVacancyUser());
                 return View("Review", vm);    
             }
             ModelState.ClearValidationState(nameof(ReviewEditModel.ReviewerComment));
         }
 
-        var nextVacancyReviewId = await _orchestrator.SubmitReviewAsync(model, User.GetVacancyUser());
+        var nextVacancyReviewId = await orchestrator.SubmitReviewAsync(model, User.GetVacancyUser());
 
         if (nextVacancyReviewId == null)
             return RedirectToRoute(RouteNames.Dashboard_Index_Get);
@@ -57,7 +49,7 @@ public class ReviewController : Controller
     [HttpGet("unassign", Name = RouteNames.Vacancy_Review_Unassign_Get)]
     public async Task<IActionResult> UnassignReview([FromRoute] Guid reviewId)
     {
-        var unassignReviewVM = await _orchestrator.GetUnassignReviewViewModelAsync(reviewId);
+        var unassignReviewVM = await orchestrator.GetUnassignReviewViewModelAsync(reviewId);
         if (unassignReviewVM == null)
         {
             return RedirectToRoute(RouteNames.Dashboard_Index_Get);
@@ -72,12 +64,12 @@ public class ReviewController : Controller
             
         if (!ModelState.IsValid)
         {
-            var unasignReviewViewModel = await _orchestrator.GetUnassignReviewViewModelAsync(model.ReviewId);
+            var unasignReviewViewModel = await orchestrator.GetUnassignReviewViewModelAsync(model.ReviewId);
             return View(unasignReviewViewModel);
         }
                 
         if (model.ConfirmUnassign.GetValueOrDefault())
-            await _orchestrator.UnassignVacancyReviewAsync(model.ReviewId);
+            await orchestrator.UnassignVacancyReviewAsync(model.ReviewId);
             
         return RedirectToRoute(RouteNames.Dashboard_Index_Get);
     }
@@ -85,7 +77,7 @@ public class ReviewController : Controller
     [HttpGet("readonly", Name = RouteNames.Vacancy_Readonly_Review_Get)]
     public async Task<IActionResult> ReadonlyReview([FromRoute] Guid reviewId)
     {
-        var vm = await _orchestrator.GetReadonlyReviewViewModelAsync(reviewId);
+        var vm = await orchestrator.GetReadonlyReviewViewModelAsync(reviewId);
 
         return View(vm);
     }

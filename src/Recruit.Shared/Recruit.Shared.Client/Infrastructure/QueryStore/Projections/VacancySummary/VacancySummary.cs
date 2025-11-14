@@ -1,7 +1,7 @@
 ﻿using System;
 using Recruit.Vacancies.Client.Domain.Entities;
 
-namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections;
+namespace Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancySummary;
 
 public class VacancySummary
 {

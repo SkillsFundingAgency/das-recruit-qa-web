@@ -5,17 +5,12 @@ using System.Text;
 
 namespace Recruit.Shared.Web.Services;
 
-public class GoogleMapsGeocodeImageService : IGeocodeImageService
+public class GoogleMapsGeocodeImageService(string privateKey) : IGeocodeImageService
 {
     private const string MapTypeMarkers = "markers";
     private const string MapTypeCenter = "center";
 
-    private string _privateKey { get; set; }
-
-    public GoogleMapsGeocodeImageService(string privateKey)
-    {
-        _privateKey = privateKey;
-    }
+    private string _privateKey { get; set; } = privateKey;
 
     public string GetMapImageUrl(string postcode, int imageWidth, int imageHeight, bool showMarker)
     {
