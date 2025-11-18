@@ -493,6 +493,6 @@ mce-tinymce {
     white-space: normal;
 }
 
-.govuk-list > ul {
+.govuk-list ul {
     list-style: disc;
 }
