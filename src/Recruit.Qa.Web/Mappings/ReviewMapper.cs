@@ -18,30 +18,15 @@ using Recruit.Shared.Web.Services;
 
 namespace Recruit.Qa.Web.Mappings;
 
-public class ReviewMapper
+public class ReviewMapper(
+    ILogger<ReviewMapper> logger,
+    IQaVacancyClient vacancyClient,
+    IGeocodeImageService mapService,
+    IRuleMessageTemplateRunner ruleTemplateRunner,
+    IReviewSummaryService reviewSummaryService)
 {
     private const int MapImageWidth = 465;
     private const int MapImageHeight = 256;
-    private readonly ILogger<ReviewMapper> _logger;
-    private readonly IQaVacancyClient _vacancyClient;
-    private readonly IGeocodeImageService _mapService;
-    private readonly Lazy<IList<string>> _qualifications;
-    private readonly IRuleMessageTemplateRunner _ruleTemplateRunner;
-    private readonly IReviewSummaryService _reviewSummaryService;
-
-    public ReviewMapper(ILogger<ReviewMapper> logger,
-        IQaVacancyClient vacancyClient,
-        IGeocodeImageService mapService,
-        IRuleMessageTemplateRunner ruleTemplateRunner,
-        IReviewSummaryService reviewSummaryService)
-    {
-        _logger = logger;
-        _vacancyClient = vacancyClient;
-        _mapService = mapService;
-        _qualifications = new Lazy<IList<string>>(() => _vacancyClient.GetCandidateQualificationsAsync().Result.QualificationTypes);
-        _ruleTemplateRunner = ruleTemplateRunner;
-        _reviewSummaryService = reviewSummaryService;
-    }
 
     private static readonly Dictionary<string, IEnumerable<string>> ReviewFields = new Dictionary<string, IEnumerable<string>>
     {
@@ -163,20 +148,20 @@ public class ReviewMapper
     {
         var vacancy = review.VacancySnapshot;
 
-        var currentVacancy = _vacancyClient.GetVacancyAsync(review.VacancyReference);
+        var currentVacancy = vacancyClient.GetVacancyAsync(review.VacancyReference);
 
-        var programmeTask = _vacancyClient.GetApprenticeshipProgrammeAsync(vacancy.ProgrammeId);
+        var programmeTask = vacancyClient.GetApprenticeshipProgrammeAsync(vacancy.ProgrammeId);
             
-        var reviewHistoryTask = _vacancyClient.GetVacancyReviewHistoryAsync(review.VacancyReference);
+        var reviewHistoryTask = vacancyClient.GetVacancyReviewHistoryAsync(review.VacancyReference);
 
-        var approvedCountTask = _vacancyClient.GetApprovedCountAsync(vacancy.SubmittedByUser.UserId);
+        var approvedCountTask = vacancyClient.GetApprovedCountAsync(vacancy.SubmittedByUser.UserId);
 
-        var approvedFirstTimeCountTask = _vacancyClient.GetApprovedFirstTimeCountAsync(vacancy.SubmittedByUser.UserId);
+        var approvedFirstTimeCountTask = vacancyClient.GetApprovedFirstTimeCountAsync(vacancy.SubmittedByUser.UserId);
 
-        var reviewSummaryTask = _reviewSummaryService.GetReviewSummaryViewModelAsync(review.Id,
+        var reviewSummaryTask = reviewSummaryService.GetReviewSummaryViewModelAsync(review.Id,
             ReviewFieldMappingLookups.GetPreviewReviewFieldIndicators());
 
-        var anonymousApprovedCountTask = vacancy.IsAnonymous ? _vacancyClient.GetAnonymousApprovedCountAsync(vacancy.AccountLegalEntityPublicHashedId) : Task.FromResult(0);
+        var anonymousApprovedCountTask = vacancy.IsAnonymous ? vacancyClient.GetAnonymousApprovedCountAsync(vacancy.AccountLegalEntityPublicHashedId) : Task.FromResult(0);
 
         await Task.WhenAll(
             currentVacancy,
@@ -214,7 +199,7 @@ public class ReviewMapper
             vm.EmployerWebsiteUrl = vacancy.EmployerWebsiteUrl;
             if (vacancy.EmployerLocation != null)
             {
-                vm.MapUrl = MapImageHelper.GetEmployerLocationMapUrl(vacancy, _mapService, MapImageWidth, MapImageHeight);
+                vm.MapUrl = MapImageHelper.GetEmployerLocationMapUrl(vacancy, mapService, MapImageWidth, MapImageHeight);
                 vm.EmployerAddressElements = vacancy.EmployerAddressForDisplay().ToList();
             }
             vm.EmployerLocationOption = vacancy.EmployerLocationOption;
@@ -230,7 +215,7 @@ public class ReviewMapper
             vm.ProviderContactEmail = vacancy.ProviderContact?.Email;
             vm.ProviderContactTelephone= vacancy.ProviderContact?.Phone;
             vm.ProviderName = vacancy.TrainingProvider.Name;
-            vm.Qualifications = vacancy.Qualifications.SortQualifications(_qualifications.Value).AsText();
+            vm.Qualifications = vacancy.Qualifications.AsText();
             vm.ShortDescription = vacancy.ShortDescription;
             vm.Skills = vacancy.Skills ?? Enumerable.Empty<string>();
             vm.OwnerType = vacancy.OwnerType;
@@ -298,7 +283,7 @@ public class ReviewMapper
         }
         catch (NullReferenceException ex)
         {
-            _logger.LogError(ex, "Unable to map vacancy to view model. Unexpected null fields.");
+            logger.LogError(ex, "Unable to map vacancy to view model. Unexpected null fields.");
             throw;
         }
 
@@ -328,7 +313,7 @@ public class ReviewMapper
         if (currentReview.SubmissionCount <= 1)
             return vm;
 
-        var previousReview = await _vacancyClient.GetCurrentReferredVacancyReviewAsync(currentReview.VacancyReference);
+        var previousReview = await vacancyClient.GetCurrentReferredVacancyReviewAsync(currentReview.VacancyReference);
 
         if (previousReview == null)
             return vm;
@@ -421,7 +406,7 @@ public class ReviewMapper
                         OutcomeId = d.Id.ToString(),
                         FieldId = d.Target,
                         Checked = !review.DismissedAutomatedQaOutcomeIndicators?.Contains(d.Target.ToString()) ?? true,
-                        Text = _ruleTemplateRunner.ToText(ruleOutcome.RuleId, d.Data, FieldDisplayNameResolver.Resolve(d.Target))
+                        Text = ruleTemplateRunner.ToText(ruleOutcome.RuleId, d.Data, FieldDisplayNameResolver.Resolve(d.Target))
                     }));
         }
 
