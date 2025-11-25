@@ -119,6 +119,9 @@ public partial class Startup
             
         services.AddFeatureToggle();
         services.AddDasEncoding(_configuration);
+#if DEBUG
+        services.AddControllersWithViews().AddRazorRuntimeCompilation();
+#endif
 
         CheckInfrastructure(services);
     }

@@ -93,15 +93,12 @@
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                <div class="@Model.ShortDescriptionClass govuk-character-count" id="@FieldIdentifiers.ShortDescription" data-module="govuk-character-count" data-maxlength="350">
-                    <h3 class="govuk-heading-s govuk-!-margin-top-0">Summary</h3>
-
-                    <textarea class="govuk-textarea govuk-js-character-count" asp-for="ShortDescription" rows="5"></textarea>
-                    
-                    <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
-                                          asp-value="@FieldIdentifiers.ShortDescription"
-                                          asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
-                </div>
+                <h3 class="govuk-heading-s govuk-!-margin-top-0">Summary</h3>
+                <textarea class="html-editor" asp-for="ShortDescription" rows="5"  data-val-length-max="350"></textarea>
+                <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
+                                      asp-value="@FieldIdentifiers.ShortDescription"
+                                      asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
+                
             </div>
             <div class="govuk-grid-column-one-third">
                 <div class="@Model.ClosingDateClass" id="@FieldIdentifiers.ClosingDate">
@@ -127,7 +124,7 @@
                                 <h3 class="govuk-heading-s">Wage</h3>
                                 <p class="govuk-body">@Model.WageText</p>
                                 <h3 class="govuk-heading-s">Information about pay (optional)</h3>
-                                <p class="govuk-body">@Model.WageInfo</p>
+                                <p class="govuk-body">@Html.Raw(Model.WageInfo)</p>
                                 
                                 <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
                                                       asp-value="@FieldIdentifiers.Wage"
@@ -136,7 +133,7 @@
                         </li>
                         <li>
                             <h3 class="govuk-heading-s">Company benefits (optional)</h3>
-                            <textarea class="govuk-textarea govuk-js-character-count" asp-for="CompanyBenefitsInformation" rows="5" data-val-length-max="250"></textarea>
+                            <textarea class="govuk-textarea govuk-js-character-count html-editor" asp-for="CompanyBenefitsInformation" rows="5" data-val-length-max="250"></textarea>
                             <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
                                                   asp-value="@FieldIdentifiers.CompanyBenefitsInformation"
                                                   asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
@@ -259,14 +256,12 @@
                 </div>
             </div>
             <div class="govuk-grid-column-one-half" asp-hide="@(Model.ApprenticeshipType is ApprenticeshipTypes.Foundation && string.IsNullOrWhiteSpace(Model.ThingsToConsider))">
-                <div class="@Model.ThingsToConsiderClass" id="@FieldIdentifiers.ThingsToConsider">
-                    <h3 class="govuk-heading-s">Other requirements (optional)</h3>
-                    <textarea class="govuk-textarea govuk-js-character-count" asp-for="ThingsToConsider" rows="5" data-val-length-max="250"></textarea>
+                <h3 class="govuk-heading-s">Other requirements (optional)</h3>
+                <textarea class="govuk-textarea govuk-js-character-count html-editor" asp-for="ThingsToConsider" rows="5" data-val-length-max="250"></textarea>
 
-                    <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
-                                          asp-value="@FieldIdentifiers.ThingsToConsider"
-                                          asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
-                </div>
+                <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
+                                      asp-value="@FieldIdentifiers.ThingsToConsider"
+                                      asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
             </div>
             <div class="govuk-grid-column-two-thirds" asp-show="@(Model.ApprenticeshipType is ApprenticeshipTypes.Foundation && string.IsNullOrWhiteSpace(Model.ThingsToConsider))">
                 <p class="govuk-body">You do not need any specific qualifications to apply for a foundation apprenticeship.</p>
@@ -309,14 +304,16 @@
         </div>
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-two-thirds">
-                <div class="@Model.EmployerDescriptionClass" id="@FieldIdentifiers.EmployerDescription">
-                    <h3 class="govuk-heading-s">Description</h3>
+                <div>
+                    <div class="@Model.EmployerDescriptionClass" id="@FieldIdentifiers.EmployerDescription">
+                        <h3 class="govuk-heading-s">Description</h3>
 
-                    <p class="govuk-body">@Model.EmployerDescription</p>
+                        <div class="govuk-body">@Html.Raw(Model.EmployerDescription)</div>
 
-                    <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
-                                          asp-value="@FieldIdentifiers.EmployerDescription"
-                                          asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
+                        <esfa-review-checkbox asp-for="SelectedFieldIdentifiers"
+                                              asp-value="@FieldIdentifiers.EmployerDescription"
+                                              asp-items="@Model.FieldIdentifiers"></esfa-review-checkbox>
+                    </div>    
                 </div>
                 <div class="@Model.EmployerNameClass" id="@FieldIdentifiers.EmployerName">
                     <h3 class="govuk-heading-s">Employer</h3>
