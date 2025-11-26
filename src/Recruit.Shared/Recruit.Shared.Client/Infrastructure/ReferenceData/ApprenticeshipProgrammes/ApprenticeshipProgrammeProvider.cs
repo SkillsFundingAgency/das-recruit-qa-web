@@ -1,14 +1,15 @@
+using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Application.FeatureToggle;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Application.Cache;
-using Recruit.Vacancies.Client.Application.FeatureToggle;
-using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
@@ -19,8 +20,6 @@ public class ApprenticeshipProgrammeProvider(
     IFeature feature)
     : IApprenticeshipProgrammeProvider
 {
-    private const int DummyStandardProgrammeId = 999999;
-
     public async Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId)
     {
         var apprenticeships = await GetApprenticeshipProgrammesAsync(true);
@@ -46,6 +45,8 @@ public class ApprenticeshipProgrammeProvider(
             {
                 var result = await outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest(includeFoundationApprenticeships));
                 var trainingProgrammes = result.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList();
+                
+                // Add dummy programme for CSJ and other special vacancies. FAI-2869
                 trainingProgrammes.Add(GetDummyProgramme());
                 return new ApprenticeshipProgrammes
                 {
@@ -63,11 +64,11 @@ public class ApprenticeshipProgrammeProvider(
     private static ApprenticeshipProgramme GetDummyProgramme() =>
         new()
         {
-            Id = DummyStandardProgrammeId.ToString(),
-            Title = "To be confirmed",
+            Id = EsfaTestTrainingProgramme.Id.ToString(),
+            Title = EsfaTestTrainingProgramme.Title,
             IsActive = true,
-            ApprenticeshipType = TrainingType.Standard,
-            ApprenticeshipLevel = ApprenticeshipLevel.Unknown,
+            ApprenticeshipType = EsfaTestTrainingProgramme.ApprenticeshipType,
+            ApprenticeshipLevel = EsfaTestTrainingProgramme.ApprenticeshipLevel,
             EffectiveTo = DateTime.UtcNow.AddYears(1),
             LastDateStarts = DateTime.UtcNow.AddYears(1)
         };

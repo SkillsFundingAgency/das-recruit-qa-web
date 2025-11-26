@@ -1,9 +1,9 @@
 using AutoFixture.NUnit3;
 using NUnit.Framework;
 using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Configuration;
 using Recruit.Vacancies.Client.Application.FeatureToggle;
 using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
@@ -67,10 +67,10 @@ public class WhenGettingAllApprenticeshipProgrammes
 
         var actual = await provider.GetApprenticeshipProgrammeAsync("999999");
 
-        actual.Id.Should().Be("999999");
-        actual.Title.Should().Be("To be confirmed");
-        actual.ApprenticeshipType.Should().Be(TrainingType.Standard);
-        actual.ApprenticeshipLevel.Should().Be(ApprenticeshipLevel.Unknown);
+        actual.Id.Should().Be(EsfaTestTrainingProgramme.Id.ToString());
+        actual.Title.Should().Be(EsfaTestTrainingProgramme.Title);
+        actual.ApprenticeshipType.Should().Be(EsfaTestTrainingProgramme.ApprenticeshipType);
+        actual.ApprenticeshipLevel.Should().Be(EsfaTestTrainingProgramme.ApprenticeshipLevel);
         actual.LastDateStarts.Should().BeAfter(DateTime.UtcNow);
         actual.EffectiveTo.Should().BeAfter(DateTime.UtcNow);
     }
