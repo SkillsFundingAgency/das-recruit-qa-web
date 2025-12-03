@@ -35,7 +35,7 @@ jobs:
             ServiceConnection: ${{ parameters.ServiceConnection }}
             ApimResourceGroup: $(SharedApimResourceGroup)
             ApimName: $(SharedApimName)
-            SubscriptionId: $(AppServiceName)
+            SubscriptionId: $(QAAppServiceName)
             PipelineVariableName: RecruitQaApimSubscriptionKey
             IsMultiRepoCheckout: true
         - template: azure-pipelines-templates/deploy/step/generate-config.yml@das-platform-building-blocks
@@ -50,8 +50,8 @@ jobs:
             ConfigurationSecrets:
               RecruitCosmosConnectionString: $(RecruitCosmosConnectionString)
               RecruitStorageConnectionString: $(RecruitStorageConnectionString)
-              RecruitApimSubscriptionKey: $(RecruitApimSubscriptionKey)
-              RecruitQaSubscriptionKey: $(RecruitQaSubscriptionKey)
+              RecruitApimSubscriptionKey: $(RecruitQaApimSubscriptionKey)
+              RecruitQaSubscriptionKey: $(RecruitQaApimSubscriptionKey)
               SlackWebHookUrl: $(SlackWebHookUrl)
               DefaultSessionRedisConnectionString: $(DefaultSessionRedisConnectionString)
               LoggingRedisConnectionString: $(LoggingRedisConnectionString)

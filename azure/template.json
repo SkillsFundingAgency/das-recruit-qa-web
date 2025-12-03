@@ -86,7 +86,6 @@
     "resourceNamePrefix": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-', parameters('serviceName')))]",
     "resourceGroupName": "[concat(variables('resourceNamePrefix'), '-rg')]",
     "qaAppServiceName": "[concat(variables('resourceNamePrefix'), '-qa-as')]",
-    "apiAppServiceName": "[concat(variables('resourceNamePrefix'),'api-as')]",
     "privateLinkScopeName": "[toLower(concat('das-', parameters('resourceEnvironmentName'),'-shared-ampls'))]",
     "configNames": "SFA.DAS.Recruit.QA,SFA.DAS.Provider.DfeSignIn,SFA.DAS.Encoding"
   },
@@ -248,7 +247,7 @@
     },
     {
         "apiVersion": "2021-04-01",
-        "name": "[concat(variables('apiAppServiceName'), '-apim-subscription-', parameters('utcValue'))]",
+        "name": "[concat(variables('qaAppServiceName'), '-apim-subscription-', parameters('utcValue'))]",
         "resourceGroup": "[parameters('sharedApimResourceGroup')]",
         "type": "Microsoft.Resources/deployments",
         "properties": {
@@ -262,20 +261,16 @@
                     "value": "[parameters('sharedApimName')]"
                 },
                 "subscriptionName": {
-                    "value": "[variables('apiAppServiceName')]"
+                    "value": "[variables('qaAppServiceName')]"
                 },
                 "subscriptionScope": {
-                    "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('sharedApimResourceGroup'), '/providers/Microsoft.ApiManagement/service/', parameters('sharedApimName'), '/products/RoatpOuterApi')]"
+                    "value": "[concat('/subscriptions/', subscription().subscriptionId, '/resourceGroups/', parameters('sharedApimResourceGroup'), '/providers/Microsoft.ApiManagement/service/', parameters('sharedApimName'), '/products/RecruitQaOuterApi')]"
                 }
             }
         }
     }
   ],
   "outputs": {
-    "ApiAppServiceName": {
-        "type": "string",
-        "value": "[variables('apiAppServiceName')]"
-    },
     "QAAppServiceName": {
       "type": "string",
       "value": "[variables('qaAppServiceName')]"
