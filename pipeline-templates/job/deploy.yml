@@ -51,7 +51,7 @@ jobs:
               RecruitCosmosConnectionString: $(RecruitCosmosConnectionString)
               RecruitStorageConnectionString: $(RecruitStorageConnectionString)
               RecruitApimSubscriptionKey: $(RecruitApimSubscriptionKey)
-              RecruitQaSubscriptionKey: $(RecruitQaApimSubscriptionKey)
+              RecruitQaApimSubscriptionKey: $(RecruitQaApimSubscriptionKey)
               SlackWebHookUrl: $(SlackWebHookUrl)
               DefaultSessionRedisConnectionString: $(DefaultSessionRedisConnectionString)
               LoggingRedisConnectionString: $(LoggingRedisConnectionString)
