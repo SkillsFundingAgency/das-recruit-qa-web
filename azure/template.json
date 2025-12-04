@@ -56,6 +56,12 @@
     "sharedSQLServerName": {
       "type": "string"
     },
+    "sharedApimResourceGroup": {
+      "type": "string"
+    },
+    "sharedApimName": {
+    "type": "string"
+    },
     "logAnalyticsSubscriptionId": {
       "type": "string",
       "defaultValue": "[subscription().subscriptionId]"
