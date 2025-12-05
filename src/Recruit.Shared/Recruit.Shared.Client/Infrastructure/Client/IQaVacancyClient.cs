@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
@@ -13,7 +12,6 @@ public interface IQaVacancyClient
     Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId);
     Task<Domain.Entities.VacancyReview> GetVacancyReviewAsync(Guid reviewId);
     Task ReferVacancyReviewAsync(Guid reviewId, string manualQaComment, List<ManualQaFieldIndicator> manualQaFieldIndicators, List<Guid> automatedQaRuleOutcomeIds);
-    Task<Qualifications> GetCandidateQualificationsAsync();
     Task<Domain.Entities.VacancyReview> GetSearchResultAsync(string searchTerm);
     Task<int> GetApprovedCountAsync(string submittedByUserId);
     Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewsInProgressAsync();
