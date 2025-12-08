@@ -5,7 +5,6 @@ using Recruit.Vacancies.Client.Application.Services.Reports;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,8 +21,7 @@ public class QaVacancyClient(
     IMessaging messaging,
     INextVacancyReviewService nextVacancyReviewService,
     IReportRepository reportRepository,
-    IReportService reportService,
-    IQualificationsProvider qualificationsProvider)
+    IReportService reportService)
     : IQaVacancyClient
 {
     private readonly ManualQaOutcome[] _displayableReviewOutcomes = [ManualQaOutcome.Approved, ManualQaOutcome.Referred];
@@ -36,16 +34,6 @@ public class QaVacancyClient(
     public Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId)
     {
         return apprenticeshipProgrammesProvider.GetApprenticeshipProgrammeAsync(programmeId);
-    }
-        
-
-    public async Task<Qualifications> GetCandidateQualificationsAsync()
-    {
-        var qualification = await qualificationsProvider.GetQualificationsAsync();
-        return new Qualifications
-        {
-            QualificationTypes = qualification.ToList()
-        };
     }
 
     public async Task<Domain.Entities.VacancyReview> GetSearchResultAsync(string searchTerm)

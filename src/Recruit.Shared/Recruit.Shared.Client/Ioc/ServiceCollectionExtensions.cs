@@ -33,7 +33,6 @@ using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.BannedPhrases;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Qualifications;
 using Recruit.Vacancies.Client.Infrastructure.Reports;
 using Recruit.Vacancies.Client.Infrastructure.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Services;
@@ -148,7 +147,6 @@ public static class ServiceCollectionExtensions
         // Reference Data Providers
         services.AddTransient<IMinimumWageProvider, NationalMinimumWageProvider>();
         services.AddTransient<IApprenticeshipProgrammeProvider, ApprenticeshipProgrammeProvider>();
-        services.AddTransient<IQualificationsProvider, QualificationsProvider>();
         services.AddTransient<IProfanityListProvider, ProfanityListProvider>();
         services.AddTransient<IBannedPhrasesProvider, BannedPhrasesProvider>();
     }
@@ -236,14 +234,10 @@ public static class ServiceCollectionExtensions
 
     private static void AddValidation(IServiceCollection services)
     {
-        services.AddTransient<AbstractValidator<Vacancy>, FluentVacancyValidator>();
         services.AddTransient(typeof(IEntityValidator<,>), typeof(EntityValidator<,>));
 
         services.AddTransient<AbstractValidator<ApplicationReview>, ApplicationReviewValidator>();
         services.AddTransient<AbstractValidator<VacancyReview>, VacancyReviewValidator>();
-
-        services.AddTransient<AbstractValidator<UserNotificationPreferences>, UserNotificationPreferencesValidator>();
-        services.AddTransient<AbstractValidator<Qualification>, QualificationValidator>();
     }
 
     private static void AddRules(IServiceCollection services)
