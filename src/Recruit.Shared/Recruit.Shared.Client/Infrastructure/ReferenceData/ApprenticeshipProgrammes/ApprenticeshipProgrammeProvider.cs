@@ -1,33 +1,26 @@
+using Recruit.Vacancies.Client.Application.Cache;
+using Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Application.FeatureToggle;
+using Recruit.Vacancies.Client.Application.Providers;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Application.Cache;
-using Recruit.Vacancies.Client.Application.FeatureToggle;
-using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Microsoft.Extensions.Configuration;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
-public class ApprenticeshipProgrammeProvider : IApprenticeshipProgrammeProvider
+public class ApprenticeshipProgrammeProvider(
+    ICache cache,
+    ITimeProvider timeProvider,
+    IRecruitOuterApiClient outerApiClient,
+    IFeature feature)
+    : IApprenticeshipProgrammeProvider
 {
-    private readonly ICache _cache;
-    private readonly ITimeProvider _timeProvider;
-    private readonly IRecruitOuterApiClient _outerApiClient;
-    private readonly IFeature _feature;
-
-    public ApprenticeshipProgrammeProvider(ICache cache, ITimeProvider timeProvider, IRecruitOuterApiClient outerApiClient, IFeature feature, IConfiguration configuration)
-    {
-        _cache = cache;
-        _timeProvider = timeProvider;
-        _outerApiClient = outerApiClient;
-        _feature = feature;
-    }
-
     public async Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId)
     {
         var apprenticeships = await GetApprenticeshipProgrammesAsync(true);
@@ -38,31 +31,50 @@ public class ApprenticeshipProgrammeProvider : IApprenticeshipProgrammeProvider
     public async Task<IEnumerable<IApprenticeshipProgramme>> GetApprenticeshipProgrammesAsync(bool includeExpired = false)
     {
         var queryItem = await GetApprenticeshipProgrammes();
-        return includeExpired ? 
-            queryItem.Data : 
-            queryItem.Data.Where(x =>x.IsActive || (x.ApprenticeshipType == TrainingType.Foundation && IsStandardActive(x.EffectiveTo,x.LastDateStarts)));
+        return includeExpired ?
+            queryItem.Data :
+            queryItem.Data.Where(x => x.IsActive || (x.ApprenticeshipType == TrainingType.Foundation && IsStandardActive(x.EffectiveTo, x.LastDateStarts)));
     }
 
     private Task<ApprenticeshipProgrammes> GetApprenticeshipProgrammes()
     {
-        var includeFoundationApprenticeships = _feature.IsFeatureEnabled(FeatureNames.FoundationApprenticeships);
+        var includeFoundationApprenticeships = feature.IsFeatureEnabled(FeatureNames.FoundationApprenticeships);
 
-        return _cache.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes,
-            _timeProvider.NextDay6am,
+        return cache.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes,
+            timeProvider.NextDay6am,
             async () =>
             {
-                var result = await _outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest(includeFoundationApprenticeships));
+                var result = await outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest(includeFoundationApprenticeships));
+                var trainingProgrammes = result.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList();
+
+                // Add dummy programme for CSJ and other special vacancies. FAI-2869
+                if (trainingProgrammes.All(tp => tp.Id != EsfaTestTrainingProgramme.Id.ToString()))
+                {
+                    trainingProgrammes.Add(GetDummyProgramme());
+                }
+
                 return new ApprenticeshipProgrammes
                 {
-                    Data = result.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList(),
-
+                    Data = trainingProgrammes
                 };
             });
     }
         
-    private bool IsStandardActive(DateTime? effectiveTo, DateTime? lastDateStarts)
+    private static bool IsStandardActive(DateTime? effectiveTo, DateTime? lastDateStarts)
     {
         return (!effectiveTo.HasValue || effectiveTo.Value.Date >= DateTime.UtcNow.Date)
                && (!lastDateStarts.HasValue || lastDateStarts.Value.Date >= DateTime.UtcNow.Date);
     }
+
+    private static ApprenticeshipProgramme GetDummyProgramme() =>
+        new()
+        {
+            Id = EsfaTestTrainingProgramme.Id.ToString(),
+            Title = EsfaTestTrainingProgramme.Title,
+            IsActive = true,
+            ApprenticeshipType = EsfaTestTrainingProgramme.ApprenticeshipType,
+            ApprenticeshipLevel = EsfaTestTrainingProgramme.ApprenticeshipLevel,
+            EffectiveTo = DateTime.UtcNow.AddYears(1),
+            LastDateStarts = DateTime.UtcNow.AddYears(1)
+        };
 }
