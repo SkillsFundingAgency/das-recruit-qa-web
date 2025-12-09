@@ -6,6 +6,7 @@ using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,9 +46,13 @@ public class ApprenticeshipProgrammeProvider(
             {
                 var result = await outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest(includeFoundationApprenticeships));
                 var trainingProgrammes = result.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList();
-                
+
                 // Add dummy programme for CSJ and other special vacancies. FAI-2869
-                trainingProgrammes.Add(GetDummyProgramme());
+                if (trainingProgrammes.All(tp => tp.Id != EsfaTestTrainingProgramme.Id.ToString()))
+                {
+                    trainingProgrammes.Add(GetDummyProgramme());
+                }
+
                 return new ApprenticeshipProgrammes
                 {
                     Data = trainingProgrammes
