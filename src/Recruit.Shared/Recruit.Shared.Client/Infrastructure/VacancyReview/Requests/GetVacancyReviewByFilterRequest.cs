@@ -12,8 +12,8 @@ public class GetVacancyReviewByFilterRequest(List<ReviewStatus>? status = null, 
         get
         {
             return status != null 
-                ? $"VacancyReviews?reviewStatus={string.Join("&reviewStatus=", status)}&expiredAssignationDateTime={expiredAssignationDateTime}" 
-                : $"VacancyReviews?reviewStatus=&expiredAssignationDateTime={expiredAssignationDateTime}";
+                ? $"VacancyReviews?reviewStatus={string.Join("&reviewStatus=", status)}&expiredAssignationDateTime={expiredAssignationDateTime:dd-MMM-yyyy HH:mm:ss}" 
+                : $"VacancyReviews?reviewStatus=&expiredAssignationDateTime={expiredAssignationDateTime:dd-MMM-yyyy HH:mm:ss}";
         }
     }
 }
