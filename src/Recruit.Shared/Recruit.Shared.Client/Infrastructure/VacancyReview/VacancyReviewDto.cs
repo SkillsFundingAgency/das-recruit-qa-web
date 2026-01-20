@@ -55,7 +55,7 @@ public class VacancyReviewDto
             ManualOutcome = source.ManualOutcome?.ToString(),
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators =source.ManualQaFieldIndicators!=null ? source.ManualQaFieldIndicators.Where(c=>c.IsChangeRequested)
-                .Select(c=>c.ToString()).ToList() : [],
+                .Select(c=>c.FieldIdentifier.ToString()).ToList() : [],
             AutomatedQaOutcome = source.AutomatedQaOutcome?.Decision.ToString(),
             AutomatedQaOutcomeIndicators = source.AutomatedQaOutcomeIndicators?.FirstOrDefault()?.IsReferred.ToString(),
             DismissedAutomatedQaOutcomeIndicators = source.DismissedAutomatedQaOutcomeIndicators,
@@ -97,10 +97,10 @@ public class VacancyReviewDto
             ReviewedByUser = new VacancyUser{Email = source.ReviewedByUserEmail},
             SubmittedByUser = new VacancyUser{Email = source.SubmittedByUserEmail },
             ClosedDate = source.ClosedDate,
-            ManualOutcome = Enum.Parse<ManualQaOutcome>(source.ManualOutcome),
+            ManualOutcome = source.ManualOutcome != null ? Enum.Parse<ManualQaOutcome>(source.ManualOutcome) : null,
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators = source.ManualQaFieldIndicators.Select(c=>new ManualQaFieldIndicator{IsChangeRequested = true, FieldIdentifier = c}).ToList(),
-            AutomatedQaOutcome = new RuleSetOutcome{Decision =  Enum.Parse<RuleSetDecision>(source.AutomatedQaOutcome)},
+            AutomatedQaOutcome = Enum.TryParse<RuleSetDecision>(source.AutomatedQaOutcome, out var value) ? new RuleSetOutcome{Decision =  value} : new RuleSetOutcome(),
             AutomatedQaOutcomeIndicators = new List<RuleOutcomeIndicator>{new()
             {
                 IsReferred = !string.IsNullOrEmpty(source.AutomatedQaOutcomeIndicators),
