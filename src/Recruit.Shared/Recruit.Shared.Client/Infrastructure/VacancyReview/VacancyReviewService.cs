@@ -125,11 +125,6 @@ public class VacancyReviewService(IRecruitQaOuterApiClient outerApiClient, IEnco
 
     public async Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId)
     {
-        //TODO
-        // GETVacancyReviewCountByAccountLegalEntityPublicHashedId
-        // where status closed
-        // ManualOutcome approved
-        // EmployerNameOption anonymous
         var accountLegalEntity =
             encodingService.Decode(accountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId);
         // this is just used as a flag so can just return 1 or zero
