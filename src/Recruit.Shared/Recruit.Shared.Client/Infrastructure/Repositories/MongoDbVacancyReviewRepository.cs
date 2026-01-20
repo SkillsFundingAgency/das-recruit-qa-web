@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using Polly;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
@@ -74,6 +75,12 @@ internal sealed class MongoDbVacancyReviewRepository(
         return result;
     }
 
+    public Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary()
+    {
+        //purposefully left unimplemented as its a SQL only implementation
+        throw new NotImplementedException();
+    }
+
     public async Task<List<Domain.Entities.VacancyReview>> GetByStatusAsync(ReviewStatus status)
     {
         var filter = Builders<Domain.Entities.VacancyReview>.Filter.Eq(r => r.Status, status);
@@ -101,7 +108,8 @@ internal sealed class MongoDbVacancyReviewRepository(
     public Task<List<Domain.Entities.VacancyReview>> GetForVacancyAsync(long vacancyReference)
     {
         var filterBuilder = Builders<Domain.Entities.VacancyReview>.Filter;
-        var filter = filterBuilder.Eq(r => r.VacancyReference, vacancyReference) & filterBuilder.Ne(v => v.ManualOutcome, ManualQaOutcome.Transferred);
+        var filter = filterBuilder.Eq(r => r.VacancyReference, vacancyReference) 
+                     & filterBuilder.Ne(v => v.ManualOutcome, ManualQaOutcome.Transferred);
 
         var collection = GetCollection<Domain.Entities.VacancyReview>();
         return RetryPolicy.ExecuteAsync(_ => collection

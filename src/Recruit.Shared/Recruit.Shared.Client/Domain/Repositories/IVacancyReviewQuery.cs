@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 
 namespace Recruit.Vacancies.Client.Domain.Repositories;
 
@@ -17,4 +18,6 @@ public interface IVacancyReviewQuery
     Task<VacancyReview> GetCurrentReferredVacancyReviewAsync(long vacancyReference);
     Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId);
     Task<VacancyReview> GetAsync(Guid reviewId);
+    Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary();
+
 }

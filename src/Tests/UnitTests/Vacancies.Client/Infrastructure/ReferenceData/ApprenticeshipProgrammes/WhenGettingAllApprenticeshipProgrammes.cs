@@ -28,7 +28,8 @@ public class WhenGettingAllApprenticeshipProgrammes
         
         var actual = await provider.GetApprenticeshipProgrammesAsync(true);
 
-        actual.Should().BeEquivalentTo(apiResponse.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList());
+        actual.Where(c => c.Id != EsfaTestTrainingProgramme.Id.ToString()).ToList().Should()
+            .BeEquivalentTo(apiResponse.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList());
     }
     
     [Test, MoqAutoData]

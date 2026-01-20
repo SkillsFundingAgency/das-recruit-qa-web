@@ -14,7 +14,6 @@ namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 public interface IVacancyReviewRepositoryRunner
 {
-    Task CreateAsync(Domain.Entities.VacancyReview vacancy);
     Task UpdateAsync(Domain.Entities.VacancyReview review);
 }
 
@@ -28,23 +27,12 @@ public class VacancyReviewRepositoryRunner(IEnumerable<IVacancyReviewRepository>
             await vacancyReviewResolver.UpdateAsync(vacancyReview);
         }
     }
-    public async Task CreateAsync(Domain.Entities.VacancyReview vacancyReview)
-    {
-        foreach (var vacancyReviewResolver in reviewResolver)
-        {
-            await vacancyReviewResolver.CreateAsync(vacancyReview);
-        }
-    }
 }
 
-public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodingService encodingService) : IVacancyReviewRepository, IVacancyReviewQuery
+public class VacancyReviewService(IRecruitQaOuterApiClient outerApiClient, IEncodingService encodingService) : IVacancyReviewRepository, IVacancyReviewQuery
 {
     public string Key { get; } = "OuterApiVacancyReview";
-    public async Task CreateAsync(Domain.Entities.VacancyReview vacancy)
-    {
-        await outerApiClient.Post(new PostVacancyReviewRequest(vacancy.Id, VacancyReviewDto.MapVacancyReviewDto(vacancy, encodingService)), false);
-    }
-
+    
     public async Task<Domain.Entities.VacancyReview> GetAsync(Guid reviewId)
     {
         var result = await outerApiClient.Get<GetVacancyReviewResponse>(new GetVacancyReviewRequest(reviewId));
@@ -64,13 +52,15 @@ public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodi
 
     public async Task<List<Domain.Entities.VacancyReview>> GetForVacancyAsync(long vacancyReference)
     {
-        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference));
+        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(
+            new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference, [ManualQaOutcome.Approved, ManualQaOutcome.Referred, ManualQaOutcome.Blocked], false));
         return result.VacancyReviews.Select(c=>(Domain.Entities.VacancyReview)c).ToList();
     }
 
     public async Task<Domain.Entities.VacancyReview> GetLatestReviewByReferenceAsync(long vacancyReference)
     {
-        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference, "latest"));
+        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference,
+            [ManualQaOutcome.Approved, ManualQaOutcome.Referred], true));
         
         if (result == null)
         {
@@ -78,6 +68,11 @@ public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodi
         }
         
         return (Domain.Entities.VacancyReview)result.VacancyReviews.FirstOrDefault();
+    }
+    
+    public async Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary()
+    {
+        return await outerApiClient.Get<GetVacancyReviewSummaryResponse>(new GetVacancyReviewSummaryRequest());
     }
 
     public async Task<List<Domain.Entities.VacancyReview>> GetByStatusAsync(ReviewStatus status)
@@ -88,7 +83,8 @@ public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodi
 
     public async Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewsInProgressAsync(DateTime getExpiredAssignationDateTime)
     {
-        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(new GetVacancyReviewByFilterRequest(expiredAssignationDateTime:getExpiredAssignationDateTime));
+        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(new GetVacancyReviewByFilterRequest(
+            [ReviewStatus.UnderReview], expiredAssignationDateTime:getExpiredAssignationDateTime));
         return result.VacancyReviews.Select(c=>(Domain.Entities.VacancyReview)c).ToList();
     }
 
@@ -100,10 +96,7 @@ public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodi
 
     public async Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId)
     {
-        // GETVacancyReviewCountByAccountLegalEntityPublicHashedId
-        // where status closed
-        // ManualOutcome approved
-        // EmployerNameOption anonymous
+        
         var result = await outerApiClient.Get<GetVacancyReviewCountResponse>(new GetVacancyReviewCountByUserFilterRequest(submittedByUserId, true));
         return result.Count;
     }
@@ -112,24 +105,31 @@ public class VacancyReviewService(IRecruitOuterApiClient outerApiClient, IEncodi
     {
         var result =
             await outerApiClient.Get<GetVacancyReviewListResponse>(
-                new GetVacancyReviewsAssignedToUserRequest(userId, assignationExpiryDateTime));
+                new GetVacancyReviewsAssignedToUserRequest(userId, assignationExpiryDateTime, nameof(ReviewStatus.UnderReview)));
         return result.VacancyReviews.Select(c=>(Domain.Entities.VacancyReview)c).ToList();
     }
 
     public async Task<Domain.Entities.VacancyReview> GetCurrentReferredVacancyReviewAsync(long vacancyReference)
     {
-        var result = await outerApiClient.Get<GetVacancyReviewResponse>(new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference, "latestReferred"));
+        var result = await outerApiClient.Get<GetVacancyReviewListResponse>(
+            new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference,
+                [ManualQaOutcome.Referred], false, nameof(ReviewStatus.Closed)));
         
         if (result == null)
         {
             return null;
         }
         
-        return (Domain.Entities.VacancyReview)result.VacancyReview;
+        return (Domain.Entities.VacancyReview)result.VacancyReviews.OrderByDescending(r => r.ClosedDate).FirstOrDefault();
     }
 
     public async Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId)
     {
+        //TODO
+        // GETVacancyReviewCountByAccountLegalEntityPublicHashedId
+        // where status closed
+        // ManualOutcome approved
+        // EmployerNameOption anonymous
         var accountLegalEntity =
             encodingService.Decode(accountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId);
         // this is just used as a flag so can just return 1 or zero

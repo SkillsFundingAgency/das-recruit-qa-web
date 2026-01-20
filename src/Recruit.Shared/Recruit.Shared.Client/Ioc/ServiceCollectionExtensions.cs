@@ -201,7 +201,7 @@ public static class ServiceCollectionExtensions
 
         //Queries
         services.AddTransient<IVacancyQuery, MongoDbVacancyRepository>();
-        services.AddTransient<IVacancyReviewQuery, MongoDbVacancyReviewRepository>();
+        services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
         services.AddTransient<IApplicationReviewQuery, MongoDbApplicationReviewRepository>();
         services.AddTransient<IBlockedOrganisationQuery, MongoDbBlockedOrganisationRepository>();
 
