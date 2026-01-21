@@ -5,5 +5,5 @@ namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 
 public class GetAnonymousApprovedCountByAccountLegalEntity(long accountLegalEntityId) : IGetApiRequest
 {
-    public string GetUrl => $"accounts/{accountLegalEntityId}/vacancyreviews?status={ReviewStatus.Closed}&manualOutcome={ManualQaOutcome.Approved}&employerNameOption={EmployerNameOption.Anonymous}";
+    public string GetUrl => $"accounts/{accountLegalEntityId}/vacancyreviews/count?status={ReviewStatus.Closed}&manualOutcome={ManualQaOutcome.Approved}&employerNameOption={EmployerNameOption.Anonymous}";
 }
