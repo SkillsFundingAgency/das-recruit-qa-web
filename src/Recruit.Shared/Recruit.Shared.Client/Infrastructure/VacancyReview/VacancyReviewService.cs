@@ -14,7 +14,6 @@ namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 public interface IVacancyReviewRepositoryRunner
 {
-    Task CreateAsync(Domain.Entities.VacancyReview vacancy);
     Task UpdateAsync(Domain.Entities.VacancyReview review);
 }
 

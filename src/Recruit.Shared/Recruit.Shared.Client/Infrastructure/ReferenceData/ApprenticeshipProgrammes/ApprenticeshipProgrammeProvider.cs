@@ -6,7 +6,6 @@ using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
