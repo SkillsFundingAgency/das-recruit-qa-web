@@ -16,7 +16,7 @@ public class NextVacancyReviewService(
 {
     private readonly NextVacancyReviewServiceConfiguration _config = config.Value;
 
-    public async Task<VacancyReview> GetNextVacancyReviewAsync(string userId)
+    public async Task<VacancyReview> GetNextVacancyReviewAsync(string email)
     {
         var assignationExpiryTime = timeProvider.Now.AddMinutes(_config.VacancyReviewAssignationTimeoutMinutes * -1);
 
@@ -24,7 +24,7 @@ public class NextVacancyReviewService(
 
         //Get the oldest unexpired review assigned to the user
         var nextVacancyReview = assignedReviews.Where(r => 
-                r.ReviewedByUser.UserId == userId
+                r.ReviewedByUser.Email == email
                 && r.ReviewedDate >= assignationExpiryTime)
             .OrderBy(r => r.CreatedDate)
             .FirstOrDefault();

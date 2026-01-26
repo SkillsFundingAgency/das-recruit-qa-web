@@ -157,7 +157,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IBlockedOrganisationRepository, MongoDbBlockedOrganisationRepository>();
 
         //Queries
-        services.AddTransient<IVacancyReviewQuery, MongoDbVacancyReviewRepository>();
+        services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
         services.AddTransient<IBlockedOrganisationQuery, MongoDbBlockedOrganisationRepository>();
 
         services.AddTransient<IQueryStoreReader, QueryStoreClient>();

@@ -57,7 +57,7 @@ public class DashboardOrchestrator(
 
         return new VacancyReviewSearchResultViewModel
         {
-            IsAssignedToLoggedInUser = vacancyUser.UserId == vacancyReview.ReviewedByUser?.UserId,
+            IsAssignedToLoggedInUser = vacancyUser.Email == vacancyReview.ReviewedByUser?.Email,
             AssignedTo = vacancyReview.ReviewedByUser?.Name,
             AssignedTimeElapsed = vacancyReview.ReviewedDate.GetShortTimeElapsed(timeProvider.Now),
             ClosingDate = vacancyReview.VacancySnapshot.ClosingDate.GetValueOrDefault(),
@@ -76,7 +76,7 @@ public class DashboardOrchestrator(
     {
         await vacancyClient.AssignNextVacancyReviewAsync(user);
 
-        var userVacancyReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.UserId);
+        var userVacancyReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.Email);
 
         return userVacancyReviews.FirstOrDefault()?.Id;
     }

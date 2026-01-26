@@ -8,10 +8,10 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 public class WhenBuildingGetVacancyReviewsAssignedToUserRequest
 {
     [Test, AutoData]
-    public void Then_The_Request_Is_Built_Correctly(string userId, DateTime assignationExpiry)
+    public void Then_The_Request_Is_Built_Correctly(string userId, DateTime assignationExpiry, string status)
     {
-        var actual = new GetVacancyReviewsAssignedToUserRequest(userId + "@%$£" + userId, assignationExpiry);
+        var actual = new GetVacancyReviewsAssignedToUserRequest(userId + "@%$£" + userId, assignationExpiry, status);
 
-        actual.GetUrl.Should().Be($"users/{HttpUtility.UrlEncode(userId + "@%$£" + userId)}/VacancyReviews?assignationExpiry={assignationExpiry}");
+        actual.GetUrl.Should().Be($"users/{HttpUtility.UrlEncode(userId + "@%$£" + userId)}/VacancyReviews?assignationExpiry={assignationExpiry:dd-MMM-yyyy HH:mm:ss}&status={status}");
     }
 }
