@@ -31,7 +31,7 @@ public class VacancyReviewDto
     public required string VacancySnapshot { get; set; }
     public long Ukprn { get; set; }
     public long AccountId { get; set; }
-    public long AccountLegalEntityId { get; set; }
+    public long? AccountLegalEntityId { get; set; }
     public string EmployerName { get; set; }
 
     public string HashedAccountId { get; set; }
@@ -64,7 +64,7 @@ public class VacancyReviewDto
             OwnerType = source.VacancySnapshot.OwnerType.ToString(),
             AccountId = encodingService.Decode(source.VacancySnapshot.EmployerAccountId, EncodingType.AccountId),
             Ukprn = source.VacancySnapshot.TrainingProvider.Ukprn!.Value,
-            AccountLegalEntityId = encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId),
+            AccountLegalEntityId = !string.IsNullOrWhiteSpace(source.VacancySnapshot.AccountLegalEntityPublicHashedId) ? encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId) : null,
             HashedAccountId = source.VacancySnapshot.EmployerAccountId,
             EmployerName =  source.VacancySnapshot.EmployerName,
             EmployerLocations = source.VacancySnapshot.EmployerLocationOption == null ? [ source.VacancySnapshot.EmployerLocation ] : source.VacancySnapshot.EmployerLocations,
