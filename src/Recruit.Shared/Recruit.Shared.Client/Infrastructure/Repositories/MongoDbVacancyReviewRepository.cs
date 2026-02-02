@@ -118,10 +118,10 @@ internal sealed class MongoDbVacancyReviewRepository(
             new Context(nameof(GetForVacancyAsync)));
     }
 
-    public async Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId)
+    public async Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserEmail)
     {
         var filterBuilder = Builders<Domain.Entities.VacancyReview>.Filter;
-        var filter = filterBuilder.Eq(r => r.SubmittedByUser.UserId, submittedByUserId) &
+        var filter = filterBuilder.Eq(r => r.SubmittedByUser.UserId, submittedByUserEmail) &
                      filterBuilder.Eq(r => r.Status, ReviewStatus.Closed) &
                      filterBuilder.Eq(r => r.ManualOutcome, ManualQaOutcome.Approved) &
                      filterBuilder.Eq(r => r.SubmissionCount, 1);
@@ -134,10 +134,10 @@ internal sealed class MongoDbVacancyReviewRepository(
         return (int) count;
     }
 
-    public async Task<int> GetApprovedCountAsync(string submittedByUserId)
+    public async Task<int> GetApprovedCountAsync(string submittedByUserEmail)
     {
         var filterBuilder = Builders<Domain.Entities.VacancyReview>.Filter;
-        var filter = filterBuilder.Eq(r => r.SubmittedByUser.UserId, submittedByUserId) &
+        var filter = filterBuilder.Eq(r => r.SubmittedByUser.UserId, submittedByUserEmail) &
                      filterBuilder.Eq(r => r.Status, ReviewStatus.Closed) &
                      filterBuilder.Eq(r => r.ManualOutcome, ManualQaOutcome.Approved);
 

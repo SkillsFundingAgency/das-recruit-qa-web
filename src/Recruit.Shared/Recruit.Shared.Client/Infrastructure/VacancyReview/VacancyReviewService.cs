@@ -88,16 +88,15 @@ public class VacancyReviewService(IRecruitQaOuterApiClient outerApiClient, IEnco
         return result.VacancyReviews.Select(c=>(Domain.Entities.VacancyReview)c).ToList();
     }
 
-    public async Task<int> GetApprovedCountAsync(string submittedByUserId)
+    public async Task<int> GetApprovedCountAsync(string submittedByUserEmail)
     {
-        var result = await outerApiClient.Get<GetVacancyReviewCountResponse>(new GetVacancyReviewCountByUserFilterRequest(submittedByUserId));
+        var result = await outerApiClient.Get<GetVacancyReviewCountResponse>(new GetVacancyReviewCountByUserFilterRequest(submittedByUserEmail));
         return result.Count;
     }
 
-    public async Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId)
+    public async Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserEmail)
     {
-        
-        var result = await outerApiClient.Get<GetVacancyReviewCountResponse>(new GetVacancyReviewCountByUserFilterRequest(submittedByUserId, true));
+        var result = await outerApiClient.Get<GetVacancyReviewCountResponse>(new GetVacancyReviewCountByUserFilterRequest(submittedByUserEmail, true));
         return result.Count;
     }
 

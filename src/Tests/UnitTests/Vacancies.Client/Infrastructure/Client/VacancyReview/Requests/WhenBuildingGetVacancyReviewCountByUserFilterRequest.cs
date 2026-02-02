@@ -8,18 +8,18 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 public class WhenBuildingGetVacancyReviewCountByUserFilterRequest
 {
     [Test, AutoData]
-    public void Then_The_Request_Is_Built_With_All_Parameters(string userId)
+    public void Then_The_Request_Is_Built_With_All_Parameters(string userEmail)
     {
-        var actual = new GetVacancyReviewCountByUserFilterRequest(userId + "@%$£" + userId, true);
+        var actual = new GetVacancyReviewCountByUserFilterRequest(userEmail + "@%$£" + userEmail, true);
         
-        actual.GetUrl.Should().Be($"users/VacancyReviews/count?approvedFirstTime=True&userId={HttpUtility.UrlEncode(userId + "@%$£" + userId)}");
+        actual.GetUrl.Should().Be($"users/VacancyReviews/count?approvedFirstTime=True&userEmail={HttpUtility.UrlEncode(userEmail + "@%$£" + userEmail)}");
     }
     
     [Test, AutoData]
-    public void Then_The_Request_Is_Built_With_Optional_Parameters(string userId)
+    public void Then_The_Request_Is_Built_With_Optional_Parameters(string userEmail)
     {
-        var actual = new GetVacancyReviewCountByUserFilterRequest(userId + "@%$£" + userId);
+        var actual = new GetVacancyReviewCountByUserFilterRequest(userEmail + "@%$£" + userEmail);
         
-        actual.GetUrl.Should().Be($"users/VacancyReviews/count?approvedFirstTime=False&userId={HttpUtility.UrlEncode(userId + "@%$£" + userId)}");
+        actual.GetUrl.Should().Be($"users/VacancyReviews/count?approvedFirstTime=False&userEmail={HttpUtility.UrlEncode(userEmail + "@%$£" + userEmail)}");
     }
 }
