@@ -1,11 +1,11 @@
 ﻿using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
+using Recruit.Vacancies.Client.Domain.Models;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 
 public static class TrainingProviderMapper
 {
-    public static Domain.Entities.TrainingProvider MapFromApiProvider(ReferenceData.TrainingProviders.TrainingProvider provider)
+    public static Domain.Entities.TrainingProvider MapFromApiProvider(Provider provider)
     {
         return new Domain.Entities.TrainingProvider
         {
@@ -15,14 +15,14 @@ public static class TrainingProviderMapper
         };
     }
         
-    private static Address GetAddress(TrainingProviderAddress address)
+    private static Address GetAddress(ProviderAddress address)
     {
         return new Address
         {
-            AddressLine1 = address.AddressLine1,
-            AddressLine2 = address.AddressLine2,
-            AddressLine3 = address.AddressLine3,
-            AddressLine4 = address.AddressLine4,
+            AddressLine1 = address.Address1,
+            AddressLine2 = address.Address2,
+            AddressLine3 = address.Address3,
+            AddressLine4 = address.Address4,
             Postcode = address.Postcode
         };
     }

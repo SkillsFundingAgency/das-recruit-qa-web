@@ -1,13 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Microsoft.Extensions.Logging;
 using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.Providers;
-using Microsoft.Extensions.Logging;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
 
 public class ProfanityListProvider(
-    IReferenceDataReader referenceDataReader,
+    IRecruitQaOuterApiVacancyClient recruitQaOuterApiVacancyClient,
     ILogger<ProfanityListProvider> logger,
     ICache cache,
     ITimeProvider timeProvider)
@@ -20,11 +21,11 @@ public class ProfanityListProvider(
             async () =>
             {
                 logger.LogInformation("Attempting to retrieve profanity list from reference data.");
-                var result = await referenceDataReader.GetReferenceData<ProfanityList>();
+                var result = await recruitQaOuterApiVacancyClient.GetProfanityListAsync();
                 if (result != null)
-                    return result.Profanities;
+                    return result;
                 logger.LogWarning("Unable to retrieve reference data for profanity list.");
-                return new List<string>();
+                return [];
             });
     }
 }

@@ -1,12 +1,9 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Entities;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Application.Providers;
 
 public interface IApprenticeshipProgrammeProvider
 {
-    Task<IEnumerable<IApprenticeshipProgramme>> GetApprenticeshipProgrammesAsync(bool includeExpired = false);
-
     Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId);
 }

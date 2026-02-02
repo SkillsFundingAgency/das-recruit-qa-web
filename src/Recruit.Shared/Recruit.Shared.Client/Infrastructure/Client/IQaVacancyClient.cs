@@ -13,9 +13,9 @@ public interface IQaVacancyClient
     Task<Domain.Entities.VacancyReview> GetVacancyReviewAsync(Guid reviewId);
     Task ReferVacancyReviewAsync(Guid reviewId, string manualQaComment, List<ManualQaFieldIndicator> manualQaFieldIndicators, List<Guid> automatedQaRuleOutcomeIds);
     Task<Domain.Entities.VacancyReview> GetSearchResultAsync(string searchTerm);
-    Task<int> GetApprovedCountAsync(string submittedByUserId);
+    Task<int> GetApprovedCountAsync(string submittedByUserEmail);
     Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewsInProgressAsync();
-    Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId);
+    Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserEmail);
     Task AssignNextVacancyReviewAsync(VacancyUser user);
     Task AssignVacancyReviewAsync(VacancyUser user, Guid reviewId);
     Task<List<Domain.Entities.VacancyReview>> GetAssignedVacancyReviewsForUserAsync(string userId);

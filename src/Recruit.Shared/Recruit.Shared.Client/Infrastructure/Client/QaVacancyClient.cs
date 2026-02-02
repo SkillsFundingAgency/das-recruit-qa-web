@@ -101,14 +101,14 @@ public class QaVacancyClient(
         });
     }
 
-    public Task<int> GetApprovedCountAsync(string submittedByUserId)
+    public Task<int> GetApprovedCountAsync(string submittedByUserEmail)
     {
-        return vacancyReviewQuery.GetApprovedCountAsync(submittedByUserId);
+        return vacancyReviewQuery.GetApprovedCountAsync(submittedByUserEmail);
     }
 
-    public Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId)
+    public Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserEmail)
     {
-        return vacancyReviewQuery.GetApprovedFirstTimeCountAsync(submittedByUserId);
+        return vacancyReviewQuery.GetApprovedFirstTimeCountAsync(submittedByUserEmail);
     }
 
     public Task<List<Domain.Entities.VacancyReview>> GetAssignedVacancyReviewsForUserAsync(string userId)

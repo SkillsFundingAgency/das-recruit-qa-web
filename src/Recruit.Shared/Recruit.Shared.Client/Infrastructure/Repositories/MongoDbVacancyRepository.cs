@@ -16,7 +16,7 @@ namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
 internal class MongoDbVacancyRepository(ILoggerFactory loggerFactory, IOptions<MongoDbConnectionDetails> details)
     : MongoDbCollectionBase(loggerFactory, MongoDbNames.RecruitDb, MongoDbCollectionNames.Vacancies, details),
-        IVacancyRepository, IVacancyQuery
+        IVacancyRepository
 {
     private const string VacancyStatusFieldName = "status";
 

@@ -1,6 +1,7 @@
 using AutoFixture.NUnit3;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using NUnit.Framework;
+using Recruit.Vacancies.Client.Domain.Entities;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.Client.VacancyReview.Requests;
 
@@ -11,6 +12,6 @@ public class WhenBuildingGetAnonymousApprovedCountByAccountLegalEntity
     {
         var actual = new GetAnonymousApprovedCountByAccountLegalEntity(accountLegalEntityId);
 
-        actual.GetUrl.Should().Be($"accounts/{accountLegalEntityId}/vacancyreviews");
+        actual.GetUrl.Should().Be($"accounts/{accountLegalEntityId}/vacancyreviews/count?status={ReviewStatus.Closed}&manualOutcome={ManualQaOutcome.Approved}&employerNameOption={EmployerNameOption.Anonymous}");
     }
 }

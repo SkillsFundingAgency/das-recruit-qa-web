@@ -20,7 +20,7 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
     {
         var review = await vacancyClient.GetVacancyReviewAsync(m.ReviewId);
             
-        await EnsureUserIsAssignedAsync(review, user.UserId);
+        await EnsureUserIsAssignedAsync(review, user.Email);
 
         var vacancy = await vacancyClient.GetVacancyAsync(review.VacancyReference);
                 
@@ -63,7 +63,7 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
             review = await vacancyClient.GetVacancyReviewAsync(reviewId);
         }
 
-        await EnsureUserIsAssignedAsync(review, user.UserId);
+        await EnsureUserIsAssignedAsync(review, user.Email);
 
         var vm = await mapper.Map(review);
 
@@ -143,7 +143,7 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
     {
         await vacancyClient.AssignNextVacancyReviewAsync(user);
 
-        var userVacancyReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.UserId);
+        var userVacancyReviews = await vacancyClient.GetAssignedVacancyReviewsForUserAsync(user.Email);
 
         return userVacancyReviews.FirstOrDefault()?.Id;
     }

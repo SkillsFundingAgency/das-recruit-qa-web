@@ -12,6 +12,6 @@ public class WhenConstructingGetTrainingProgrammesUrl
         var actual = new GetTrainingProgrammesRequest();
             
         //Assert
-        actual.GetUrl.Should().Be("trainingprogrammes?includeFoundationApprenticeships=False");
+        actual.GetUrl.Should().Be("trainingprogrammes");
     }
 }

@@ -50,7 +50,7 @@ public class NextVacancyReviewServiceTests
         Assert.Equal(Guid.Parse(expectedReviewId), nextVacancyReview.Id);
     }
 
-    private static VacancyReview CreateVacancyReview(string id, string userId, ReviewStatus status, string reviewedDate, string createdDate)
+    private static VacancyReview CreateVacancyReview(string id, string email, ReviewStatus status, string reviewedDate, string createdDate)
     {
         return new VacancyReview
         {
@@ -58,7 +58,7 @@ public class NextVacancyReviewServiceTests
             ReviewedDate = reviewedDate != null ? DateTime.Parse(reviewedDate) : (DateTime?)null,
             CreatedDate = DateTime.Parse(createdDate),
             Status = status,
-            ReviewedByUser = userId != null ? new VacancyUser {UserId = userId} : null
+            ReviewedByUser = email != null ? new VacancyUser {Email = email} : null
         };
     }
 }

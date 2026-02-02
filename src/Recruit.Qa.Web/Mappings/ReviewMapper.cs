@@ -154,9 +154,9 @@ public class ReviewMapper(
             
         var reviewHistoryTask = vacancyClient.GetVacancyReviewHistoryAsync(review.VacancyReference);
 
-        var approvedCountTask = vacancyClient.GetApprovedCountAsync(vacancy.SubmittedByUser.UserId);
+        var approvedCountTask = vacancyClient.GetApprovedCountAsync(review.SubmittedByUser.Email);
 
-        var approvedFirstTimeCountTask = vacancyClient.GetApprovedFirstTimeCountAsync(vacancy.SubmittedByUser.UserId);
+        var approvedFirstTimeCountTask = vacancyClient.GetApprovedFirstTimeCountAsync(review.SubmittedByUser.Email);
 
         var reviewSummaryTask = reviewSummaryService.GetReviewSummaryViewModelAsync(review.Id,
             ReviewFieldMappingLookups.GetPreviewReviewFieldIndicators());

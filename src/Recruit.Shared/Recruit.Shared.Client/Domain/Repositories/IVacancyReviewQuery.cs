@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Responses;
 
 namespace Recruit.Vacancies.Client.Domain.Repositories;
 
@@ -11,10 +12,12 @@ public interface IVacancyReviewQuery
     Task<VacancyReview> GetLatestReviewByReferenceAsync(long vacancyReference);
     Task<List<VacancyReview>> GetByStatusAsync(ReviewStatus status);
     Task<List<VacancyReview>> GetVacancyReviewsInProgressAsync(DateTime getExpiredAssignationDateTime);
-    Task<int> GetApprovedCountAsync(string submittedByUserId);
-    Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserId);
+    Task<int> GetApprovedCountAsync(string submittedByUserEmail);
+    Task<int> GetApprovedFirstTimeCountAsync(string submittedByUserEmail);
     Task<List<VacancyReview>> GetAssignedForUserAsync(string userId, DateTime assignationExpiryDateTime);
     Task<VacancyReview> GetCurrentReferredVacancyReviewAsync(long vacancyReference);
     Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId);
     Task<VacancyReview> GetAsync(Guid reviewId);
+    Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary();
+
 }
