@@ -12,7 +12,7 @@ public class WhenBuildingGetVacancyReviewCountByUserFilterRequest
     {
         var actual = new GetVacancyReviewCountByUserFilterRequest(userId + "@%$£" + userId, true);
         
-        actual.GetUrl.Should().Be($"users/{HttpUtility.UrlEncode(userId + "@%$£" + userId)}/VacancyReviews/count?approvedFirstTime=True");
+        actual.GetUrl.Should().Be($"users/VacancyReviews/count?approvedFirstTime=True&userId={HttpUtility.UrlEncode(userId + "@%$£" + userId)}");
     }
     
     [Test, AutoData]
@@ -20,6 +20,6 @@ public class WhenBuildingGetVacancyReviewCountByUserFilterRequest
     {
         var actual = new GetVacancyReviewCountByUserFilterRequest(userId + "@%$£" + userId);
         
-        actual.GetUrl.Should().Be($"users/{HttpUtility.UrlEncode(userId + "@%$£" + userId)}/VacancyReviews/count?approvedFirstTime=False");
+        actual.GetUrl.Should().Be($"users/VacancyReviews/count?approvedFirstTime=False&userId={HttpUtility.UrlEncode(userId + "@%$£" + userId)}");
     }
 }

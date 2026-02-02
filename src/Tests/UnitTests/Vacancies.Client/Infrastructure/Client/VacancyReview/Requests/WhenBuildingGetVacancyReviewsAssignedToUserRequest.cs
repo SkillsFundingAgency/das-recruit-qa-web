@@ -12,6 +12,6 @@ public class WhenBuildingGetVacancyReviewsAssignedToUserRequest
     {
         var actual = new GetVacancyReviewsAssignedToUserRequest(userId + "@%$£" + userId, assignationExpiry, status);
 
-        actual.GetUrl.Should().Be($"users/{HttpUtility.UrlEncode(userId + "@%$£" + userId)}/VacancyReviews?assignationExpiry={assignationExpiry:dd-MMM-yyyy HH:mm:ss}&status={status}");
+        actual.GetUrl.Should().Be($"users/VacancyReviews?assignationExpiry={assignationExpiry:dd-MMM-yyyy HH:mm:ss}&status={status}&userId={HttpUtility.UrlEncode(userId + "@%$£" + userId)}");
     }
 }
