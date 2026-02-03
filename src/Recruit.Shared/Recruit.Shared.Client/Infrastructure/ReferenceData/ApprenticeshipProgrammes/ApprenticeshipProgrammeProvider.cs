@@ -15,10 +15,9 @@ using System.Threading.Tasks;
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
 public class ApprenticeshipProgrammeProvider(
-    ICache cache,
-    ITimeProvider timeProvider,
     IRecruitOuterApiClient outerApiClient,
-    IFeature feature)
+    ICache cache,
+    ITimeProvider timeProvider)
     : IApprenticeshipProgrammeProvider
 {
     public async Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId)
@@ -38,13 +37,11 @@ public class ApprenticeshipProgrammeProvider(
 
     private Task<ApprenticeshipProgrammes> GetApprenticeshipProgrammes()
     {
-        var includeFoundationApprenticeships = feature.IsFeatureEnabled(FeatureNames.FoundationApprenticeships);
-
         return cache.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes,
             timeProvider.NextDay6am,
             async () =>
             {
-                var result = await outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest(includeFoundationApprenticeships));
+                var result = await outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest());
                 var trainingProgrammes = result.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList();
 
                 // Add dummy programme for CSJ and other special vacancies. FAI-2869
