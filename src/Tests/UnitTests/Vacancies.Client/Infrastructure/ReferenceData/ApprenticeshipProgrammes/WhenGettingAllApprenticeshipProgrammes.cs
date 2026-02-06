@@ -15,22 +15,44 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 public class WhenGettingAllApprenticeshipProgrammes
 {
     [Test, MoqAutoData]
-    public async Task Then_The_Courses_Are_Retrieved_From_The_Api_When_Not_Cached(
+    public async Task Then_The_Courses_Are_Retrieved_From_The_Api(
         GetTrainingProgrammesResponse apiResponse,
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
         [Frozen] Mock<IRecruitOuterApiClient> outerApiClient)
     {
+        // Arrange
+        var cache = new TestCache();
         outerApiClient
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
-        var cache = new TestHelpers.TestCache();
-        var provider = new ApprenticeshipProgrammeProvider(cache, mockTimeProvider.Object, outerApiClient.Object, Mock.Of<IFeature>());
-        
+
+        var provider = new ApprenticeshipProgrammeProvider(outerApiClient.Object, cache, mockTimeProvider.Object);
+
+        var expected = apiResponse
+            .TrainingProgrammes
+            .Select(c => (ApprenticeshipProgramme)c)
+            .ToList();
+
+        expected.Add(GetDummyProgramme());
+
+        // Act
         var actual = await provider.GetApprenticeshipProgrammesAsync(true);
 
-        actual.Should().BeEquivalentTo(apiResponse.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList());
+        // Assert
+        actual.Should().BeEquivalentTo(expected, options =>
+            options
+                // Ignore time part for DateTime
+                .Using<DateTime>(ctx =>
+                    ctx.Subject.Date.Should().Be(ctx.Expectation.Date))
+                .WhenTypeIs<DateTime>()
+
+                // Also ignore time for nullable DateTime?
+                .Using<DateTime?>(ctx =>
+                    ctx.Subject?.Date.Should().Be(ctx.Expectation?.Date))
+                .WhenTypeIs<DateTime?>()
+        );
     }
-    
+
     [Test, MoqAutoData]
     public async Task Then_If_The_Courses_Are_Cached_Api_Not_Called_And_Retrieved_From_The_Cached(
         Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes response,
@@ -43,8 +65,8 @@ public class WhenGettingAllApprenticeshipProgrammes
         cache
             .Setup(x => x.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes, dateTime, It.IsAny<Func<Task<Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes>>>()))
             .ReturnsAsync(response);
-        var provider = new ApprenticeshipProgrammeProvider(cache.Object, mockTimeProvider.Object, outerApiClient.Object, Mock.Of<IFeature>());
-        
+        var provider = new ApprenticeshipProgrammeProvider(outerApiClient.Object, cache.Object, mockTimeProvider.Object);
+
         var actual = await provider.GetApprenticeshipProgrammesAsync(true);
 
         actual.Should().BeEquivalentTo(response.Data);
@@ -58,14 +80,14 @@ public class WhenGettingAllApprenticeshipProgrammes
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
         [Frozen] Mock<IRecruitOuterApiClient> outerApiClient)
     {
-        var cache = new TestHelpers.TestCache();
+        var cache = new TestCache();
         outerApiClient
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
 
-        var provider = new ApprenticeshipProgrammeProvider(cache, mockTimeProvider.Object, outerApiClient.Object, Mock.Of<IFeature>());
+        var provider = new ApprenticeshipProgrammeProvider(outerApiClient.Object, cache, mockTimeProvider.Object);
 
-        var actual = await provider.GetApprenticeshipProgrammeAsync("999999");
+        var actual = await provider.GetApprenticeshipProgrammeAsync(EsfaTestTrainingProgramme.Id.ToString());
 
         actual.Id.Should().Be(EsfaTestTrainingProgramme.Id.ToString());
         actual.Title.Should().Be(EsfaTestTrainingProgramme.Title);
@@ -74,4 +96,16 @@ public class WhenGettingAllApprenticeshipProgrammes
         actual.LastDateStarts.Should().BeAfter(DateTime.UtcNow);
         actual.EffectiveTo.Should().BeAfter(DateTime.UtcNow);
     }
+
+    private static ApprenticeshipProgramme GetDummyProgramme() =>
+        new()
+        {
+            Id = EsfaTestTrainingProgramme.Id.ToString(),
+            Title = EsfaTestTrainingProgramme.Title,
+            IsActive = true,
+            ApprenticeshipType = EsfaTestTrainingProgramme.ApprenticeshipType,
+            ApprenticeshipLevel = EsfaTestTrainingProgramme.ApprenticeshipLevel,
+            EffectiveTo = DateTime.UtcNow.AddYears(1),
+            LastDateStarts = DateTime.UtcNow.AddYears(1)
+        };
 }

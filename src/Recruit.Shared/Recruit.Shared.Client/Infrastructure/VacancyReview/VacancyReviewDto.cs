@@ -51,6 +51,7 @@ public class VacancyReviewDto
             SubmissionCount = (byte)source.SubmissionCount,
             ReviewedByUserEmail = source.ReviewedByUser?.Email,
             SubmittedByUserEmail = source.SubmittedByUser.Email,
+            SubmittedByUserId = source.SubmittedByUser.UserId ?? source.SubmittedByUser.DfEUserId,
             ClosedDate = source.ClosedDate,
             ManualOutcome = source.ManualOutcome?.ToString(),
             ManualQaComment = source.ManualQaComment,
@@ -72,6 +73,8 @@ public class VacancyReviewDto
             VacancyId = source.VacancySnapshot.Id
         };
     }
+
+    public string SubmittedByUserId { get; set; }
 
     public AvailableWhere? EmployerLocationOption { get; set; }
 
