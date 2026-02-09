@@ -1,10 +1,12 @@
 using Recruit.Vacancies.Client.Application.Cache;
 using Recruit.Vacancies.Client.Application.Configuration;
+using Recruit.Vacancies.Client.Application.FeatureToggle;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using Recruit.Vacancies.Client.Infrastructure.ReferenceData.TrainingProviders;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +15,9 @@ using System.Threading.Tasks;
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
 public class ApprenticeshipProgrammeProvider(
+    IRecruitQaOuterApiClient outerApiClient,
     ICache cache,
-    ITimeProvider timeProvider,
-    IRecruitQaOuterApiClient recruitQaOuterApiClient)
+    ITimeProvider timeProvider)
     : IApprenticeshipProgrammeProvider
 {
     public async Task<IApprenticeshipProgramme> GetApprenticeshipProgrammeAsync(string programmeId)
@@ -39,7 +41,7 @@ public class ApprenticeshipProgrammeProvider(
             timeProvider.NextDay6am,
             async () =>
             {
-                var result = await recruitQaOuterApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest());
+                var result = await outerApiClient.Get<GetTrainingProgrammesResponse>(new GetTrainingProgrammesRequest());
                 var trainingProgrammes = result.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList();
 
                 // Add dummy programme for CSJ and other special vacancies. FAI-2869

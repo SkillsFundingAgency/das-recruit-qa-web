@@ -20,12 +20,12 @@ public class WhenGettingAllApprenticeshipProgrammes
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient)
     {
         // Arrange
-        var cache = new TestCache();
+        var cache = new TestHelpers.TestCache();
         outerApiClient
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
-        var cache = new TestHelpers.TestCache();
-        var provider = new ApprenticeshipProgrammeProvider(cache, mockTimeProvider.Object, outerApiClient.Object);
+        
+        var provider = new ApprenticeshipProgrammeProvider(outerApiClient.Object, cache, mockTimeProvider.Object);
         
         var actual = await provider.GetApprenticeshipProgrammesAsync(true);
 
@@ -45,7 +45,7 @@ public class WhenGettingAllApprenticeshipProgrammes
         cache
             .Setup(x => x.CacheAsideAsync(CacheKeys.ApprenticeshipProgrammes, dateTime, It.IsAny<Func<Task<Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes>>>()))
             .ReturnsAsync(response);
-        var provider = new ApprenticeshipProgrammeProvider(cache.Object, mockTimeProvider.Object, outerApiClient.Object);
+        var provider = new ApprenticeshipProgrammeProvider(outerApiClient.Object, cache.Object, mockTimeProvider.Object);
         
         var actual = await provider.GetApprenticeshipProgrammesAsync(true);
 
@@ -65,7 +65,7 @@ public class WhenGettingAllApprenticeshipProgrammes
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
 
-        var provider = new ApprenticeshipProgrammeProvider(cache, mockTimeProvider.Object, outerApiClient.Object);
+        var provider = new ApprenticeshipProgrammeProvider(outerApiClient.Object, cache, mockTimeProvider.Object);
 
         var actual = await provider.GetApprenticeshipProgrammeAsync(EsfaTestTrainingProgramme.Id.ToString());
 
