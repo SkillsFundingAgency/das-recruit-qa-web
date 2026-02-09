@@ -14,11 +14,13 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 public class WhenGettingAllApprenticeshipProgrammes
 {
     [Test, MoqAutoData]
-    public async Task Then_The_Courses_Are_Retrieved_From_The_Api_When_Not_Cached(
+    public async Task Then_The_Courses_Are_Retrieved_From_The_Api(
         GetTrainingProgrammesResponse apiResponse,
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient)
     {
+        // Arrange
+        var cache = new TestCache();
         outerApiClient
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
@@ -30,7 +32,7 @@ public class WhenGettingAllApprenticeshipProgrammes
         actual.Where(c => c.Id != EsfaTestTrainingProgramme.Id.ToString()).ToList().Should()
             .BeEquivalentTo(apiResponse.TrainingProgrammes.Select(c => (ApprenticeshipProgramme)c).ToList());
     }
-    
+
     [Test, MoqAutoData]
     public async Task Then_If_The_Courses_Are_Cached_Api_Not_Called_And_Retrieved_From_The_Cached(
         Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes.ApprenticeshipProgrammes response,
@@ -58,14 +60,14 @@ public class WhenGettingAllApprenticeshipProgrammes
         [Frozen] Mock<ITimeProvider> mockTimeProvider,
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient)
     {
-        var cache = new TestHelpers.TestCache();
+        var cache = new TestCache();
         outerApiClient
             .Setup(x => x.Get<GetTrainingProgrammesResponse>(It.IsAny<GetTrainingProgrammesRequest>()))
             .ReturnsAsync(apiResponse);
 
         var provider = new ApprenticeshipProgrammeProvider(cache, mockTimeProvider.Object, outerApiClient.Object);
 
-        var actual = await provider.GetApprenticeshipProgrammeAsync("999999");
+        var actual = await provider.GetApprenticeshipProgrammeAsync(EsfaTestTrainingProgramme.Id.ToString());
 
         actual.Id.Should().Be(EsfaTestTrainingProgramme.Id.ToString());
         actual.Title.Should().Be(EsfaTestTrainingProgramme.Title);
@@ -74,4 +76,16 @@ public class WhenGettingAllApprenticeshipProgrammes
         actual.LastDateStarts.Should().BeAfter(DateTime.UtcNow);
         actual.EffectiveTo.Should().BeAfter(DateTime.UtcNow);
     }
+
+    private static ApprenticeshipProgramme GetDummyProgramme() =>
+        new()
+        {
+            Id = EsfaTestTrainingProgramme.Id.ToString(),
+            Title = EsfaTestTrainingProgramme.Title,
+            IsActive = true,
+            ApprenticeshipType = EsfaTestTrainingProgramme.ApprenticeshipType,
+            ApprenticeshipLevel = EsfaTestTrainingProgramme.ApprenticeshipLevel,
+            EffectiveTo = DateTime.UtcNow.AddYears(1),
+            LastDateStarts = DateTime.UtcNow.AddYears(1)
+        };
 }
