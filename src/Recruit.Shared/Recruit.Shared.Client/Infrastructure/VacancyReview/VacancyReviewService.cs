@@ -67,7 +67,7 @@ public class VacancyReviewService(IRecruitQaOuterApiClient outerApiClient, IEnco
             return null;
         }
         
-        return (Domain.Entities.VacancyReview)result.VacancyReviews.FirstOrDefault();
+        return (Domain.Entities.VacancyReview)result.VacancyReviews.OrderByDescending(c=>c.CreatedDate).FirstOrDefault();
     }
     
     public async Task<GetVacancyReviewSummaryResponse> GetVacancyReviewSummary()
