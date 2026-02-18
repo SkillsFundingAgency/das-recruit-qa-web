@@ -203,7 +203,7 @@ public class VacancyReviewServiceTests
         vacancyDto2.Status = ReviewStatus.PendingReview.ToString();
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         UpdateToValidVacancyDto(vacancyDto2, vacancy);
-        var expectedRequest = new GetVacancyReviewByFilterRequest([ReviewStatus.UnderReview],expiredAssignationDateTime:expiredAssignationDateTime);
+        var expectedRequest = new GetVacancyReviewByFilterRequest([ReviewStatus.UnderReview]);
         outerApiClient
             .Setup(
                 x => x.Get<GetVacancyReviewListResponse>(It.Is<GetVacancyReviewByFilterRequest>(c => 

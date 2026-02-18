@@ -58,7 +58,7 @@ public class DashboardOrchestrator(
         return new VacancyReviewSearchResultViewModel
         {
             IsAssignedToLoggedInUser = vacancyUser.Email == vacancyReview.ReviewedByUser?.Email,
-            AssignedTo = vacancyReview.ReviewedByUser?.Name,
+            AssignedTo = vacancyReview.ReviewedByUser?.Email,
             AssignedTimeElapsed = vacancyReview.ReviewedDate.GetShortTimeElapsed(timeProvider.Now),
             ClosingDate = vacancyReview.VacancySnapshot.ClosingDate.GetValueOrDefault(),
             EmployerName = vacancyReview.VacancySnapshot.LegalEntityName,

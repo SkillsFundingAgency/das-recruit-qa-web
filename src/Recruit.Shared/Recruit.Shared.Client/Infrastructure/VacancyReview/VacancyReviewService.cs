@@ -84,7 +84,7 @@ public class VacancyReviewService(IRecruitQaOuterApiClient outerApiClient, IEnco
     public async Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewsInProgressAsync(DateTime getExpiredAssignationDateTime)
     {
         var result = await outerApiClient.Get<GetVacancyReviewListResponse>(new GetVacancyReviewByFilterRequest(
-            [ReviewStatus.UnderReview], expiredAssignationDateTime:getExpiredAssignationDateTime));
+            [ReviewStatus.UnderReview]));
         return result.VacancyReviews.Select(c=>(Domain.Entities.VacancyReview)c).ToList();
     }
 
