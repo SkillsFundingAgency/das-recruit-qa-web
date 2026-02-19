@@ -62,7 +62,6 @@ internal sealed class MongoDbBlockedOrganisationRepository(
         var result = await RetryPolicy.ExecuteAsync(async _ =>
             {
                 var pipeline = BlockedOrganisationsAggQueryBuilder.GetBlockedEmployersAggregateQueryPipeline();
-                var mongoQuery = pipeline.ToJson();
                 var aggResults = await collection.AggregateAsync<BlockedOrganisationSummary>(pipeline);
                 return await aggResults.ToListAsync();
             },

@@ -51,11 +51,12 @@ public class VacancyReviewDto
             SubmissionCount = (byte)source.SubmissionCount,
             ReviewedByUserEmail = source.ReviewedByUser?.Email,
             SubmittedByUserEmail = source.SubmittedByUser.Email,
+            SubmittedByUserId = source.SubmittedByUser.UserId ?? source.SubmittedByUser.DfEUserId,
             ClosedDate = source.ClosedDate,
             ManualOutcome = source.ManualOutcome?.ToString(),
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators =source.ManualQaFieldIndicators!=null ? source.ManualQaFieldIndicators.Where(c=>c.IsChangeRequested)
-                .Select(c=>c.ToString()).ToList() : [],
+                .Select(c=>c.FieldIdentifier.ToString()).ToList() : [],
             AutomatedQaOutcome = source.AutomatedQaOutcome?.Decision.ToString(),
             AutomatedQaOutcomeIndicators = source.AutomatedQaOutcomeIndicators?.FirstOrDefault()?.IsReferred.ToString(),
             DismissedAutomatedQaOutcomeIndicators = source.DismissedAutomatedQaOutcomeIndicators,
@@ -64,7 +65,7 @@ public class VacancyReviewDto
             OwnerType = source.VacancySnapshot.OwnerType.ToString(),
             AccountId = encodingService.Decode(source.VacancySnapshot.EmployerAccountId, EncodingType.AccountId),
             Ukprn = source.VacancySnapshot.TrainingProvider.Ukprn!.Value,
-            AccountLegalEntityId = encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId),
+            AccountLegalEntityId = !string.IsNullOrWhiteSpace(source.VacancySnapshot.AccountLegalEntityPublicHashedId) ? encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId) : 0,
             HashedAccountId = source.VacancySnapshot.EmployerAccountId,
             EmployerName =  source.VacancySnapshot.EmployerName,
             EmployerLocations = source.VacancySnapshot.EmployerLocationOption == null ? [ source.VacancySnapshot.EmployerLocation ] : source.VacancySnapshot.EmployerLocations,
@@ -72,6 +73,8 @@ public class VacancyReviewDto
             VacancyId = source.VacancySnapshot.Id
         };
     }
+
+    public string SubmittedByUserId { get; set; }
 
     public AvailableWhere? EmployerLocationOption { get; set; }
 
@@ -97,10 +100,10 @@ public class VacancyReviewDto
             ReviewedByUser = new VacancyUser{Email = source.ReviewedByUserEmail},
             SubmittedByUser = new VacancyUser{Email = source.SubmittedByUserEmail },
             ClosedDate = source.ClosedDate,
-            ManualOutcome = Enum.Parse<ManualQaOutcome>(source.ManualOutcome),
+            ManualOutcome = source.ManualOutcome != null ? Enum.Parse<ManualQaOutcome>(source.ManualOutcome) : null,
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators = source.ManualQaFieldIndicators.Select(c=>new ManualQaFieldIndicator{IsChangeRequested = true, FieldIdentifier = c}).ToList(),
-            AutomatedQaOutcome = new RuleSetOutcome{Decision =  Enum.Parse<RuleSetDecision>(source.AutomatedQaOutcome)},
+            AutomatedQaOutcome = Enum.TryParse<RuleSetDecision>(source.AutomatedQaOutcome, out var value) ? new RuleSetOutcome{Decision =  value} : new RuleSetOutcome(),
             AutomatedQaOutcomeIndicators = new List<RuleOutcomeIndicator>{new()
             {
                 IsReferred = !string.IsNullOrEmpty(source.AutomatedQaOutcomeIndicators),

@@ -19,34 +19,27 @@ using Recruit.Vacancies.Client.Application.Validation.Fluent;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.ApplicationReview;
 using Recruit.Vacancies.Client.Infrastructure.Client;
 using Recruit.Vacancies.Client.Infrastructure.EventStore;
-using Recruit.Vacancies.Client.Infrastructure.HttpRequestHandlers;
 using Recruit.Vacancies.Client.Infrastructure.Messaging;
 using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore;
-using Recruit.Vacancies.Client.Infrastructure.ReferenceData;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.BannedPhrases;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
 using Recruit.Vacancies.Client.Infrastructure.Reports;
 using Recruit.Vacancies.Client.Infrastructure.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Services;
-using Recruit.Vacancies.Client.Infrastructure.Services.EmployerAccount;
 using Recruit.Vacancies.Client.Infrastructure.Services.Projections;
-using Recruit.Vacancies.Client.Infrastructure.Services.ProviderRelationship;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProviderSummaryProvider;
 using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.User;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using SFA.DAS.EAS.Account.Api.Client;
-using SFA.DAS.Http.MessageHandlers;
-using SFA.DAS.Http.TokenGenerators;
 using System;
 using VacancyRuleSet = Recruit.Vacancies.Client.Application.Rules.VacancyRules.VacancyRuleSet;
 
@@ -70,24 +63,6 @@ public static class ServiceCollectionExtensions
         AddValidation(services);
         AddRules(services);
         RegisterMediatR(services);
-        RegisterProviderRelationshipsClient(services, configuration);
-    }
-
-    private static void RegisterProviderRelationshipsClient(IServiceCollection services, IConfiguration configuration)
-    {
-        var config = configuration.GetSection("ProviderRelationshipsApiConfiguration").Get<ProviderRelationshipApiConfiguration>();
-        if (config == null)
-        {
-            services.AddTransient<IProviderRelationshipsService, ProviderRelationshipsService>();
-            return;
-        }
-        services
-            .AddHttpClient<IProviderRelationshipsService, ProviderRelationshipsService>(options =>
-            {
-                options.BaseAddress = new Uri(config.ApiBaseUrl);
-            })
-            .AddHttpMessageHandler(() => new VersionHeaderHandler())
-            .AddHttpMessageHandler(() => new ManagedIdentityHeadersHandler(new ManagedIdentityTokenGenerator(config)));
     }
 
     private static void RegisterAccountApiClientDeps(IServiceCollection services)
@@ -132,20 +107,15 @@ public static class ServiceCollectionExtensions
         });
 
         // Infrastructure Services
-        services.AddTransient<IEmployerAccountProvider, EmployerAccountProvider>();
         services.AddTransient<ITrainingProviderService, TrainingProviderService>();
         services.AddTransient<ITrainingProviderSummaryProvider, TrainingProviderSummaryProvider>();
         services.AddHttpClient<IRecruitOuterApiClient, RecruitOuterApiClient>();
 
         // Projection services
         services.AddTransient<IQaDashboardProjectionService, QaDashboardProjectionService>();
-        services.AddTransient<IEditVacancyInfoProjectionService, EditVacancyInfoProjectionService>();
-        services.AddTransient<IPublishedVacancyProjectionService, PublishedVacancyProjectionService>();
-        services.AddTransient<IVacancyApplicationsProjectionService, VacancyApplicationsProjectionService>();
         services.AddTransient<IBlockedOrganisationsProjectionService, BlockedOrganisationsProjectionService>();
 
         // Reference Data Providers
-        services.AddTransient<IMinimumWageProvider, NationalMinimumWageProvider>();
         services.AddTransient<IApprenticeshipProgrammeProvider, ApprenticeshipProgrammeProvider>();
         services.AddTransient<IProfanityListProvider, ProfanityListProvider>();
         services.AddTransient<IBannedPhrasesProvider, BannedPhrasesProvider>();
@@ -182,34 +152,16 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IUserWriteRepository, MongoDbUserRepository>();
         services.AddTransient<IUserWriteRepository, UserService>();
             
-
-        services.AddTransient<IApplicationWriteRepository, ApplicationReviewService>();
-        services.AddTransient<IApplicationWriteRepository, MongoDbApplicationReviewRepository>();
-            
-        services.AddTransient<ISqlDbRepository, ApplicationReviewService>();
-        services.AddTransient<IMongoDbRepository, MongoDbApplicationReviewRepository>();
-
-        services.AddTransient<IApplicationReviewRepository, MongoDbApplicationReviewRepository>();
-
-        services.AddTransient<IApplicationReviewRepositoryRunner, ApplicationReviewRepositoryRunner>();
-
-
-        services.AddTransient<IEmployerProfileRepository, MongoDbEmployerProfileRepository>();
         services.AddTransient<IReportRepository, MongoDbReportRepository>();
         services.AddTransient<IUserNotificationPreferencesRepository, MongoDbUserNotificationPreferencesRepository>();
         services.AddTransient<IBlockedOrganisationRepository, MongoDbBlockedOrganisationRepository>();
 
         //Queries
-        services.AddTransient<IVacancyQuery, MongoDbVacancyRepository>();
-        services.AddTransient<IVacancyReviewQuery, MongoDbVacancyReviewRepository>();
-        services.AddTransient<IApplicationReviewQuery, MongoDbApplicationReviewRepository>();
+        services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
         services.AddTransient<IBlockedOrganisationQuery, MongoDbBlockedOrganisationRepository>();
 
         services.AddTransient<IQueryStoreReader, QueryStoreClient>();
         services.AddTransient<IQueryStoreWriter, QueryStoreClient>();
-
-        services.AddTransient<IReferenceDataReader, MongoDbReferenceDataRepository>();
-        services.AddTransient<IReferenceDataWriter, MongoDbReferenceDataRepository>();
     }
 
     private static void RegisterOutOfProcessEventDelegatorDeps(IServiceCollection services)
