@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 namespace Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
 
 public class ApprenticeshipProgrammeProvider(
-    IRecruitOuterApiClient outerApiClient,
+    IRecruitQaOuterApiClient outerApiClient,
     ICache cache,
     ITimeProvider timeProvider)
     : IApprenticeshipProgrammeProvider

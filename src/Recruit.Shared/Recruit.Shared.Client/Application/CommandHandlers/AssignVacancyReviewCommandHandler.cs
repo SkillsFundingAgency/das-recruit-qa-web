@@ -32,7 +32,7 @@ public class AssignVacancyReviewCommandHandler(
         else
         {
             logger.LogInformation("Starting assignment of next review for user {userId}.", message.User.UserId);
-            review = await GetNextVacancyReviewForUser(message.User.UserId);
+            review = await GetNextVacancyReviewForUser(message.User.Email, message.User.UserId);
         }
 
         if (review == null)
@@ -57,9 +57,9 @@ public class AssignVacancyReviewCommandHandler(
         return null;
     }
 
-    private async Task<VacancyReview> GetNextVacancyReviewForUser(string userId)
+    private async Task<VacancyReview> GetNextVacancyReviewForUser(string email, string userId)
     {
-        var review = await nextVacancyReviewService.GetNextVacancyReviewAsync(userId);
+        var review = await nextVacancyReviewService.GetNextVacancyReviewAsync(email);
 
         if (review == null)
         {
