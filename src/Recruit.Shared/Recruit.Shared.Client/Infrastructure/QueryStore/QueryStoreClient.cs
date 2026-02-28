@@ -13,19 +13,6 @@ namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
 public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider) : IQueryStoreReader, IQueryStoreWriter
 {
-    public Task UpdateProviderDashboardAsync(long ukprn, IEnumerable<VacancySummary> vacancySummaries, IEnumerable<ProviderDashboardTransferredVacancy> transferredVacancies)
-    {
-        var dashboardItem = new ProviderDashboard
-        {
-            Id = QueryViewType.ProviderDashboard.GetIdValue(ukprn),
-            Vacancies = vacancySummaries,
-            TransferredVacancies = transferredVacancies,
-            LastUpdated = timeProvider.Now
-        };
-
-        return queryStore.UpsertAsync(dashboardItem);
-    }
-
     public Task UpdateEmployerVacancyDataAsync(string employerAccountId, IEnumerable<LegalEntity> legalEntities)
     {
         var employerVacancyDataItem = new EmployerEditVacancyInfo
@@ -36,19 +23,6 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
         };
 
         return queryStore.UpsertAsync(employerVacancyDataItem);
-    }
-
-    public Task UpdateProviderVacancyDataAsync(long ukprn, IEnumerable<EmployerInfo> employers, bool hasAgreement)
-    {
-        var providerVacancyDataItem = new ProviderEditVacancyInfo
-        {
-            Id = QueryViewType.EditVacancyInfo.GetIdValue(ukprn),
-            Employers = employers,
-            HasProviderAgreement = hasAgreement,
-            LastUpdated = timeProvider.Now
-        };
-
-        return queryStore.UpsertAsync(providerVacancyDataItem);
     }
 
     public Task<ProviderEditVacancyInfo> GetProviderVacancyDataAsync(long ukprn)
