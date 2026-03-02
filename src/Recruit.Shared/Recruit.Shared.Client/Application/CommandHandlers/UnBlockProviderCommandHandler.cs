@@ -7,13 +7,14 @@ using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Recruit.Vacancies.Client.Infrastructure.BlockedOrganisations;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class UnblockProviderCommandHandler(
     ILogger<UnblockProviderCommandHandler> logger,
     IBlockedOrganisationQuery blockedOrganisationQuery,
-    IBlockedOrganisationRepository blockedOrganisationRepository,
+    IBlockedOrganisationRepositoryRunner blockedOrganisationRepository,
     IMessaging messaging)
     : IRequestHandler<UnblockProviderCommand, Unit>
 {
@@ -37,7 +38,7 @@ public class UnblockProviderCommandHandler(
 
     private static BlockedOrganisation ConvertToBlockedOrganisation(UnblockProviderCommand message)
     {
-        return new BlockedOrganisation()
+        return new BlockedOrganisation
         {
             BlockedStatus = BlockedStatus.Unblocked,
             OrganisationType = OrganisationType.Provider,

@@ -19,6 +19,7 @@ using Recruit.Vacancies.Client.Application.Validation.Fluent;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
+using Recruit.Vacancies.Client.Infrastructure.BlockedOrganisations;
 using Recruit.Vacancies.Client.Infrastructure.Client;
 using Recruit.Vacancies.Client.Infrastructure.EventStore;
 using Recruit.Vacancies.Client.Infrastructure.Messaging;
@@ -41,6 +42,7 @@ using Recruit.Vacancies.Client.Infrastructure.User;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using SFA.DAS.EAS.Account.Api.Client;
 using System;
+using Recruit.Vacancies.Client.Infrastructure.BlockedOrganisations;
 using VacancyRuleSet = Recruit.Vacancies.Client.Application.Rules.VacancyRules.VacancyRuleSet;
 
 namespace Recruit.Vacancies.Client.Ioc;
@@ -154,11 +156,12 @@ public static class ServiceCollectionExtensions
             
         services.AddTransient<IReportRepository, MongoDbReportRepository>();
         services.AddTransient<IUserNotificationPreferencesRepository, MongoDbUserNotificationPreferencesRepository>();
-        services.AddTransient<IBlockedOrganisationRepository, MongoDbBlockedOrganisationRepository>();
+        services.AddTransient<IBlockedOrganisationRepository, BlockedOrganisationService>();
+        services.AddTransient<IBlockedOrganisationRepositoryRunner, BlockedOrganisationRepositoryRunner>();
 
         //Queries
         services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
-        services.AddTransient<IBlockedOrganisationQuery, MongoDbBlockedOrganisationRepository>();
+        services.AddTransient<IBlockedOrganisationQuery, BlockedOrganisationService>();
 
         services.AddTransient<IQueryStoreReader, QueryStoreClient>();
         services.AddTransient<IQueryStoreWriter, QueryStoreClient>();
