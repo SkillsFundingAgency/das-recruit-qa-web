@@ -7,13 +7,14 @@ using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
 using Microsoft.Extensions.Logging;
+using Recruit.Vacancies.Client.Infrastructure.BlockedOrganisations;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class BlockProviderCommandHandler(
     ILogger<BlockProviderCommandHandler> logger,
     IBlockedOrganisationQuery blockedOrganisationQuery,
-    IBlockedOrganisationRepository blockedOrganisationRepository,
+    IBlockedOrganisationRepositoryRunner blockedOrganisationRepository,
     IMessaging messaging)
     : IRequestHandler<BlockProviderCommand, Unit>
 {
