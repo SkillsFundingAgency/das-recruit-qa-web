@@ -36,6 +36,8 @@ public class BlockedOrganisationServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         BlockedOrganisationService service)
     {
+        apiResponse.BlockedStatus = nameof(BlockedStatus.Blocked);
+        apiResponse.OrganisationType = nameof(OrganisationType.Employer);
         outerApiClient.Setup(x => x.Get<BlockedOrganisationDto>(It.Is<GetBlockedOrganisationRequest>(y =>
                 y.GetUrl == $"blockedorganisations/{organisationId}")))
             .ReturnsAsync(apiResponse);
@@ -66,7 +68,7 @@ public class BlockedOrganisationServiceTests
         BlockedOrganisationService service)
     {
         outerApiClient.Setup(x => x.Get<List<BlockedOrganisationSummaryDto>>(It.Is<GetBlockedProvidersRequest>(y =>
-                y.GetUrl == "blockedorganisations/providers")))
+                y.GetUrl == "blockedorganisations/byorganisationtype/providers")))
             .ReturnsAsync(apiResponse);
 
         var result = await service.GetAllBlockedProvidersAsync();
@@ -81,7 +83,7 @@ public class BlockedOrganisationServiceTests
         BlockedOrganisationService service)
     {
         outerApiClient.Setup(x => x.Get<List<BlockedOrganisationSummaryDto>>(It.Is<GetBlockedEmployersRequest>(y =>
-                y.GetUrl == "blockedorganisations/employers")))
+                y.GetUrl == "blockedorganisations/byorganisationtype/employers")))
             .ReturnsAsync(apiResponse);
 
         var result = await service.GetAllBlockedEmployersAsync();

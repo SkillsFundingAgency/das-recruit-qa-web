@@ -10,6 +10,6 @@ public class WhenBuildingGetBlockedEmployersRequest
     {
         var actual = new GetBlockedEmployersRequest();
 
-        actual.GetUrl.Should().Be("blockedorganisations/employers");
+        actual.GetUrl.Should().Be("blockedorganisations/byorganisationtype/employers");
     }
 }

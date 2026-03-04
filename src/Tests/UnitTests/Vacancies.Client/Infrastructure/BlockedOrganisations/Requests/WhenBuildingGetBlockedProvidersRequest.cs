@@ -10,6 +10,6 @@ public class WhenBuildingGetBlockedProvidersRequest
     {
         var actual = new GetBlockedProvidersRequest();
 
-        actual.GetUrl.Should().Be("blockedorganisations/providers");
+        actual.GetUrl.Should().Be("blockedorganisations/byorganisationtype/providers");
     }
 }

@@ -4,5 +4,5 @@ namespace Recruit.Vacancies.Client.Infrastructure.BlockedOrganisations.Requests;
 
 public class GetBlockedProvidersRequest : IGetApiRequest
 {
-    public string GetUrl => "blockedorganisations/providers";
+    public string GetUrl => "blockedorganisations/byorganisationtype/providers";
 }
