@@ -12,5 +12,4 @@ internal static class MongoDbCollectionNames
     internal const string EmployerProfiles = "employerProfiles";
     internal const string Reports = "reports";
     internal const string UserNotificationPreferences = "userNotificationPreferences";
-    internal const string BlockedOrganisations = "blockedOrganisations";
 }
