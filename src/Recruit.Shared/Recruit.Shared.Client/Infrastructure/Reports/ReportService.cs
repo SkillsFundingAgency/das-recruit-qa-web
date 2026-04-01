@@ -1,95 +1,38 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
-using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Application.Services.Reports;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Domain.Repositories;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Reports;
 
-public class ReportService(
-    ILogger<ReportService> logger,
-    IReportRepository reportRepository,
-    Func<ReportType, IReportStrategy> reportStrategyAccessor,
-    ITimeProvider timeProvider,
-    ICsvBuilder csvBuilder)
+public class ReportService(ICsvBuilder csvBuilder)
     : IReportService
 {
-    public async Task GenerateReportAsync(Guid reportId)
+    public void WriteReportAsCsv(Stream stream, List<QaCsvReport> report)
     {
-        var report = await reportRepository.GetReportAsync(reportId);
+        var results = JArray.Parse(JsonConvert.SerializeObject(report));
 
-        if (report == null)
-        {
-            logger.LogInformation("Report: {reportId} not found. Ignoring.", reportId);
-            return;
-        }
-
-        if (report.Status == ReportStatus.Generated)
-        {
-            logger.LogInformation("Report: {reportId} already generated. Ignoring.", reportId);
-            return;
-        }
-
-        try
-        {
-            logger.LogInformation("Report: {reportId} processing.", reportId);
-            report.Status = ReportStatus.InProgress;
-            report.GenerationStartedOn = timeProvider.Now;
-
-            await reportRepository.UpdateAsync(report);
-            logger.LogInformation("Report: {reportId} in progress.", reportId);
-
-            var reportStrategy = reportStrategyAccessor(report.ReportType);
-            var reportStrategyResult = await reportStrategy.GetReportDataAsync(report.Parameters);
-
-            report = await reportRepository.GetReportAsync(reportId);
-            if (report.Status == ReportStatus.Generated)
-            {
-                logger.LogInformation("Report: {reportId} already generated in the meantime. Ignoring.", reportId);
-                return;
-            }
-            report.Headers = reportStrategyResult.Headers;
-            report.Query = reportStrategyResult.Query;
-            report.Data = reportStrategyResult.Data;
-            report.Status = ReportStatus.Generated;
-            report.GeneratedOn = timeProvider.Now;
-
-            await reportRepository.UpdateAsync(report);
-            logger.LogInformation("Report: {reportId} generated.", reportId);
-        }
-        catch (Exception ex)
-        {
-            logger.LogWarning(ex, "Failed to generate report: {reportId}", report.Id);
-            report.Status = ReportStatus.Failed;
-            await reportRepository.UpdateAsync(report);
-            throw;
-        }
+        csvBuilder.WriteCsvToStream(stream, results, new List<KeyValuePair<string, string>>{new("Date", DateTime.Now.ToString("G"))}, ResolveFormat);
     }
-
-    public async Task WriteReportAsCsv(Stream stream, Report report)
+    
+    private ReportDataType ResolveFormat(string fieldName)
     {
-        if (report.Status != ReportStatus.Generated)
+        if (fieldName.Equals("Referred Fields", StringComparison.CurrentCultureIgnoreCase))
         {
-            throw new Exception($"Cannot download report: {report.Id} as incorrect status: {report.Status}");
+            return ReportDataType.ArrayType;
         }
 
-        var reportStrategy = reportStrategyAccessor(report.ReportType);
-        string reportData;
-        if (!string.IsNullOrEmpty(report.Query))
+        if (fieldName.Equals("SLA deadline", StringComparison.CurrentCultureIgnoreCase)
+            || fieldName.Equals("Date submitted", StringComparison.CurrentCultureIgnoreCase)
+            || fieldName.Equals("Review completed", StringComparison.CurrentCultureIgnoreCase)
+            || fieldName.Equals("Review started", StringComparison.CurrentCultureIgnoreCase))
         {
-            reportData = await reportStrategy.GetApplicationReviewsRecursiveAsync(report.Query);    
+            return ReportDataType.DateTimeType;
         }
-        else
-        {
-            reportData = report.Data;
-        }
-
-        var results = JArray.Parse(reportData);
-
-        csvBuilder.WriteCsvToStream(stream, results, report.Headers, reportStrategy.ResolveFormat);
+            
+        return ReportDataType.StringType;
     }
 }
