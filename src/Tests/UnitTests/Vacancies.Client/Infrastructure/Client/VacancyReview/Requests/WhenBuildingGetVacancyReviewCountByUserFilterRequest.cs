@@ -1,5 +1,5 @@
 using System.Web;
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using NUnit.Framework;
 
