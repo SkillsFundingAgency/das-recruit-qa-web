@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.WindowsAzure.Storage;
+using Azure.Storage.Queues;
 using Recruit.Communication.Types;
 
 namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
@@ -22,11 +22,8 @@ internal class CommunicationStorageQueueService(string connString) : StorageQueu
         if(string.IsNullOrEmpty(queueName))
             throw new ArgumentException($"Cannot map type {typeof(T).Name} to a queue name");
 
-        var storageAccount = CloudStorageAccount.Parse(ConnectionString);
-        var client = storageAccount.CreateCloudQueueClient();
+        var queueClient = new QueueClient(ConnectionString, queueName);
 
-        var queue = client.GetQueueReference(queueName);
-
-        await AddMessageToQueueAsync(queue, message);
+        await AddMessageToQueueAsync(queueClient, message);
     }
 }
