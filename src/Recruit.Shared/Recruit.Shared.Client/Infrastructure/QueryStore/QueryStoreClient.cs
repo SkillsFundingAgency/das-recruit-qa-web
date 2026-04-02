@@ -1,13 +1,11 @@
 using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.BlockedOrganisations;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.EditVacancyInfo;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancyApplications;
+using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancySummary;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.VacancySummary;
 
 namespace Recruit.Vacancies.Client.Infrastructure.QueryStore;
 
@@ -101,34 +99,5 @@ public class QueryStoreClient(IQueryStore queryStore, ITimeProvider timeProvider
     private string GetLiveVacancyId(long vacancyReference)
     {
         return QueryViewType.LiveVacancy.GetIdValue(vacancyReference.ToString());
-    }
-
-    public Task UpdateBlockedProviders(IEnumerable<BlockedOrganisationSummary> blockedProviders)
-    {
-        var blockedProvidersDoc = new BlockedProviderOrganisations
-        {
-            Id = QueryViewType.BlockedProviderOrganisations.GetIdValue(),
-            Data = blockedProviders,
-            LastUpdated = timeProvider.Now
-        };
-
-        return queryStore.UpsertAsync(blockedProvidersDoc);
-    }
-
-    public Task UpdateBlockedEmployers(IEnumerable<BlockedOrganisationSummary> blockedEmployers)
-    {
-        var blockedEmployersDoc = new BlockedEmployerOrganisations
-        {
-            Id = QueryViewType.BlockedEmployerOrganisations.GetIdValue(),
-            Data = blockedEmployers,
-            LastUpdated = timeProvider.Now
-        };
-
-        return queryStore.UpsertAsync(blockedEmployersDoc);
-    }
-
-    public Task<BlockedProviderOrganisations> GetBlockedProvidersAsync()
-    {
-        return queryStore.GetAsync<BlockedProviderOrganisations>(QueryViewType.BlockedProviderOrganisations.GetIdValue());
     }
 }

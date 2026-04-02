@@ -1,13 +1,15 @@
-﻿using System;
-using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Infrastructure.Extensions;
+using System;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
 // TODO: Proxies calls to the new outer api endpoints - this class should go once we have migrated vacancies over to SQL
-public class SqlVacancyRepository(IRecruitOuterApiVacancyClient recruitOuterApiVacancyClient) : IVacancyRepository
+public class SqlVacancyRepository(IRecruitOuterApiVacancyClient recruitOuterApiVacancyClient,
+    IRecruitQaOuterApiVacancyClient recruitQaOuterApiVacancyClient) : IVacancyRepository
 {
     public async Task CreateAsync(Vacancy vacancy)
     {
@@ -19,13 +21,15 @@ public class SqlVacancyRepository(IRecruitOuterApiVacancyClient recruitOuterApiV
         await recruitOuterApiVacancyClient.UpdateAsync(vacancy);
     }
 
-    public Task<Vacancy> GetVacancyAsync(Guid id)
+    public async Task<Vacancy> GetVacancyAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var vacancy = await recruitQaOuterApiVacancyClient.GetVacancyAsync(id);
+        return vacancy?.ToVacancy();
     }
 
-    public Task<Vacancy> GetVacancyAsync(long vacancyReference)
+    public async Task<Vacancy> GetVacancyAsync(long vacancyReference)
     {
-        throw new NotImplementedException();
+        var vacancy = await recruitQaOuterApiVacancyClient.GetVacancyAsync(vacancyReference);
+        return vacancy?.ToVacancy();
     }
 }
