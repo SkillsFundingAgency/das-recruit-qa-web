@@ -29,7 +29,7 @@ public class Vacancy : ITaskListVacancy
 
     public DateTime? LastUpdatedDate { get; set; }
     public VacancyUser LastUpdatedByUser { get; set; }
-    public bool IsDeleted { get; set; }
+    public bool IsDeleted => DeletedDate.HasValue;
     public DateTime? DeletedDate { get; set; }
     public VacancyUser DeletedByUser { get; set; }
     public string AnonymousReason { get; set; }
@@ -89,13 +89,9 @@ public class Vacancy : ITaskListVacancy
     public TrainingProvider TrainingProvider { get; set; }
     public Wage Wage { get; set; }
     public ClosureReason? ClosureReason { get; set; }
-    public string ClosureExplanation { get; set; }
     public TransferInfo TransferInfo { get; set; }
     public bool CanClose => Status == VacancyStatus.Live;
-    public bool CanClone => (Status == VacancyStatus.Live || 
-                             Status == VacancyStatus.Closed || 
-                             Status == VacancyStatus.Submitted || 
-                             Status == VacancyStatus.Review);
+    
     /// <summary>
     /// We can only delete draft vacancies that have not been deleted
     /// </summary>
@@ -104,66 +100,17 @@ public class Vacancy : ITaskListVacancy
                                Status == VacancyStatus.Rejected )
                               && IsDeleted == false) || (Status == VacancyStatus.Submitted && ClosingDate <= DateTime.UtcNow && !IsDeleted);
     /// <summary>
-    /// We can only edit draft & referred & rejected vacancies that have not been deleted
-    /// </summary>
-    public bool CanEdit => (Status == VacancyStatus.Draft || 
-                            Status == VacancyStatus.Referred ||
-                            Status == VacancyStatus.Rejected)                               
-                           && IsDeleted == false;
-
-    /// <summary>
-    /// Employer can only edit draft , referred & review vacancies that have not been deleted
-    /// </summary>
-    public bool CanEmployerEdit => (Status == VacancyStatus.Draft ||
-                                    Status == VacancyStatus.Referred ||
-                                    Status == VacancyStatus.Review)                                
-                                   && IsDeleted == false;
-
-    public bool CanGetEmployerProfileAboutOrganisation => (Status == VacancyStatus.Draft ||
-                                                           Status == VacancyStatus.Referred)                                
-                                                          && IsDeleted == false;
-
-    /// <summary>
     /// The vacancy is being edited
     /// We can only submit draft & referred & rejected vacancies that have not been deleted
     /// </summary>
     public bool CanSubmit => (Status == VacancyStatus.Draft || Status == VacancyStatus.Referred || Status == VacancyStatus.Rejected || Status == VacancyStatus.Review) && IsDeleted == false;
 
     /// <summary>
-    /// We can only approve submitted vacancies that have not been deleted
-    /// </summary>
-    public bool CanApprove => (Status == VacancyStatus.Submitted) && IsDeleted == false;
-
-    /// <summary>
-    /// We can only refer pending review vacancies that have not been deleted
-    /// </summary>
-    public bool CanRefer => Status == VacancyStatus.Submitted && IsDeleted == false;
-
-    /// <summary>
-    /// We can only reject  review vacancies that have not been deleted
-    /// </summary>
-    public bool CanReject => Status == VacancyStatus.Review && IsDeleted == false;
-
-    /// <summary>
     /// We can only make approved vacancies live that have not been deleted
     /// </summary>
     public bool CanMakeLive => Status == VacancyStatus.Approved && IsDeleted == false;
 
-    /// <summary>
-    /// We can send for review vacancies that are submitted and that have not been deleted
-    /// </summary>
-    public bool CanSendForReview => Status == VacancyStatus.Submitted && IsDeleted == false;
-        
-    public bool CanReview => Status == VacancyStatus.Review && IsDeleted == false;
-
-    public bool CanEmployerAndProviderCollabarate => (Status == VacancyStatus.Review || Status == VacancyStatus.Rejected);
-
     public bool IsDisabilityConfident => DisabilityConfident == DisabilityConfident.Yes;
-
-    /// <summary>
-    /// We can extend the ClosingDate and StartDate for Live vacancies that have not been deleted
-    /// </summary>
-    public bool CanExtendStartAndClosingDates => Status == VacancyStatus.Live && IsDeleted == false;
 
     /// <summary>
     /// Is the employer anonymous

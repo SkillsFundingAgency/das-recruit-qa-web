@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
-using Recruit.Vacancies.Client.Domain.Entities;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using SFA.DAS.Encoding;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
 

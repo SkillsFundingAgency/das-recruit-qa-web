@@ -12,7 +12,7 @@ public class VacancyTests
         var vacancy = new Vacancy
         {
             Status = VacancyStatus.Draft,
-            IsDeleted = true
+            DeletedDate = DateTime.UtcNow,
         };
 
         vacancy.CanSubmit.Should().BeFalse();
@@ -27,7 +27,7 @@ public class VacancyTests
             var vacancy = new Vacancy
             {
                 Status = status,
-                IsDeleted = false
+                DeletedDate = null,
             };
 
             vacancy.CanSubmit.Should().BeFalse();

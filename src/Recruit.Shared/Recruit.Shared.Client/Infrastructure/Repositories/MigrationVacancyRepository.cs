@@ -43,11 +43,11 @@ public class MigrationVacancyRepository(
 
     public Task<Vacancy> GetVacancyAsync(Guid id)
     {
-        return mongoRepository.GetVacancyAsync(id);
+        return sqlRepository.GetVacancyAsync(id);
     }
 
     public Task<Vacancy> GetVacancyAsync(long vacancyReference)
     {
-        return mongoRepository.GetVacancyAsync(vacancyReference);
+        return sqlRepository.GetVacancyAsync(vacancyReference);
     }
 }
