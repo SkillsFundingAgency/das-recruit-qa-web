@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Extensions;
-using Recruit.Vacancies.Client.Infrastructure.Client;
 using Recruit.Qa.Web.ViewModels.Reports;
 using Recruit.Qa.Web.ViewModels.Reports.ApplicationsReport;
 using Recruit.Shared.Web.Extensions;
+using Recruit.Vacancies.Client.Infrastructure.Services.Report;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;
 
-public class ApplicationsReportOrchestrator(IQaVacancyClient client, ITimeProvider timeProvider)
+public class ApplicationsReportOrchestrator(IQaReportService qaReportService, ITimeProvider timeProvider)
 {
     public ApplicationsReportCreateViewModel GetCreateViewModel()
     {
@@ -32,7 +32,7 @@ public class ApplicationsReportOrchestrator(IQaVacancyClient client, ITimeProvid
         return vm;
     }
 
-    public Task<Guid> PostCreateViewModelAsync(ApplicationsReportCreateEditModel model, VacancyUser user)
+    public async Task<Guid> PostCreateViewModelAsync(ApplicationsReportCreateEditModel model, VacancyUser user)
     {
         DateTime fromDate;
         DateTime toDate = timeProvider.Today;
@@ -58,8 +58,9 @@ public class ApplicationsReportOrchestrator(IQaVacancyClient client, ITimeProvid
 
         var reportName = $"{fromDate.ToUkTime().AsGdsDate()} to {toDate.ToUkTime().AsGdsDate()}";
 
-        DateTime toDateInclusive = toDate.AddDays(1).AddTicks(-1);
-
-        return client.CreateApplicationsReportAsync(fromDate, toDateInclusive, user, reportName);
+        var toDateInclusive = toDate.AddDays(1).AddTicks(-1);
+        var reportId = Guid.NewGuid();
+        await qaReportService.CreateQaApplicationsReportAsync(reportId, fromDate, toDateInclusive, user, reportName);
+        return reportId;
     }
 }

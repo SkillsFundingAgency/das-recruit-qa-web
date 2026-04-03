@@ -101,7 +101,6 @@ public partial class Startup
         services.AddScoped<ApplicationsReportOrchestrator>();
         services.AddScoped<BlockedOrganisationsOrchestrator>();
         services.AddScoped<UnblockOrganisationOrchestrator>();
-        services.AddScoped<ReportConfirmationOrchestrator>();
         services.AddScoped<WithdrawVacancyOrchestrator>();
         services.AddTransient<UserAuthorizationService>();
 
