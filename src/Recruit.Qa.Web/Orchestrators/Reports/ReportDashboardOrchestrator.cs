@@ -3,35 +3,37 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Domain.Extensions;
-using Recruit.Vacancies.Client.Infrastructure.Client;
 using Microsoft.Extensions.Logging;
 using Recruit.Qa.Web.ViewModels.Reports.ReportDashboard;
+using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Infrastructure.Client;
+using Recruit.Vacancies.Client.Infrastructure.Exceptions;
+using Recruit.Vacancies.Client.Infrastructure.Services.Report;
 
 namespace Recruit.Qa.Web.Orchestrators.Reports;
 
-public class ReportDashboardOrchestrator(ILogger<ReportDashboardOrchestrator> logger, IQaVacancyClient vacancyClient)
-    : ReportOrchestratorBase(logger, vacancyClient)
+public class ReportDashboardOrchestrator(ILogger<ReportDashboardOrchestrator> logger, IQaReportService qaReportService, IQaVacancyClient client)
 {
-    private readonly IQaVacancyClient _vacancyClient = vacancyClient;
 
     public async Task<ReportsDashboardViewModel> GetDashboardViewModel()
     {
-        var reports = await _vacancyClient.GetReportsAsync();
-
+        var reportsResponse = await qaReportService.GetReportsAsync();
+        var reports = reportsResponse.Reports;
+        
         var vm = new ReportsDashboardViewModel
         {
-            ProcessingCount = reports.Count(r => r.IsProcessing),
+            ProcessingCount = 0,
             Reports = reports
-                .OrderByDescending(r => r.RequestedOn)
+                .OrderByDescending(r => r.CreatedDate)
                 .Select(r => new ReportRowViewModel
                 {
                     ReportId = r.Id,
-                    ReportName = r.ReportName,
+                    ReportName = r.Name,
                     DownloadCount = r.DownloadCount,
-                    CreatedDate = r.RequestedOn.ToUkTime().AsGdsDateTime(),
-                    CreatedBy = r.RequestedBy.Name,
-                    Status = r.Status,
-                    IsProcessing = r.IsProcessing
+                    CreatedDate = r.CreatedDate.ToUkTime().AsGdsDateTime(),
+                    CreatedBy = r.CreatedBy,
+                    Status = ReportStatus.Generated,
+                    IsProcessing = false
                 })
         };
 
@@ -40,15 +42,16 @@ public class ReportDashboardOrchestrator(ILogger<ReportDashboardOrchestrator> lo
 
     public async Task<ReportDownloadViewModel> GetDownloadCsvAsync(Guid reportId)
     {
-        var report = await GetReportAsync(reportId);
+        var report = await qaReportService.GetGenerateQaReportAsync(reportId);
+        if (report.ReportName == null)
+        {
+            logger.LogInformation("Cannot find report: {reportId}", reportId);
+            throw new ReportNotFoundException($"Cannot find report: {reportId}");
+        }
 
         var stream = new MemoryStream();
             
-        var reportTask = _vacancyClient.WriteReportAsCsv(stream, report);
-
-        var downloadIncrementTask = _vacancyClient.IncrementReportDownloadCountAsync(report.Id);
-
-        await Task.WhenAll(reportTask, downloadIncrementTask);
+        client.WriteReportAsCsv(stream, report.QaReports.Select(c=>(QaCsvReport)c).ToList());
 
         return new ReportDownloadViewModel
         {
