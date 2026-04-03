@@ -20,7 +20,6 @@ public class QaVacancyClient(
     IApprenticeshipProgrammeProvider apprenticeshipProgrammesProvider,
     IMessaging messaging,
     INextVacancyReviewService nextVacancyReviewService,
-    IReportRepository reportRepository,
     IReportService reportService)
     : IQaVacancyClient
 {
@@ -150,48 +149,9 @@ public class QaVacancyClient(
         return vacancyReviewQuery.GetAnonymousApprovedCountAsync(accountLegalEntityPublicHashedId);
     }
 
-    public async Task<Guid> CreateApplicationsReportAsync(DateTime fromDate, DateTime toDate, VacancyUser user, string reportName)
+    public void WriteReportAsCsv(Stream stream, List<QaCsvReport> report)
     {
-        var reportId = Guid.NewGuid();
-
-        var owner = new ReportOwner
-        {
-            OwnerType = ReportOwnerType.Qa
-        };
-
-        await messaging.SendCommandAsync(new CreateReportCommand(
-            reportId,
-            owner,
-            ReportType.QaApplications,
-            new Dictionary<string, object> {
-                { ReportParameterName.FromDate, fromDate},
-                { ReportParameterName.ToDate, toDate}
-            },
-            user,
-            reportName)
-        );
-
-        return reportId;
-    }
-
-    public Task<List<ReportSummary>> GetReportsAsync()
-    {
-        return reportRepository.GetReportsForQaAsync<ReportSummary>();
-    }
-
-    public Task<Report> GetReportAsync(Guid reportId)
-    {
-        return reportRepository.GetReportAsync(reportId);
-    }
-
-    public async Task WriteReportAsCsv(Stream stream, Report report)
-    {
-        await reportService.WriteReportAsCsv(stream, report);
-    }
-
-    public Task IncrementReportDownloadCountAsync(Guid reportId)
-    {
-        return reportRepository.IncrementReportDownloadCountAsync(reportId);
+        reportService.WriteReportAsCsv(stream, report);
     }
 
     public Task UpdateDraftVacancyAsync(Vacancy vacancy, VacancyUser user)
