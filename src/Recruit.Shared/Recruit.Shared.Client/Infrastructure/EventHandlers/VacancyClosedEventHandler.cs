@@ -10,10 +10,6 @@ using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Extensions;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Application.Communications;
-using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
-using Recruit.Communication.Types;
 
 namespace Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 
@@ -23,7 +19,6 @@ public class VacancyClosedEventHandler(
     IVacancyRepository repository,
     IApprenticeshipProgrammeProvider apprenticeshipProgrammeProvider,
     ITimeProvider timeProvider,
-    ICommunicationQueueService communicationQueueService,
     IQueryStoreReader queryStoreReader)
     : INotificationHandler<VacancyClosedEvent>
 {
@@ -51,25 +46,5 @@ public class VacancyClosedEventHandler(
         var programme = await apprenticeshipProgrammeProvider.GetApprenticeshipProgrammeAsync(vacancy.ProgrammeId);
 
         await queryStore.UpdateClosedVacancyAsync(vacancy.ToVacancyProjectionBase<ClosedVacancy>((ApprenticeshipProgramme)programme, () => QueryViewType.ClosedVacancy.GetIdValue(vacancy.VacancyReference.ToString()), timeProvider));
-
-        if (vacancy.ClosureReason == ClosureReason.WithdrawnByQa)
-        {
-            logger.LogInformation($"Queuing up withdrawn notification message for vacancy {vacancy.VacancyReference}");
-            var communicationRequest = GetVacancyWithdrawnByQaCommunicationRequest(vacancy.VacancyReference.Value);
-            await communicationQueueService.AddMessageAsync(communicationRequest);
-        }
     }
-
-    private CommunicationRequest GetVacancyWithdrawnByQaCommunicationRequest(long vacancyReference)
-    {
-        var communicationRequest = new CommunicationRequest(
-            CommunicationConstants.RequestType.VacancyWithdrawnByQa,
-            CommunicationConstants.ParticipantResolverNames.VacancyParticipantsResolverName,
-            CommunicationConstants.ServiceName);
-
-        communicationRequest.AddEntity(CommunicationConstants.EntityTypes.Vacancy, vacancyReference);
-        communicationRequest.AddEntity(CommunicationConstants.EntityTypes.ApprenticeshipServiceUrl, vacancyReference);
-        return communicationRequest;
-    }
-
 }
