@@ -172,10 +172,7 @@ public static class ServiceCollectionExtensions
     private static void RegisterQueueStorageServices(IServiceCollection services, IConfiguration configuration)
     {
         var recruitStorageConnectionString = configuration.GetConnectionString("QueueStorage");
-        var communicationStorageConnectionString = configuration.GetConnectionString("CommunicationsStorage");
-
         services.AddTransient<IRecruitQueueService>(_ => new RecruitStorageQueueService(recruitStorageConnectionString));
-        services.AddTransient<ICommunicationQueueService>(_ => new CommunicationStorageQueueService(communicationStorageConnectionString));
     }
 
     private static void RegisterMongoQueryStores(IServiceCollection services)

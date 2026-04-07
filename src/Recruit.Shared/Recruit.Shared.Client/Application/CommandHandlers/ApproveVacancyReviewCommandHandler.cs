@@ -9,8 +9,6 @@ using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Events;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using Recruit.Vacancies.Client.Application.Communications;
-using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
@@ -23,8 +21,7 @@ public class ApproveVacancyReviewCommandHandler(
     IMessaging messaging,
     AbstractValidator<VacancyReview> vacancyReviewValidator,
     ITimeProvider timeProvider,
-    IBlockedOrganisationQuery blockedOrganisationQuery,
-    ICommunicationQueueService communicationQueueService)
+    IBlockedOrganisationQuery blockedOrganisationQuery)
     : IRequestHandler<ApproveVacancyReviewCommand, Unit>
 {
     public async Task<Unit> Handle(ApproveVacancyReviewCommand message, CancellationToken cancellationToken)
@@ -61,19 +58,11 @@ public class ApproveVacancyReviewCommandHandler(
         if (closureReason != null)
         {
             await CloseVacancyAsync(vacancy, closureReason.Value);
-            await SendNotificationToEmployerAsync(vacancy.TrainingProvider.Ukprn.GetValueOrDefault(), vacancy.EmployerAccountId);
             return Unit.Value;
         }
 
         await PublishVacancyReviewApprovedEventAsync(message, review);    
         return Unit.Value;
-    }
-
-    private Task SendNotificationToEmployerAsync(long ukprn, string employerAccountId)
-    {
-        var communicationRequest = CommunicationRequestFactory.GetProviderBlockedEmployerNotificationForLiveVacanciesRequest(ukprn, employerAccountId);
-
-        return communicationQueueService.AddMessageAsync(communicationRequest);
     }
 
     private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
