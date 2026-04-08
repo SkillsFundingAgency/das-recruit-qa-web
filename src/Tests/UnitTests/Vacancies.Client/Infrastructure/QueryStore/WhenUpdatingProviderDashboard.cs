@@ -1,4 +1,4 @@
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using NUnit.Framework;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Provider;
