@@ -9,7 +9,9 @@ public static class VacancyDtoMappingExtensions
     public static Vacancy ToVacancy(this VacancyDto dto) => new()
     {
         Id = dto.Id,
+        EmployerAccountId = dto.AccountId?.ToString(),
         VacancyReference = dto.VacancyReference,
+        AccountLegalEntityId = dto.AccountLegalEntityId,
         Status = dto.Status,
         ApprenticeshipType = dto.ApprenticeshipType,
         Title = dto.Title,

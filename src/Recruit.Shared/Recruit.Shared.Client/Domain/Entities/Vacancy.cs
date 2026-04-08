@@ -9,6 +9,7 @@ public class Vacancy : ITaskListVacancy
     private string _shortDescription;
     public Guid Id { get; set; }
     public string EmployerAccountId { get; set; }
+    public long? AccountLegalEntityId { get; set; }
     public long? VacancyReference { get; set; }
     public VacancyStatus Status { get; set; }
     public OwnerType OwnerType { get; set; }

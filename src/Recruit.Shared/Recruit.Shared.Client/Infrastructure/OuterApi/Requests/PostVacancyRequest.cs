@@ -79,7 +79,7 @@ public class VacancyDto
     {
         return new VacancyDto
         {
-            AccountLegalEntityId = string.IsNullOrWhiteSpace(vacancy.AccountLegalEntityPublicHashedId) ? null : encodingService.Decode(vacancy.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId),
+            AccountLegalEntityId = vacancy.AccountLegalEntityId ?? encodingService.Decode(vacancy.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId),
             AdditionalQuestion1 = vacancy.AdditionalQuestion1,
             AdditionalQuestion2 = vacancy.AdditionalQuestion2,
             AdditionalTrainingDescription = vacancy.AdditionalTrainingDescription,
