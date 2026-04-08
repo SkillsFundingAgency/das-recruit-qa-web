@@ -11,11 +11,6 @@ namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 public class SqlVacancyRepository(IRecruitOuterApiVacancyClient recruitOuterApiVacancyClient,
     IRecruitQaOuterApiVacancyClient recruitQaOuterApiVacancyClient) : IVacancyRepository
 {
-    public async Task CreateAsync(Vacancy vacancy)
-    {
-        await recruitOuterApiVacancyClient.CreateAsync(vacancy);
-    }
-
     public async Task UpdateAsync(Vacancy vacancy)
     {
         await recruitOuterApiVacancyClient.UpdateAsync(vacancy);
