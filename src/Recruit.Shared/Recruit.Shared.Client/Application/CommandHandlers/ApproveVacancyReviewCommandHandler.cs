@@ -23,7 +23,6 @@ public class ApproveVacancyReviewCommandHandler(
     IMessaging messaging,
     AbstractValidator<VacancyReview> vacancyReviewValidator,
     ITimeProvider timeProvider,
-    IBlockedOrganisationQuery blockedOrganisationQuery,
     ICommunicationQueueService communicationQueueService)
     : IRequestHandler<ApproveVacancyReviewCommand, Unit>
 {
@@ -84,9 +83,6 @@ public class ApproveVacancyReviewCommandHandler(
                 ClosureReason.TransferredByEmployer : ClosureReason.TransferredByQa;
         }
 
-        if(await HasProviderBeenBlockedSinceReviewWasCreatedAsync(vacancy))
-            return ClosureReason.BlockedByQa;
-
         return null;
     }
 
@@ -102,12 +98,6 @@ public class ApproveVacancyReviewCommandHandler(
     private bool HasVacancyBeenTransferredSinceReviewWasCreated(VacancyReview review, Vacancy vacancy)
     {
         return review.VacancySnapshot.TransferInfo == null && vacancy.TransferInfo != null;
-    }
-
-    private async Task<bool> HasProviderBeenBlockedSinceReviewWasCreatedAsync(Vacancy vacancy)
-    {
-        var blockedProvider = await blockedOrganisationQuery.GetByOrganisationIdAsync(vacancy.TrainingProvider.Ukprn.ToString());
-        return blockedProvider?.BlockedStatus == BlockedStatus.Blocked;
     }
 
     private Task CloseVacancyAsync(Vacancy vacancy, ClosureReason closureReason)
