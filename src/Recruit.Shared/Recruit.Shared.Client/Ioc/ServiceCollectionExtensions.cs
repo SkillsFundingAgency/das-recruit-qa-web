@@ -101,7 +101,6 @@ public static class ServiceCollectionExtensions
 
         // Projection services
         services.AddTransient<IQaDashboardProjectionService, QaDashboardProjectionService>();
-        services.AddTransient<IBlockedOrganisationsProjectionService, BlockedOrganisationsProjectionService>();
 
         // Reference Data Providers
         services.AddTransient<IApprenticeshipProgrammeProvider, ApprenticeshipProgrammeProvider>();
@@ -141,11 +140,9 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IUserWriteRepository, UserService>();
             
         services.AddTransient<IUserNotificationPreferencesRepository, MongoDbUserNotificationPreferencesRepository>();
-        services.AddTransient<IBlockedOrganisationRepository, MongoDbBlockedOrganisationRepository>();
 
         //Queries
         services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
-        services.AddTransient<IBlockedOrganisationQuery, MongoDbBlockedOrganisationRepository>();
 
         services.AddTransient<IQueryStoreReader, QueryStoreClient>();
         services.AddTransient<IQueryStoreWriter, QueryStoreClient>();
