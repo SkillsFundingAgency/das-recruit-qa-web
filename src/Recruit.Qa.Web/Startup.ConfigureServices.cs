@@ -99,7 +99,6 @@ public partial class Startup
         services.AddScoped<ReviewOrchestrator>();
         services.AddScoped<ReportDashboardOrchestrator>();
         services.AddScoped<ApplicationsReportOrchestrator>();
-        services.AddScoped<ReportConfirmationOrchestrator>();
         services.AddScoped<WithdrawVacancyOrchestrator>();
         services.AddTransient<UserAuthorizationService>();
 
