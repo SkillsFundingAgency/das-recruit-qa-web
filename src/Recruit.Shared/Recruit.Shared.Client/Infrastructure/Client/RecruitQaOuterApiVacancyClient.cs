@@ -1,9 +1,12 @@
-﻿using Recruit.Vacancies.Client.Domain.Models;
+﻿using Recruit.Vacancies.Client.Domain.Entities;
+using Recruit.Vacancies.Client.Domain.Models;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using VacancyDto = Recruit.Vacancies.Client.Domain.Models.VacancyDto;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
 
@@ -13,6 +16,8 @@ public interface IRecruitQaOuterApiVacancyClient
     Task<List<string>> GetProfanityListAsync();
     Task<List<string>> GetBlockedPhrasesAsync();
     Task<Provider> GetProviderAsync(long ukprn);
+    Task<VacancyDto> GetVacancyAsync(Guid id);
+    Task<VacancyDto> GetVacancyAsync(long vacancyReference);
 }
 
 public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOuterApiClient): IRecruitQaOuterApiVacancyClient
@@ -37,5 +42,17 @@ public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOu
     public async Task<Provider> GetProviderAsync(long ukprn)
     {
         return await recruitQaOuterApiClient.Get<GetProviderApiResponse>(new GetProviderRequest(ukprn));
+    }
+
+    public async Task<VacancyDto> GetVacancyAsync(Guid id)
+    {
+        var response = await recruitQaOuterApiClient.Get<GetVacancyByIdApiResponse>(new GetVacancyByIdRequest(id));
+        return response?.Data;
+    }
+
+    public async Task<VacancyDto> GetVacancyAsync(long vacancyReference)
+    {
+        var response = await recruitQaOuterApiClient.Get<GetVacancyByReferenceApiResponse>(new GetVacancyByReferenceRequest(vacancyReference));
+        return response?.Data;
     }
 }
