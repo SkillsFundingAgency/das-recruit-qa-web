@@ -15,7 +15,7 @@ public class ReportService(ICsvBuilder csvBuilder)
     {
         var results = JArray.Parse(JsonConvert.SerializeObject(report));
 
-        csvBuilder.WriteCsvToStream(stream, results, new List<KeyValuePair<string, string>>{new("Date", DateTime.Now.ToString("G"))}, ResolveFormat);
+        csvBuilder.WriteCsvToStream(stream, results, new List<KeyValuePair<string, string>>{new("Date", DateTime.Now.ToString("dd/MM/yyyy HH:mm"))}, ResolveFormat);
     }
     
     private ReportDataType ResolveFormat(string fieldName)
