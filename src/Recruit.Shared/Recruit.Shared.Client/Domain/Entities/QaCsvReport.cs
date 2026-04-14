@@ -20,12 +20,12 @@ public record QaCsvReport
     public DateTime? ReviewStarted { get; set; }
     [JsonProperty("Review completed")]
     public DateTime? ReviewCompleted { get; set; }
-    [JsonProperty("Outcome")]
-    public string? Outcome { get; set; }
-    [JsonProperty("SLA exceeded by (hours)")]
-    public string SlaExceededByHours { get; set; } = "";
     [JsonProperty("Time taken to review")]
     public string TimeTakenToReview { get; set; } = "";
+    [JsonProperty("SLA exceeded by (hours)")]
+    public string SlaExceededByHours { get; set; } = "";
+    [JsonProperty("Outcome")]
+    public string? Outcome { get; set; }
     [JsonProperty("Number of issues reported")]
     public int NumberOfIssuesReported { get; set; }
     [JsonProperty("Vacancy submitted by")]
@@ -40,16 +40,17 @@ public record QaCsvReport
     public string? TrainingProvider { get; set; }
     [JsonProperty("Vacancy postcode")]
     public string? VacancyPostcode { get; set; }
+    [JsonProperty("Standard / Framework")]
+    public string? CourseName { get; set; }
+    [JsonProperty("level")]
+    public string? CourseLevel { get; set; }
     [JsonProperty("Referred Fields")]
     public List<string> ReferredFields { get; set; } = [];
     [JsonProperty("Reviewed by")]
     public string? ReviewedBy { get; set; }
     [JsonProperty("Reviewer Comment")]
     public string? ReviewerComment { get; set; }
-    [JsonProperty("Standard / Framework")]
-    public string? CourseName { get; set; }
-    [JsonProperty("level")]
-    public string? CourseLevel { get; set; }
+    
 
     public static implicit operator QaCsvReport(QaReport report) =>
         new()
