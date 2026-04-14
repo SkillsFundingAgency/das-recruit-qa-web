@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 
 namespace Recruit.Vacancies.Client.Domain.Entities;
 

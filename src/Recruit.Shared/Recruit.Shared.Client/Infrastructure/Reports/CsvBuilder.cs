@@ -136,7 +136,7 @@ public class CsvBuilder : ICsvBuilder
                 }
                     
                 value = field.Value.Value<JArray>()
-                    .Select(c => JsonConvert.DeserializeObject<ReviewField>(c.ToString()).FieldIdentifier)
+                    .Select(c => c.ToString())
                     .ToDelimitedString("|");
                 break;
             default:

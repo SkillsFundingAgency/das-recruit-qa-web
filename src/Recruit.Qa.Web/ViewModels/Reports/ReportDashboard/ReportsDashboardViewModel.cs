@@ -16,6 +16,8 @@ public class ReportsDashboardViewModel
     public string ProcessingCaption => $"{"report".ToQuantity(ProcessingCount)}";
 
     public bool IsProcessingReports => ProcessingCount > 0;
+    public bool ShowSuccessBanner { get; set; }
+    public string SuccessReportName { get; set; }
 }
 
 public class ReportRowViewModel

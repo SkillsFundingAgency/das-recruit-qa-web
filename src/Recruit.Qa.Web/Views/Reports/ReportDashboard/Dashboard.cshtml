@@ -7,7 +7,23 @@
         <a asp-route="@RouteNames.Dashboard_Index_Get" class="govuk-back-link govuk-!-margin-bottom-6">Return to dashboard</a>
 
         <h1 class="govuk-heading-xl">Reports</h1>
+        @if (Model.ShowSuccessBanner)
+        {
+            <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+                <div class="govuk-notification-banner__header">
+                    <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+                        Success
+                    </h2>
+                </div>
+                <div class="govuk-notification-banner__content">
+                    <h3 class="govuk-notification-banner__heading">
+                        Report from @Model.SuccessReportName is ready.
+                    </h3>
+                </div>
+            </div>
+        }
     </div>
+    
     <div asp-hide="@Model.HasReports" class="govuk-grid-column-two-thirds">
         <p class="govuk-body">Create and download reports for your vacancies for any period of time.</p>
         <a asp-route="@RouteNames.ApplicationsReportCreate_Get" class="govuk-button">Create new report</a>
