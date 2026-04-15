@@ -33,6 +33,7 @@ using Recruit.Vacancies.Client.Infrastructure.ReferenceData.Profanities;
 using Recruit.Vacancies.Client.Infrastructure.Reports;
 using Recruit.Vacancies.Client.Infrastructure.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.Services;
+using Recruit.Vacancies.Client.Infrastructure.Services.Report;
 using Recruit.Vacancies.Client.Infrastructure.Services.Projections;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProviderSummaryProvider;
@@ -91,29 +92,15 @@ public static class ServiceCollectionExtensions
         //Reporting Service
         services.AddTransient<ICsvBuilder, CsvBuilder>();
         services.AddTransient<IReportService, ReportService>();
-        services.AddTransient<ProviderApplicationsReportStrategy>();
-        services.AddTransient<QaApplicationsReportStrategy>();
-        services.AddTransient<Func<ReportType, IReportStrategy>>(serviceProvider => reportType =>
-        {
-            switch (reportType)
-            {
-                case ReportType.ProviderApplications:
-                    return serviceProvider.GetService<ProviderApplicationsReportStrategy>();
-                case ReportType.QaApplications:
-                    return serviceProvider.GetService<QaApplicationsReportStrategy>();
-                default:
-                    throw new Exception($"No report strategy for {reportType}");
-            }
-        });
 
         // Infrastructure Services
         services.AddTransient<ITrainingProviderService, TrainingProviderService>();
         services.AddTransient<ITrainingProviderSummaryProvider, TrainingProviderSummaryProvider>();
         services.AddHttpClient<IRecruitOuterApiClient, RecruitOuterApiClient>();
+        services.AddTransient<IQaReportService, QaReportService>();
 
         // Projection services
         services.AddTransient<IQaDashboardProjectionService, QaDashboardProjectionService>();
-        services.AddTransient<IBlockedOrganisationsProjectionService, BlockedOrganisationsProjectionService>();
 
         // Reference Data Providers
         services.AddTransient<IApprenticeshipProgrammeProvider, ApprenticeshipProgrammeProvider>();
@@ -152,13 +139,10 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IUserWriteRepository, MongoDbUserRepository>();
         services.AddTransient<IUserWriteRepository, UserService>();
             
-        services.AddTransient<IReportRepository, MongoDbReportRepository>();
         services.AddTransient<IUserNotificationPreferencesRepository, MongoDbUserNotificationPreferencesRepository>();
-        services.AddTransient<IBlockedOrganisationRepository, MongoDbBlockedOrganisationRepository>();
 
         //Queries
         services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
-        services.AddTransient<IBlockedOrganisationQuery, MongoDbBlockedOrganisationRepository>();
 
         services.AddTransient<IQueryStoreReader, QueryStoreClient>();
         services.AddTransient<IQueryStoreWriter, QueryStoreClient>();

@@ -77,9 +77,13 @@ public class VacancyDto
     
     public static VacancyDto From(Vacancy vacancy, IEncodingService encodingService)
     {
+        
         return new VacancyDto
         {
-            AccountLegalEntityId = string.IsNullOrWhiteSpace(vacancy.AccountLegalEntityPublicHashedId) ? null : encodingService.Decode(vacancy.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId),
+            AccountLegalEntityId = vacancy.AccountLegalEntityId
+                                   ?? (string.IsNullOrWhiteSpace(vacancy.AccountLegalEntityPublicHashedId)
+                                       ? null
+                                       : encodingService.Decode(vacancy.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId)),
             AdditionalQuestion1 = vacancy.AdditionalQuestion1,
             AdditionalQuestion2 = vacancy.AdditionalQuestion2,
             AdditionalTrainingDescription = vacancy.AdditionalTrainingDescription,
@@ -96,7 +100,7 @@ public class VacancyDto
             DeletedDate = vacancy.DeletedDate,
             Description = vacancy.Description,
             DisabilityConfident = vacancy.DisabilityConfident == Domain.Entities.DisabilityConfident.Yes,
-            AccountId = string.IsNullOrWhiteSpace(vacancy.EmployerAccountId) ? null : encodingService.Decode(vacancy.EmployerAccountId, EncodingType.AccountId),
+            AccountId = string.IsNullOrWhiteSpace(vacancy.EmployerAccountId) ? null : Convert.ToInt32(vacancy.EmployerAccountId),
             Contact = vacancy.EmployerContact ?? vacancy.ProviderContact,
             EmployerDescription = vacancy.EmployerDescription,
             EmployerLocationInformation = vacancy.EmployerLocationInformation,
@@ -139,6 +143,7 @@ public class VacancyDto
             VacancyReference = vacancy.VacancyReference,
             Wage = vacancy.Wage,
         };
+        
     }
 
     private static List<Address> MapLocations(Vacancy vacancy)

@@ -8,7 +8,6 @@
         </div>
     </div>
 </div>
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <form asp-route="@RouteNames.Dashboard_Next_Vacancy_Post">
@@ -28,7 +27,6 @@
         </form>
     </div>
 </div>
-
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <h2 class="govuk-heading-m govuk-!-margin-bottom-0">Statistics</h2>
@@ -52,11 +50,8 @@
         </table>
     </div>
 </div>
-
 <h2 asp-show="@Model.IsUserAdmin" class="govuk-heading-m govuk-!-margin-bottom-0">In-progress vacancies</h2>
-
 <span asp-show="@Model.DisplayNoInProgressVacanciesMessage" class="govuk-body">There are no vacancy reviews currently in progress</span>
-
 <div asp-show="@Model.DisplayInProgressResults" class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <table class="govuk-table">
@@ -90,11 +85,8 @@
         </table>
     </div>
 </div>
-
 <h2 asp-show="@Model.DisplayLastSearchTerm" class="govuk-heading-m govuk-!-margin-bottom-0">Search results for [@Model.LastSearchTerm]</h2>
-
 <span asp-show="@Model.DisplayNoSearchResultsMessage" class="govuk-body">No results</span>
-
 <div asp-show="@Model.DisplaySearchResults" class="govuk-grid-row">
     <div class="govuk-grid-column-full">
         <table class="govuk-table">
@@ -127,7 +119,6 @@
         </table>
     </div>
 </div>
-
 <div asp-show="@Model.IsUserAdmin" class="govuk-grid-row">
     <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
     <div class="govuk-grid-column-one-third">
@@ -138,15 +129,8 @@
     </div>
     <div class="govuk-grid-column-one-third">
         <h3 class="govuk-heading-s govuk-!-margin-bottom-0">
-            <a class="govuk-link govuk-link--no-visited-state" asp-route="@RouteNames.BlockedOrganisations_Get">Remove training provider</a>
-        </h3>
-        <p class="govuk-body">Remove a training provider</p>
-    </div>
-    <div class="govuk-grid-column-one-third">
-        <h3 class="govuk-heading-s govuk-!-margin-bottom-0">
             <a class="govuk-link govuk-link--no-visited-state" asp-route="@RouteNames.WithdrawVacancy_FindVacancy_Get">Close a vacancy</a>
         </h3>
         <p class="govuk-body">Find and close a live vacancy and prevent it being found on Find an apprenticeship.</p>
     </div>
 </div>
-

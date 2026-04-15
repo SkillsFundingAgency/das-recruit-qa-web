@@ -13,7 +13,7 @@ public class WhenSettingCanDeleteFlag
         var vacancy = new Vacancy
         {
             Status = vacancyStatus,
-            IsDeleted = false
+            DeletedDate = null
         };
             
         vacancy.CanDelete.Should().BeTrue();
@@ -26,7 +26,7 @@ public class WhenSettingCanDeleteFlag
         {
             Status = VacancyStatus.Submitted,
             ClosingDate = DateTime.UtcNow.AddDays(-1),
-            IsDeleted = false
+            DeletedDate = null
         };
             
         vacancy.CanDelete.Should().BeTrue();
@@ -39,7 +39,7 @@ public class WhenSettingCanDeleteFlag
         {
             Status = VacancyStatus.Submitted,
             ClosingDate = DateTime.UtcNow.AddDays(1),
-            IsDeleted = false
+            DeletedDate = null
         };
             
         vacancy.CanDelete.Should().BeFalse();
@@ -54,7 +54,7 @@ public class WhenSettingCanDeleteFlag
         var vacancy = new Vacancy
         {
             Status = vacancyStatus,
-            IsDeleted = false
+            DeletedDate = null
         };
             
         vacancy.CanDelete.Should().BeFalse();
@@ -69,7 +69,7 @@ public class WhenSettingCanDeleteFlag
         var vacancy = new Vacancy
         {
             Status = vacancyStatus,
-            IsDeleted = true,
+            DeletedDate = DateTime.UtcNow,
             ClosingDate = DateTime.UtcNow.AddDays(-1)
         };
             
