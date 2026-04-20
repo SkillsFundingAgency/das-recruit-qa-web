@@ -9,6 +9,7 @@ using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Events;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
+using NServiceBus;
 using Recruit.Vacancies.Client.Application.Communications;
 using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
@@ -21,8 +22,9 @@ public class ApproveVacancyReviewCommandHandler(
     IVacancyReviewQuery vacancyReviewQuery,
     IVacancyRepository vacancyRepository,
     IMessaging messaging,
-    AbstractValidator<VacancyReview> vacancyReviewValidator,
+    IValidator<VacancyReview> vacancyReviewValidator,
     ITimeProvider timeProvider,
+    IMessageSession messageSession,
     ICommunicationQueueService communicationQueueService)
     : IRequestHandler<ApproveVacancyReviewCommand, Unit>
 {
@@ -64,7 +66,8 @@ public class ApproveVacancyReviewCommandHandler(
             return Unit.Value;
         }
 
-        await PublishVacancyReviewApprovedEventAsync(message, review);    
+        await PublishVacancyReviewApprovedEventAsync(message, review);
+        await messageSession.Send(new SFA.DAS.Recruit.Jobs.NServiceBus.Commands.PublishVacancyCommand(vacancy.Id));
         return Unit.Value;
     }
 
