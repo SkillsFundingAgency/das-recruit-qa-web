@@ -18,6 +18,8 @@ using Microsoft.Extensions.Logging;
 using NServiceBus;
 using NUnit.Framework;
 using Recruit.Communication.Types;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.CommandHandlers;
 
@@ -30,7 +32,7 @@ public class ApproveVacancyReviewCommandHandlerTests
     private Mock<IVacancyRepository> _mockVacancyRepository;
     private Mock<ITimeProvider> _mockTimeProvider;
     private Mock<IMessaging> _mockMessaging;
-    private Mock<IMessageSession> _messageSession;
+    private Mock<IRecruitQaOuterApiClient> _outerApiClient;
     private ApproveVacancyReviewCommandHandler _sut;
     private Mock<ICommunicationQueueService> _mockCommunicationQueueService;
 
@@ -44,7 +46,7 @@ public class ApproveVacancyReviewCommandHandlerTests
         _mockMessaging = new Mock<IMessaging>();
         var mockValidator = new VacancyReviewValidator();
 
-        _messageSession = new Mock<IMessageSession>();
+        _outerApiClient = new Mock<IRecruitQaOuterApiClient>();
 
         _mockTimeProvider = new Mock<ITimeProvider>();
         _mockTimeProvider.Setup(t => t.Now).Returns(DateTime.UtcNow);
@@ -54,7 +56,7 @@ public class ApproveVacancyReviewCommandHandlerTests
 
         _sut = new ApproveVacancyReviewCommandHandler(Mock.Of<ILogger<ApproveVacancyReviewCommandHandler>>(), _mockVacancyReviewRepository.Object,
             _mockVacancyReviewQuery.Object, _mockVacancyRepository.Object, _mockMessaging.Object, mockValidator, 
-            _mockTimeProvider.Object, _messageSession.Object, _mockCommunicationQueueService.Object);
+            _mockTimeProvider.Object, _outerApiClient.Object, _mockCommunicationQueueService.Object);
     }
 
     [Test]
@@ -114,13 +116,14 @@ public class ApproveVacancyReviewCommandHandlerTests
     }
     
     [Test, MoqAutoData]
-    public async Task The_Publish_Vacancy_Command_Is_Sent(
+    public async Task The_Publish_Vacancy_Call_Is_Made(
         Guid vacancyReviewId,
         Vacancy existingVacancy,
         [Frozen] Mock<IVacancyReviewQuery> vacancyReviewQuery,
         [Frozen] Mock<IVacancyRepository> vacancyRepository,
         [Frozen] Mock<IValidator<VacancyReview>> vacancyReviewValidator,
         [Frozen] Mock<IMessageSession> messageSession,
+        [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         [Greedy] ApproveVacancyReviewCommandHandler sut)
     {
         // arrange
@@ -142,6 +145,6 @@ public class ApproveVacancyReviewCommandHandlerTests
         await sut.Handle(command, CancellationToken.None);
         
         // assert
-        messageSession.Verify(x => x.Send(It.IsAny<SFA.DAS.Recruit.Jobs.NServiceBus.Commands.PublishVacancyCommand>(), It.IsAny<SendOptions>()), Times.Once);
+        outerApiClient.Verify(x => x.Post(It.Is<PostPublishVacancyRequest>(r => r.VacancyId == existingVacancy.Id), true), Times.Once);
     }
 }
