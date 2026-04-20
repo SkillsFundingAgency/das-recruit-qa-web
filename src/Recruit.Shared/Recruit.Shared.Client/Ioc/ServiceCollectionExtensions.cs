@@ -173,7 +173,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient(typeof(IEntityValidator<,>), typeof(EntityValidator<,>));
 
         services.AddTransient<AbstractValidator<ApplicationReview>, ApplicationReviewValidator>();
-        services.AddTransient<AbstractValidator<VacancyReview>, VacancyReviewValidator>();
+        services.AddTransient<IValidator<VacancyReview>, VacancyReviewValidator>();
     }
 
     private static void AddRules(IServiceCollection services)
