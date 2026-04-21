@@ -10,8 +10,6 @@ using Recruit.Vacancies.Client.Domain.Events;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
 using Recruit.Vacancies.Client.Application.Communications;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
-using Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests;
 using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
@@ -24,9 +22,7 @@ public class ApproveVacancyReviewCommandHandler(
     IVacancyRepository vacancyRepository,
     IMessaging messaging,
     IValidator<VacancyReview> vacancyReviewValidator,
-    ITimeProvider timeProvider,
-    IRecruitQaOuterApiClient outerApiClient,
-    ICommunicationQueueService communicationQueueService)
+    ITimeProvider timeProvider)
     : IRequestHandler<ApproveVacancyReviewCommand, Unit>
 {
     public async Task<Unit> Handle(ApproveVacancyReviewCommand message, CancellationToken cancellationToken)
@@ -36,6 +32,7 @@ public class ApproveVacancyReviewCommandHandler(
         var review = await vacancyReviewQuery.GetAsync(message.ReviewId);
         var vacancy = await vacancyRepository.GetVacancyAsync(review.VacancyReference);
 
+        var initialReviewStatus = review.Status;
         if (!review.CanApprove)
         {
             logger.LogWarning($"Unable to approve review {{reviewId}} due to review having a status of {review.Status}.", message.ReviewId);
@@ -56,30 +53,25 @@ public class ApproveVacancyReviewCommandHandler(
 
         Validate(review);
 
-        await vacancyReviewRepositoryRunner.UpdateAsync(review);
-
         var closureReason = await TryGetReasonToCloseVacancy(review, vacancy);
-
         if (closureReason != null)
         {
-            await CloseVacancyAsync(vacancy, closureReason.Value);
-            await SendNotificationToEmployerAsync(vacancy.TrainingProvider.Ukprn.GetValueOrDefault(), vacancy.EmployerAccountId);
+            // review should have been closed and vacancy transferred
+            if (initialReviewStatus is not ReviewStatus.Closed)
+            {
+                review.ManualOutcome = ManualQaOutcome.Transferred;
+                await vacancyReviewRepositoryRunner.UpdateAsync(review);        
+            }
+            
             return Unit.Value;
         }
-
+        
+        await vacancyReviewRepositoryRunner.UpdateAsync(review);
         await PublishVacancyReviewApprovedEventAsync(message, review);
-        await outerApiClient.Post(new PostPublishVacancyRequest(vacancy.Id));
         return Unit.Value;
     }
 
-    private Task SendNotificationToEmployerAsync(long ukprn, string employerAccountId)
-    {
-        var communicationRequest = CommunicationRequestFactory.GetProviderBlockedEmployerNotificationForLiveVacanciesRequest(ukprn, employerAccountId);
-
-        return communicationQueueService.AddMessageAsync(communicationRequest);
-    }
-
-    private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
+   private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
     {
         if (HasVacancyBeenTransferredSinceReviewWasCreated(review, vacancy))
         {
@@ -102,15 +94,6 @@ public class ApproveVacancyReviewCommandHandler(
     private bool HasVacancyBeenTransferredSinceReviewWasCreated(VacancyReview review, Vacancy vacancy)
     {
         return review.VacancySnapshot.TransferInfo == null && vacancy.TransferInfo != null;
-    }
-
-    private Task CloseVacancyAsync(Vacancy vacancy, ClosureReason closureReason)
-    {
-        vacancy.Status = VacancyStatus.Closed;
-        vacancy.ClosedDate = timeProvider.Now;
-        vacancy.ClosedByUser = vacancy.TransferInfo?.TransferredByUser;
-        vacancy.ClosureReason = closureReason;
-        return vacancyRepository.UpdateAsync(vacancy);
     }
 
     private Task PublishVacancyReviewApprovedEventAsync(ApproveVacancyReviewCommand message, VacancyReview review)
