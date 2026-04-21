@@ -41,7 +41,6 @@ using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.User;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using SFA.DAS.EAS.Account.Api.Client;
-using System;
 using VacancyRuleSet = Recruit.Vacancies.Client.Application.Rules.VacancyRules.VacancyRuleSet;
 
 namespace Recruit.Vacancies.Client.Ioc;
@@ -173,7 +172,7 @@ public static class ServiceCollectionExtensions
         services.AddTransient(typeof(IEntityValidator<,>), typeof(EntityValidator<,>));
 
         services.AddTransient<AbstractValidator<ApplicationReview>, ApplicationReviewValidator>();
-        services.AddTransient<AbstractValidator<VacancyReview>, VacancyReviewValidator>();
+        services.AddTransient<IValidator<VacancyReview>, VacancyReviewValidator>();
     }
 
     private static void AddRules(IServiceCollection services)
@@ -189,9 +188,7 @@ public static class ServiceCollectionExtensions
             .AddTransient<IRecruitOuterApiVacancyClient, RecruitOuterApiVacancyClient>()
             .AddTransient<IRecruitQaOuterApiVacancyClient, RecruitQaOuterApiVacancyClient>()
             .AddTransient<IRecruitQaOuterApiClient, RecruitQaOuterApiClient>();
-
     }
-
 
     private static void RegisterMediatR(IServiceCollection services)
     {
