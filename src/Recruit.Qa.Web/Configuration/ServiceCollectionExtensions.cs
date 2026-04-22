@@ -30,7 +30,7 @@ public static class ServiceCollectionExtensions
             
     }
 
-    public static void AddAuthorizationService(this IServiceCollection services, AuthorizationConfiguration legacyAuthorizationConfig, AuthorizationConfiguration authorizationConfig)
+    public static void AddAuthorizationService(this IServiceCollection services, AuthorizationConfiguration authorizationConfig)
     {
         services.AddAuthorization(options =>
         {
@@ -38,9 +38,7 @@ public static class ServiceCollectionExtensions
             {
                 policy.RequireAuthenticatedUser();
                 policy.RequireAssertion(context =>
-                    context.User.HasClaim(legacyAuthorizationConfig.ClaimType, legacyAuthorizationConfig.UserClaimValue)
-                    || context.User.HasClaim(legacyAuthorizationConfig.ClaimType, legacyAuthorizationConfig.TeamLeadClaimValue)
-                    || context.User.HasClaim(authorizationConfig.ClaimType, authorizationConfig.UserClaimValue)
+                    context.User.HasClaim(authorizationConfig.ClaimType, authorizationConfig.UserClaimValue)
                     || context.User.HasClaim(authorizationConfig.ClaimType, authorizationConfig.TeamLeadClaimValue)
                     // including the DfESignIn service role URI in the authorization policy.
                     || context.User.HasClaim(CustomClaimsIdentity.Service, authorizationConfig.UserClaimValue) 
@@ -51,8 +49,7 @@ public static class ServiceCollectionExtensions
             {
                 policy.RequireAuthenticatedUser();
                 policy.RequireAssertion(context =>
-                    context.User.HasClaim(legacyAuthorizationConfig.ClaimType, legacyAuthorizationConfig.TeamLeadClaimValue)
-                    || context.User.HasClaim(authorizationConfig.ClaimType, authorizationConfig.TeamLeadClaimValue)
+                    context.User.HasClaim(authorizationConfig.ClaimType, authorizationConfig.TeamLeadClaimValue)
                     // including the DfESignIn service role URI in the authorization policy.
                     || context.User.HasClaim(CustomClaimsIdentity.Service, authorizationConfig.TeamLeadClaimValue)
                 );

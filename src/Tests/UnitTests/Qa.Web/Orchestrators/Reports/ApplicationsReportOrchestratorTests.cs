@@ -1,5 +1,5 @@
 using AutoFixture;
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.Services.Report;

@@ -6,6 +6,7 @@ using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SFA.DAS.Encoding;
 using VacancyDto = Recruit.Vacancies.Client.Domain.Models.VacancyDto;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
@@ -18,9 +19,10 @@ public interface IRecruitQaOuterApiVacancyClient
     Task<Provider> GetProviderAsync(long ukprn);
     Task<VacancyDto> GetVacancyAsync(Guid id);
     Task<VacancyDto> GetVacancyAsync(long vacancyReference);
+    Task UpdateAsync(Vacancy vacancy);
 }
 
-public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOuterApiClient): IRecruitQaOuterApiVacancyClient
+public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOuterApiClient, IEncodingService encodingService): IRecruitQaOuterApiVacancyClient
 {
     public async Task<QaDashboard> GetDashboardAsync()
     {
@@ -54,5 +56,10 @@ public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOu
     {
         var response = await recruitQaOuterApiClient.Get<GetVacancyByReferenceApiResponse>(new GetVacancyByReferenceRequest(vacancyReference));
         return response?.Data;
+    }
+
+    public async Task UpdateAsync(Vacancy vacancy)
+    {   
+        await recruitQaOuterApiClient.Post(new PostVacancyRequest(vacancy.Id, Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests.VacancyDto.From(vacancy, encodingService)));;
     }
 }
