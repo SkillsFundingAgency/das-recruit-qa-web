@@ -35,7 +35,6 @@ using Recruit.Vacancies.Client.Infrastructure.Services.Report;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProvider;
 using Recruit.Vacancies.Client.Infrastructure.Services.TrainingProviderSummaryProvider;
 using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
-using Recruit.Vacancies.Client.Infrastructure.User;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using SFA.DAS.EAS.Account.Api.Client;
 using VacancyRuleSet = Recruit.Vacancies.Client.Application.Rules.VacancyRules.VacancyRuleSet;
@@ -53,7 +52,7 @@ public static class ServiceCollectionExtensions
         RegisterClients(services);
         RegisterServiceDeps(services, configuration);
         RegisterAccountApiClientDeps(services);
-        RegisterRepositories(services, configuration);
+        RegisterRepositories(services);
         RegisterOutOfProcessEventDelegatorDeps(services);
         RegisterQueueStorageServices(services, configuration);
         AddValidation(services);
@@ -100,21 +99,12 @@ public static class ServiceCollectionExtensions
         services.AddTransient<IBannedPhrasesProvider, BannedPhrasesProvider>();
     }
 
-    private static void RegisterRepositories(IServiceCollection services, IConfiguration configuration)
+    private static void RegisterRepositories(IServiceCollection services)
     {
-        //Repositories
-        //----------------------------------------------------------------------------------------
-        // WARNING: Do not change the order of these registrations
-        //----------------------------------------------------------------------------------------
-        services.AddKeyedTransient<IVacancyRepository, SqlVacancyRepository>("sql");
-        services.AddTransient<IVacancyRepository, MigrationVacancyRepository>();
-        //----------------------------------------------------------------------------------------
+        services.AddTransient<IVacancyRepository, SqlVacancyRepository>();
             
         services.AddTransient<IVacancyReviewRepository, VacancyReviewService>();
         services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();
-            
-        services.AddTransient<IUserRepositoryRunner, UserRepositoryRunner>();
-        services.AddTransient<IUserWriteRepository, UserService>();
     }
 
     private static void RegisterOutOfProcessEventDelegatorDeps(IServiceCollection services)
@@ -144,9 +134,7 @@ public static class ServiceCollectionExtensions
     private static void RegisterClients(IServiceCollection services)
     {
         services
-            .AddTransient<IRecruitVacancyClient, VacancyClient>()
             .AddTransient<IQaVacancyClient, QaVacancyClient>()
-            .AddTransient<IRecruitOuterApiVacancyClient, RecruitOuterApiVacancyClient>()
             .AddTransient<IRecruitQaOuterApiVacancyClient, RecruitQaOuterApiVacancyClient>()
             .AddTransient<IRecruitQaOuterApiClient, RecruitQaOuterApiClient>();
     }

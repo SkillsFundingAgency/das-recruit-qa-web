@@ -90,7 +90,7 @@ public partial class Startup
         );
 
         services.AddAuthenticationService(_configuration);
-        services.AddAuthorizationService(_legacyAuthorizationConfig, _authorizationConfig);
+        services.AddAuthorizationService(_authorizationConfig);
 
         services.AddRecruitStorageClient(_configuration);
         services.AddScoped<DashboardOrchestrator>();
