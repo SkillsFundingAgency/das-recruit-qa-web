@@ -17,8 +17,7 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.Com
 public class ApproveVacancyReviewCommandHandlerTests
 {
     private Guid _existingReviewId;
-    private readonly Fixture _autoFixture = new ();
-    private Mock<IVacancyReviewRepositoryRunner> _mockVacancyReviewRepository;
+    private Mock<IVacancyReviewRepository> _mockVacancyReviewRepository;
     private Mock<IVacancyReviewQuery> _mockVacancyReviewQuery;
     private Mock<IVacancyRepository> _mockVacancyRepository;
     private Mock<ITimeProvider> _mockTimeProvider;
@@ -29,7 +28,7 @@ public class ApproveVacancyReviewCommandHandlerTests
     public void Setup()
     {
         _existingReviewId = Guid.NewGuid();
-        _mockVacancyReviewRepository = new Mock<IVacancyReviewRepositoryRunner>();
+        _mockVacancyReviewRepository = new Mock<IVacancyReviewRepository>();
         _mockVacancyRepository = new Mock<IVacancyRepository>();
 
         _mockMessaging = new Mock<IMessaging>();

@@ -1,4 +1,4 @@
-using Recruit.Vacancies.Client.Application.Commands;
+﻿using Recruit.Vacancies.Client.Application.Commands;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
 using System.Threading;
@@ -15,7 +15,7 @@ namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class ApproveVacancyReviewCommandHandler(
     ILogger<ApproveVacancyReviewCommandHandler> logger,
-    IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
+    IVacancyReviewRepository vacancyReviewRepositoryRunner,
     IVacancyReviewQuery vacancyReviewQuery,
     IVacancyRepository vacancyRepository,
     IMessaging messaging,

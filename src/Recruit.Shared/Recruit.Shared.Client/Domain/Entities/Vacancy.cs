@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
-using Recruit.Vacancies.Client.Domain.Interfaces;
 
 namespace Recruit.Vacancies.Client.Domain.Entities;
 
-public class Vacancy : ITaskListVacancy
+public class Vacancy
 {
     private string _shortDescription;
     public Guid Id { get; set; }
