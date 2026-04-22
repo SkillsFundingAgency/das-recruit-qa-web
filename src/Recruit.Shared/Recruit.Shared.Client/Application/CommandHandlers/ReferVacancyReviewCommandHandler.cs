@@ -20,7 +20,7 @@ public class ReferVacancyReviewCommandHandler(
     IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
     IVacancyReviewQuery vacancyReviewQuery,
     IMessaging messaging,
-    AbstractValidator<VacancyReview> vacancyReviewValidator,
+    IValidator<VacancyReview> vacancyReviewValidator,
     ITimeProvider timeProvider)
     : IRequestHandler<ReferVacancyReviewCommand, Unit>
 {
