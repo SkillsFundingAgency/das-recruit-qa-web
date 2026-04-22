@@ -3,17 +3,14 @@ using System.Linq;
 using System.Threading;
 using Recruit.Vacancies.Client.Application.CommandHandlers;
 using Recruit.Vacancies.Client.Application.Commands;
-using Recruit.Vacancies.Client.Application.Communications;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Application.Validation.Fluent;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Events;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using Microsoft.Extensions.Logging;
-using Recruit.Communication.Types;
 using Xunit;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.CommandHandlers;
@@ -29,7 +26,6 @@ public class ApproveVacancyReviewCommandHandlerTests
     private readonly Mock<ITimeProvider> _mockTimeProvider;
     private readonly Mock<IMessaging> _mockMessaging;
     private readonly ApproveVacancyReviewCommandHandler _sut;
-    private readonly Mock<ICommunicationQueueService> _mockCommunicationQueueService;
     private const long BlockedProviderUkprn = 12345678;
     private const string EmployerAccountId = "EMPLOYERACCOUNTID";
 
@@ -46,12 +42,11 @@ public class ApproveVacancyReviewCommandHandlerTests
         _mockTimeProvider.Setup(t => t.Now).Returns(DateTime.UtcNow);
 
 
-        _mockCommunicationQueueService = new Mock<ICommunicationQueueService>();
         _mockVacancyReviewQuery = new Mock<IVacancyReviewQuery>();
 
         _sut = new ApproveVacancyReviewCommandHandler(Mock.Of<ILogger<ApproveVacancyReviewCommandHandler>>(), _mockVacancyReviewRepository.Object,
             _mockVacancyReviewQuery.Object, _mockVacancyRepository.Object, _mockMessaging.Object, mockValidator, 
-            _mockTimeProvider.Object, _mockCommunicationQueueService.Object);
+            _mockTimeProvider.Object);
     }
 
     [Theory]
@@ -105,6 +100,5 @@ public class ApproveVacancyReviewCommandHandlerTests
         existingVacancy.Status.Should().Be(VacancyStatus.Closed);
         existingVacancy.ClosureReason.Should().Be(expectedClosureReason);
         _mockVacancyRepository.Verify(x => x.UpdateAsync(existingVacancy), Times.Once);
-        _mockCommunicationQueueService.Verify(c => c.AddMessageAsync(It.Is<CommunicationRequest>(r => r.RequestType == CommunicationConstants.RequestType.ProviderBlockedEmployerNotificationForLiveVacancies)));
     }
 }

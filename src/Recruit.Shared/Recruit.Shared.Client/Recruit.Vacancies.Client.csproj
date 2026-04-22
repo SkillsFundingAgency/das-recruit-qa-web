@@ -49,7 +49,4 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.5" />
     <PackageReference Include="TimeZoneConverter" Version="7.2.0" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Recruit.Communication\Communication.Types\Recruit.Communication.Types.csproj" />
-  </ItemGroup>
 </Project>
