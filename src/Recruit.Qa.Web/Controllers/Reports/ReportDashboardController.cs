@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +17,17 @@ public class ReportDashboardController(ReportDashboardOrchestrator orchestrator)
     public async Task<IActionResult> Dashboard()
     {
         var vm = await orchestrator.GetDashboardViewModel();
+        if (TempData.TryGetValue("NewReportId", out var newReportIdObj) &&
+            Guid.TryParse(newReportIdObj?.ToString(), out var newReportId))
+        {
+            var newReport = vm.Reports?.FirstOrDefault(r => r.ReportId == newReportId);
+            if (newReport != null)
+            {
+                vm.ShowSuccessBanner = true;
+                vm.SuccessReportName = newReport.ReportName;
+                TempData.Remove("NewReportId");
+            }
+        }
         return View(vm);
     }
 

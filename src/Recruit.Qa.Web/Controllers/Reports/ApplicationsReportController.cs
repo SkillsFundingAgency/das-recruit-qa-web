@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using Recruit.Qa.Web.Configuration.Routing;
 using Recruit.Qa.Web.Extensions;
 using Recruit.Qa.Web.Orchestrators.Reports;
-using Recruit.Qa.Web.RouteModel;
 using Recruit.Qa.Web.Security;
 using Recruit.Qa.Web.ViewModels.Reports.ApplicationsReport;
 
@@ -33,7 +32,8 @@ public class ApplicationsReportController(ApplicationsReportOrchestrator orchest
         }
 
         var reportId = await orchestrator.PostCreateViewModelAsync(m, User.GetVacancyUser());
-
-        return RedirectToRoute(RouteNames.ReportConfirmation_Get, new ReportRouteModel { ReportId = reportId });
+        TempData["NewReportId"] = reportId.ToString();
+        
+        return RedirectToRoute(RouteNames.ReportDashboard_Get);
     }
 }

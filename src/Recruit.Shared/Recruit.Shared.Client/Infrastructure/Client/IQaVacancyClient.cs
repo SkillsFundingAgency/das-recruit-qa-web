@@ -25,10 +25,6 @@ public interface IQaVacancyClient
     Task<Domain.Entities.VacancyReview> GetCurrentReferredVacancyReviewAsync(long vacancyReference);
     Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewHistoryAsync(long vacancyReference);
     Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId);
-    Task<Guid> CreateApplicationsReportAsync(DateTime fromDate, DateTime toDate, VacancyUser user, string reportName);
-    Task<List<ReportSummary>> GetReportsAsync();
-    Task<Report> GetReportAsync(Guid reportId);
-    Task  WriteReportAsCsv(Stream stream, Report report);
-    Task IncrementReportDownloadCountAsync(Guid reportId);
+    void WriteReportAsCsv(Stream stream, List<QaCsvReport> report);
     Task UpdateDraftVacancyAsync(Vacancy vacancy, VacancyUser user);
 }

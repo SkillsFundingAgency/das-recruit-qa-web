@@ -22,9 +22,14 @@
     </PackageReference>
     <PackageReference Include="FluentAssertions" Version="7.2.0" />
     <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="SFA.DAS.Testing.AutoFixture" Version="17.1.103" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Recruit.Qa.Web\Recruit.QA.Web.csproj" />
     <ProjectReference Include="..\..\Recruit.Shared\Recruit.Shared.Client\Recruit.Vacancies.Client.csproj" />
     <ProjectReference Include="..\..\Recruit.Shared\Recruit.Shared.Web\Recruit.Shared.Web.csproj" />
   </ItemGroup>
