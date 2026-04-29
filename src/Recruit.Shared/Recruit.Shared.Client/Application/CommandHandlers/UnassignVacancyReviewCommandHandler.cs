@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class UnassignVacancyReviewCommandHandler(
-    IVacancyReviewRepositoryRunner repository,
+    IVacancyReviewRepository repository,
     IVacancyReviewQuery vacancyReviewQuery,
     ILogger<UnassignVacancyReviewCommandHandler> logger)
     : IRequestHandler<UnassignVacancyReviewCommand, Unit>

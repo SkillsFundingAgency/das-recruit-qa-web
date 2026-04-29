@@ -17,10 +17,10 @@ namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class ReferVacancyReviewCommandHandler(
     ILogger<ReferVacancyReviewCommandHandler> logger,
-    IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
+    IVacancyReviewRepository vacancyReviewRepositoryRunner,
     IVacancyReviewQuery vacancyReviewQuery,
     IMessaging messaging,
-    AbstractValidator<VacancyReview> vacancyReviewValidator,
+    IValidator<VacancyReview> vacancyReviewValidator,
     ITimeProvider timeProvider)
     : IRequestHandler<ReferVacancyReviewCommand, Unit>
 {
