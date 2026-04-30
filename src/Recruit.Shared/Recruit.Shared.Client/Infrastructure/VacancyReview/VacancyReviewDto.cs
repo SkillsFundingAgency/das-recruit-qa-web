@@ -68,7 +68,7 @@ public class VacancyReviewDto
             AccountLegalEntityId = !string.IsNullOrWhiteSpace(source.VacancySnapshot.AccountLegalEntityPublicHashedId) ? encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId) : 0,
             HashedAccountId = source.VacancySnapshot.EmployerAccountId,
             EmployerName =  source.VacancySnapshot.EmployerName,
-            EmployerLocations = source.VacancySnapshot.EmployerLocationOption == null ? [ source.VacancySnapshot.EmployerLocation ] : source.VacancySnapshot.EmployerLocations,
+            EmployerLocations = source.VacancySnapshot.EmployerLocationOption == null ? [ source.VacancySnapshot.EmployerLocation ] : (source.VacancySnapshot.EmployerLocationOption == AvailableWhere.AcrossEngland ? [] : source.VacancySnapshot.EmployerLocations),
             EmployerLocationOption = source.VacancySnapshot.EmployerLocationOption ?? AvailableWhere.OneLocation,
             VacancyId = source.VacancySnapshot.Id
         };
