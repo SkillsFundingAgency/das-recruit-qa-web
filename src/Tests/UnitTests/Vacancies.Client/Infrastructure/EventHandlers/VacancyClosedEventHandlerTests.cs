@@ -7,9 +7,7 @@ using Recruit.Vacancies.Client.Domain.Repositories;
 using Recruit.Vacancies.Client.Infrastructure.EventHandlers;
 using Recruit.Vacancies.Client.Infrastructure.QueryStore;
 using Recruit.Vacancies.Client.Infrastructure.ReferenceData.ApprenticeshipProgrammes;
-using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Microsoft.Extensions.Logging;
-using Recruit.Communication.Types;
 using Xunit;
 using Projections = Recruit.Vacancies.Client.Infrastructure.QueryStore.Projections.Vacancy;
 
@@ -23,7 +21,6 @@ public class VacancyClosedEventHandlerTests
     private Mock<IVacancyRepository> _mockVacancyRepository;
     private Mock<IApprenticeshipProgrammeProvider> _mockReferenceDataReader;
     private Mock<ITimeProvider> _mockTimeProvider;
-    private Mock<ICommunicationQueueService> _mockCommunicationQueueService;
     private DateTime _currentTime;
     private VacancyClosedEvent _event;
     private Vacancy _vacancy;
@@ -90,8 +87,6 @@ public class VacancyClosedEventHandlerTests
             .Returns(Task.CompletedTask);
 
         await _handler.Handle(_event, CancellationToken.None);
-
-        _mockCommunicationQueueService.Verify(x=>x.AddMessageAsync(It.IsAny<CommunicationRequest>()), Times.Never);
         Assert.Equal(2, sequence);
     }
         
@@ -148,8 +143,6 @@ public class VacancyClosedEventHandlerTests
             .Setup(x => x.Now)
             .Returns(() => _currentTime);
 
-        _mockCommunicationQueueService = new Mock<ICommunicationQueueService>();
-
         _mockQueryReader = new Mock<IQueryStoreReader>();
 
         _handler = new VacancyClosedEventHandler(
@@ -158,7 +151,6 @@ public class VacancyClosedEventHandlerTests
             _mockVacancyRepository.Object,
             _mockReferenceDataReader.Object,
             _mockTimeProvider.Object,
-            _mockCommunicationQueueService.Object,
             _mockQueryReader.Object);
     }
 }

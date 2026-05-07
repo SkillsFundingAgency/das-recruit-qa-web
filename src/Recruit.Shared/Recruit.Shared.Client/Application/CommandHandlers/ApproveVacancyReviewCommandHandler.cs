@@ -9,8 +9,6 @@ using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Events;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using Recruit.Vacancies.Client.Application.Communications;
-using Recruit.Vacancies.Client.Infrastructure.StorageQueue;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
@@ -71,7 +69,7 @@ public class ApproveVacancyReviewCommandHandler(
         return Unit.Value;
     }
 
-   private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
+    private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
     {
         if (HasVacancyBeenTransferredSinceReviewWasCreated(review, vacancy))
         {
