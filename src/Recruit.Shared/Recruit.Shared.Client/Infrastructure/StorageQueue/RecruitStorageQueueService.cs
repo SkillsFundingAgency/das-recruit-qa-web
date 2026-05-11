@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Storage.Queues;
+using Microsoft.WindowsAzure.Storage;
 using Recruit.Vacancies.Client.Application.Queues;
 using Recruit.Vacancies.Client.Application.Queues.Messages;
 using Recruit.Vacancies.Client.Infrastructure.EventStore;
@@ -18,11 +18,6 @@ internal class RecruitStorageQueueService(string connString) : StorageQueueServi
         { typeof(CommunicationsHouseKeepingQueueMessage), QueueNames.CommunicationsHouseKeepingQueueName },
     };
 
-    private readonly QueueClientOptions _queueClientOptions = new()
-    {
-        MessageEncoding = QueueMessageEncoding.Base64
-    };
-
     protected override string ConnectionString { get; } = connString;
 
     public override async Task AddMessageAsync<T>(T message)
@@ -32,9 +27,11 @@ internal class RecruitStorageQueueService(string connString) : StorageQueueServi
         {
             throw new ArgumentException($"Cannot map type {typeof(T).Name} to a queue name");
         }
+        var storageAccount = CloudStorageAccount.Parse(ConnectionString);
+        var client = storageAccount.CreateCloudQueueClient();
 
-        var queueClient = new QueueClient(ConnectionString, queueName, _queueClientOptions);
+        var queue = client.GetQueueReference(queueName);
 
-        await AddMessageToQueueAsync(queueClient, message);
+        await AddMessageToQueueAsync(queue, message);
     }
 }

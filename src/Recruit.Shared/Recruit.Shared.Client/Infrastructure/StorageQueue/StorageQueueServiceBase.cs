@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Azure.Storage.Queues;
+using Microsoft.WindowsAzure.Storage.Queue;
 using Newtonsoft.Json;
 
 namespace Recruit.Vacancies.Client.Infrastructure.StorageQueue;
@@ -8,13 +8,13 @@ public abstract class StorageQueueServiceBase
 {
     protected abstract string ConnectionString { get; }
 
-    protected async Task AddMessageToQueueAsync<T>(QueueClient queue, T message)
+    protected async Task AddMessageToQueueAsync<T>(CloudQueue queue, T message)
     {
         await queue.CreateIfNotExistsAsync();
 
-        var json = JsonConvert.SerializeObject(message, Formatting.Indented);
-
-        await queue.SendMessageAsync(json);
+        var cloudMessage = new CloudQueueMessage(JsonConvert.SerializeObject(message, Formatting.Indented));
+        
+        await queue.AddMessageAsync(cloudMessage);
     }
 
     public abstract Task AddMessageAsync<T>(T message);
