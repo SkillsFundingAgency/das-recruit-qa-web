@@ -101,7 +101,7 @@ public static class ServiceCollectionExtensions
 
     private static void RegisterRepositories(IServiceCollection services)
     {
-        services.AddTransient<IVacancyRepository, SqlVacancyRepository>();
+        services.AddTransient<IVacancyRepository, VacancyRepository>();
             
         services.AddTransient<IVacancyReviewRepository, VacancyReviewService>();
         services.AddTransient<IVacancyReviewQuery, VacancyReviewService>();

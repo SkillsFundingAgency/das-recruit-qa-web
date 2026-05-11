@@ -33,11 +33,16 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
         }
         else
         {
-            var manualQaFieldEditIndicator = PopulateManualQaFieldEditIndicators(review, m, vacancy);
+            var vacancyQaFieldUpdate = new VacancyQaFieldUpdate
+            {
+                Id = vacancy.Id,
+                Status = vacancy.Status.ToString()
+            };
+            var manualQaFieldEditIndicator = PopulateManualQaFieldEditIndicators(review, m, vacancyQaFieldUpdate);
 
             if (manualQaFieldEditIndicator.Any())
             {
-                await vacancyClient.UpdateDraftVacancyAsync(vacancy, user);
+                await vacancyClient.UpdateDraftVacancyAsync(vacancyQaFieldUpdate, user, vacancy.EmployerAccountId);
             }
                 
             await messaging.SendCommandAsync(
@@ -170,7 +175,7 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
     }
 
     private List<ManualQaFieldEditIndicator> PopulateManualQaFieldEditIndicators(VacancyReview review,
-        ReviewEditModel m, Vacancy vacancy)
+        ReviewEditModel m, VacancyQaFieldUpdate vacancy)
     {
         var manualQaFieldEditIndicator = new List<ManualQaFieldEditIndicator>();
         if (review.VacancySnapshot.OutcomeDescription != m.OutcomeDescription)
@@ -231,7 +236,7 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
                 BeforeEdit = review.VacancySnapshot.Wage.WorkingWeekDescription,
                 AfterEdit = m.WorkingWeekDescription
             });
-            vacancy.Wage.WorkingWeekDescription = m.WorkingWeekDescription;
+            vacancy.WorkingWeekDescription = m.WorkingWeekDescription;
         }
         if (review.VacancySnapshot.Wage.CompanyBenefitsInformation != m.CompanyBenefitsInformation)
         {
@@ -241,7 +246,7 @@ public class ReviewOrchestrator(IQaVacancyClient vacancyClient, ReviewMapper map
                 BeforeEdit = review.VacancySnapshot.Wage.CompanyBenefitsInformation,
                 AfterEdit = m.CompanyBenefitsInformation
             });
-            vacancy.Wage.CompanyBenefitsInformation = m.CompanyBenefitsInformation;
+            vacancy.CompanyBenefitsInformation = m.CompanyBenefitsInformation;
         }
         if (review.VacancySnapshot.EmployerLocationInformation != m.EmployerLocationInformation)
         {

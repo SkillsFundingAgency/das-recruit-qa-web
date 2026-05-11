@@ -6,7 +6,6 @@ using Recruit.Vacancies.Client.Infrastructure.OuterApi.Responses;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using SFA.DAS.Encoding;
 using VacancyDto = Recruit.Vacancies.Client.Domain.Models.VacancyDto;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Client;
@@ -19,10 +18,12 @@ public interface IRecruitQaOuterApiVacancyClient
     Task<Provider> GetProviderAsync(long ukprn);
     Task<VacancyDto> GetVacancyAsync(Guid id);
     Task<VacancyDto> GetVacancyAsync(long vacancyReference);
-    Task UpdateAsync(Vacancy vacancy);
+    Task UpdateVacancyFromQaEdits(VacancyQaFieldUpdate vacancyUpdate);
+    Task CloseVacancy(Guid vacancyId, ClosureReason messageClosureReason);
+    Task PublishVacancy(Guid vacancyId);
 }
 
-public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOuterApiClient, IEncodingService encodingService): IRecruitQaOuterApiVacancyClient
+public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOuterApiClient): IRecruitQaOuterApiVacancyClient
 {
     public async Task<QaDashboard> GetDashboardAsync()
     {
@@ -58,8 +59,18 @@ public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOu
         return response?.Data;
     }
 
-    public async Task UpdateAsync(Vacancy vacancy)
-    {   
-        await recruitQaOuterApiClient.Post(new PostVacancyRequest(vacancy.Id, Recruit.Vacancies.Client.Infrastructure.OuterApi.Requests.VacancyDto.From(vacancy, encodingService)));;
+    public async Task UpdateVacancyFromQaEdits(VacancyQaFieldUpdate vacancyUpdate)
+    {
+        await recruitQaOuterApiClient.Post(new PostUpdateVacancyRequest(vacancyUpdate));
+    }
+
+    public async Task CloseVacancy(Guid vacancyId, ClosureReason messageClosureReason)
+    {
+        await recruitQaOuterApiClient.Post(new PostCloseVacancyRequest(vacancyId, new CloseVacancyRequest{ClosureReason = messageClosureReason.ToString()}));
+    }
+
+    public async Task PublishVacancy(Guid vacancyId)
+    {
+        await recruitQaOuterApiClient.Post(new PostPublishVacancyRequest(vacancyId));
     }
 }

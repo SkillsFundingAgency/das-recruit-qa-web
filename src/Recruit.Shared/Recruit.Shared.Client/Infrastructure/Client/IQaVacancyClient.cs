@@ -26,5 +26,5 @@ public interface IQaVacancyClient
     Task<List<Domain.Entities.VacancyReview>> GetVacancyReviewHistoryAsync(long vacancyReference);
     Task<int> GetAnonymousApprovedCountAsync(string accountLegalEntityPublicHashedId);
     void WriteReportAsCsv(Stream stream, List<QaCsvReport> report);
-    Task UpdateDraftVacancyAsync(Vacancy vacancy, VacancyUser user);
+    Task UpdateDraftVacancyAsync(VacancyQaFieldUpdate vacancy, VacancyUser user, string employerAccountId);
 }

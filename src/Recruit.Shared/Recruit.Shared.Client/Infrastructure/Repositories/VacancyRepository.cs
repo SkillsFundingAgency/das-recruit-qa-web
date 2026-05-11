@@ -7,15 +7,9 @@ using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Infrastructure.Repositories;
 
-// TODO: Proxies calls to the new outer api endpoints - this class should go once we have migrated vacancies over to SQL
-public class SqlVacancyRepository(
+public class VacancyRepository(
     IRecruitQaOuterApiVacancyClient recruitQaOuterApiVacancyClient) : IVacancyRepository
 {
-    public async Task UpdateAsync(Vacancy vacancy)
-    {
-        await recruitQaOuterApiVacancyClient.UpdateAsync(vacancy);
-    }
-
     public async Task<Vacancy> GetVacancyAsync(Guid id)
     {
         var vacancy = await recruitQaOuterApiVacancyClient.GetVacancyAsync(id);
@@ -26,5 +20,20 @@ public class SqlVacancyRepository(
     {
         var vacancy = await recruitQaOuterApiVacancyClient.GetVacancyAsync(vacancyReference);
         return vacancy?.ToVacancy();
+    }
+
+    public async Task UpdateVacancyFromQaEdits(VacancyQaFieldUpdate vacancyUpdate)
+    {
+        await recruitQaOuterApiVacancyClient.UpdateVacancyFromQaEdits(vacancyUpdate);
+    }
+
+    public async Task CloseVacancy(Guid messageVacancyId, ClosureReason messageClosureReason)
+    {
+        await recruitQaOuterApiVacancyClient.CloseVacancy(messageVacancyId, messageClosureReason);
+    }
+
+    public async Task PublishVacancy(Guid vacancyId)
+    {
+        await recruitQaOuterApiVacancyClient.PublishVacancy(vacancyId);
     }
 }

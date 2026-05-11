@@ -1,5 +1,4 @@
 ﻿using Recruit.Vacancies.Client.Application.Commands;
-using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Events;
 using Recruit.Vacancies.Client.Domain.Messaging;
@@ -13,7 +12,6 @@ namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class CloseVacancyCommandHandler(
     IVacancyRepository vacancyRepository,
-    ITimeProvider timeProvider,
     IMessaging messaging,
     ILogger<CloseVacancyCommandHandler> logger)
     : IRequestHandler<CloseVacancyCommand, Unit>
@@ -28,13 +26,8 @@ public class CloseVacancyCommandHandler(
         }
 
         logger.LogInformation("Closing vacancy {vacancyId} by user {userEmail}.", vacancy.Id, message.User.Email);
-        vacancy.ClosedByUser = message.User;
-        vacancy.ClosureReason = message.ClosureReason;
-
-        vacancy.ClosedDate = timeProvider.Now;
-        vacancy.Status = VacancyStatus.Closed;
-
-        await vacancyRepository.UpdateAsync(vacancy);
+        
+        await vacancyRepository.CloseVacancy(message.VacancyId, message.ClosureReason);
 
         await messaging.PublishEvent(new VacancyClosedEvent
         {

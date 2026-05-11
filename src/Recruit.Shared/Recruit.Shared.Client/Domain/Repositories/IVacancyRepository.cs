@@ -6,7 +6,9 @@ namespace Recruit.Vacancies.Client.Domain.Repositories;
 
 public interface IVacancyRepository
 {
-    Task UpdateAsync(Vacancy vacancy);
     Task<Vacancy> GetVacancyAsync(Guid id);
     Task<Vacancy> GetVacancyAsync(long vacancyReference);
+    Task UpdateVacancyFromQaEdits(VacancyQaFieldUpdate vacancyUpdate);
+    Task CloseVacancy(Guid messageVacancyId, ClosureReason messageClosureReason);
+    Task PublishVacancy(Guid vacancyId);
 }

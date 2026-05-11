@@ -6,6 +6,7 @@ namespace Recruit.Vacancies.Client.Application.Commands;
 
 public class UpdateDraftVacancyCommand : ICommand, IRequest<Unit>
 {
-    public Vacancy Vacancy { get; set; }
+    public VacancyQaFieldUpdate Vacancy { get; set; }   
     public VacancyUser User { get; set; }
+    public string EmployerAccountId { get; set; }
 }
