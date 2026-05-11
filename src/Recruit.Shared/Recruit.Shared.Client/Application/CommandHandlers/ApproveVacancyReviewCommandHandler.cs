@@ -1,4 +1,4 @@
-﻿using Recruit.Vacancies.Client.Application.Commands;
+using Recruit.Vacancies.Client.Application.Commands;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
 using System.Threading;
@@ -69,7 +69,7 @@ public class ApproveVacancyReviewCommandHandler(
         return Unit.Value;
     }
 
-   private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
+    private async Task<ClosureReason?> TryGetReasonToCloseVacancy(VacancyReview review, Vacancy vacancy)
     {
         if (HasVacancyBeenTransferredSinceReviewWasCreated(review, vacancy))
         {
