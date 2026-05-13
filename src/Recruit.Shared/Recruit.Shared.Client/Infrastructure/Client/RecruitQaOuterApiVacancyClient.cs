@@ -18,6 +18,9 @@ public interface IRecruitQaOuterApiVacancyClient
     Task<Provider> GetProviderAsync(long ukprn);
     Task<VacancyDto> GetVacancyAsync(Guid id);
     Task<VacancyDto> GetVacancyAsync(long vacancyReference);
+    Task UpdateVacancyFromQaEdits(VacancyQaFieldUpdate vacancyUpdate);
+    Task CloseVacancy(Guid vacancyId, ClosureReason messageClosureReason);
+    Task PublishVacancy(Guid vacancyId);
 }
 
 public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOuterApiClient): IRecruitQaOuterApiVacancyClient
@@ -54,5 +57,20 @@ public class RecruitQaOuterApiVacancyClient(IRecruitQaOuterApiClient recruitQaOu
     {
         var response = await recruitQaOuterApiClient.Get<GetVacancyByReferenceApiResponse>(new GetVacancyByReferenceRequest(vacancyReference));
         return response?.Data;
+    }
+
+    public async Task UpdateVacancyFromQaEdits(VacancyQaFieldUpdate vacancyUpdate)
+    {
+        await recruitQaOuterApiClient.Post(new PostUpdateVacancyRequest(vacancyUpdate));
+    }
+
+    public async Task CloseVacancy(Guid vacancyId, ClosureReason messageClosureReason)
+    {
+        await recruitQaOuterApiClient.Post(new PostCloseVacancyRequest(vacancyId, new CloseVacancyRequest{ClosureReason = messageClosureReason.ToString()}));
+    }
+
+    public async Task PublishVacancy(Guid vacancyId)
+    {
+        await recruitQaOuterApiClient.Post(new PostPublishVacancyRequest(vacancyId));
     }
 }

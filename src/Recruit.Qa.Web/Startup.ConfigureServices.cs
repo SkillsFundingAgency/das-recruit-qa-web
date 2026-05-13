@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -17,7 +16,6 @@ using Recruit.Shared.Web.Extensions;
 using Recruit.Shared.Web.Mappers;
 using Recruit.Shared.Web.RuleTemplates;
 using Recruit.Shared.Web.Services;
-using Recruit.Vacancies.Client.Infrastructure.Mongo;
 using Recruit.Vacancies.Client.Ioc;
 using SFA.DAS.Configuration.AzureTableStorage;
 using SFA.DAS.DfESignIn.Auth.Configuration;
@@ -92,7 +90,7 @@ public partial class Startup
         );
 
         services.AddAuthenticationService(_configuration);
-        services.AddAuthorizationService(_legacyAuthorizationConfig, _authorizationConfig);
+        services.AddAuthorizationService(_authorizationConfig);
 
         services.AddRecruitStorageClient(_configuration);
         services.AddScoped<DashboardOrchestrator>();
@@ -120,21 +118,5 @@ public partial class Startup
         services.AddControllersWithViews().AddRazorRuntimeCompilation();
 #endif
 
-        CheckInfrastructure(services);
-    }
-
-    private void CheckInfrastructure(IServiceCollection services)
-    {
-        try
-        {
-            var serviceProvider = services.BuildServiceProvider();
-            var collectionChecker = (MongoDbCollectionChecker)serviceProvider.GetService(typeof(MongoDbCollectionChecker));
-            collectionChecker?.EnsureCollectionsExist();
-            collectionChecker?.CreateIndexes().Wait();
-        }
-        catch (Exception ex)
-        {
-            _logger.LogError(ex, "Error checking infrastructure");
-        }
     }
 }

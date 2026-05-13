@@ -14,7 +14,7 @@ namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
 public class AssignVacancyReviewCommandHandler(
     ILogger<AssignVacancyReviewCommand> logger,
-    IVacancyReviewRepositoryRunner vacancyReviewRepositoryRunner,
+    IVacancyReviewRepository vacancyReviewRepositoryRunner,
     ITimeProvider timeProvider,
     INextVacancyReviewService nextVacancyReviewService,
     IVacancyReviewQuery vacancyReviewQuery)

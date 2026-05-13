@@ -154,12 +154,13 @@ public class QaVacancyClient(
         reportService.WriteReportAsCsv(stream, report);
     }
 
-    public Task UpdateDraftVacancyAsync(Vacancy vacancy, VacancyUser user)
+    public Task UpdateDraftVacancyAsync(VacancyQaFieldUpdate vacancy, VacancyUser user, string employerAccountId)
     {
         var command = new UpdateDraftVacancyCommand
         {
             Vacancy = vacancy,
-            User = user
+            User = user,
+            EmployerAccountId = employerAccountId
         };
 
         return messaging.SendCommandAsync(command);

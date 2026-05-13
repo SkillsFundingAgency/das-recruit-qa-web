@@ -6,7 +6,6 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Application.Providers;
-using Recruit.Vacancies.Client.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
@@ -30,10 +29,7 @@ public class PublishVacancyCommandHandler(
             return Unit.Value;
         }
 
-        vacancy.Status = VacancyStatus.Live;
-        vacancy.LiveDate = timeProvider.Now;
-
-        await repository.UpdateAsync(vacancy);
+        await repository.PublishVacancy(vacancy.Id);
 
         await messaging.PublishEvent(new VacancyPublishedEvent
         {

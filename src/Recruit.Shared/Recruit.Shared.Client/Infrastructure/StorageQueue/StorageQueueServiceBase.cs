@@ -13,7 +13,7 @@ public abstract class StorageQueueServiceBase
         await queue.CreateIfNotExistsAsync();
 
         var cloudMessage = new CloudQueueMessage(JsonConvert.SerializeObject(message, Formatting.Indented));
-
+        
         await queue.AddMessageAsync(cloudMessage);
     }
 

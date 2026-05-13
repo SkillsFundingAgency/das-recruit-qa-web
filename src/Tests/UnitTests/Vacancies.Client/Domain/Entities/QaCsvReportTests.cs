@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using AutoFixture.NUnit3;
+using AutoFixture.NUnit4;
 using NUnit.Framework;
 using Recruit.Vacancies.Client.Domain.Entities;
 

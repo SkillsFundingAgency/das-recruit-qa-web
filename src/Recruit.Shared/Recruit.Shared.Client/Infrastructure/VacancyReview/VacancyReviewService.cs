@@ -11,24 +11,6 @@ using SFA.DAS.Encoding;
 
 namespace Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
-
-public interface IVacancyReviewRepositoryRunner
-{
-    Task UpdateAsync(Domain.Entities.VacancyReview review);
-}
-
-public class VacancyReviewRepositoryRunner(IEnumerable<IVacancyReviewRepository> reviewResolver)
-    : IVacancyReviewRepositoryRunner
-{
-    public async Task UpdateAsync(Domain.Entities.VacancyReview vacancyReview)
-    {
-        foreach (var vacancyReviewResolver in reviewResolver)
-        {
-            await vacancyReviewResolver.UpdateAsync(vacancyReview);
-        }
-    }
-}
-
 public class VacancyReviewService(IRecruitQaOuterApiClient outerApiClient, IEncodingService encodingService) : IVacancyReviewRepository, IVacancyReviewQuery
 {
     public string Key { get; } = "OuterApiVacancyReview";
