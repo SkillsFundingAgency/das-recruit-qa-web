@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoFixture.NUnit4;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
@@ -13,7 +14,7 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 
 public class VacancyReviewServiceTests
 {
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_UpdateAsync_The_Data_Is_Mapped_And_Request_Made(
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         [Frozen] Mock<IEncodingService> encodingService,
@@ -34,7 +35,7 @@ public class VacancyReviewServiceTests
         ), Times.Once);
     }
     
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetAsync_The_Request_Is_Made_And_VacancyReview_Mapped_To_Entity(
         Guid reviewId,
         VacancyReviewDto vacancyDto,
@@ -42,7 +43,7 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         var expectedRequest = new GetVacancyReviewRequest(reviewId);
         outerApiClient
@@ -77,7 +78,7 @@ public class VacancyReviewServiceTests
         actual.Should().BeNull();
     }
 
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetLatestReviewByReferenceAsync_The_Request_Is_Made_And_VacancyReview_Mapped_To_Entity(
         long vacancyReference,
         VacancyReviewDto vacancyDto,
@@ -85,7 +86,7 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         var expectedRequest = new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference,[ManualQaOutcome.Approved, ManualQaOutcome.Referred], true);
         outerApiClient
@@ -120,7 +121,7 @@ public class VacancyReviewServiceTests
         actual.Should().BeNull();
     }
 
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetForVacancyAsync_The_Request_Is_Made_And_List_Of_Vacancy_Reviews_Returned(
         long vacancyReference,
         VacancyReviewDto vacancyDto,
@@ -129,8 +130,8 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
-        vacancyDto2.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
+        vacancyDto2.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         UpdateToValidVacancyDto(vacancyDto2, vacancy);
         var expectedRequest = new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference, [ManualQaOutcome.Approved, ManualQaOutcome.Referred, ManualQaOutcome.Blocked], false);
@@ -155,7 +156,7 @@ public class VacancyReviewServiceTests
             );
     }
 
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetByStatusAsync_The_Request_Is_Made_And_List_Of_Vacancy_Reviews_Returned_By_Status(
         ReviewStatus reviewStatus,
         VacancyReviewDto vacancyDto,
@@ -164,8 +165,8 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
-        vacancyDto2.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
+        vacancyDto2.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         UpdateToValidVacancyDto(vacancyDto2, vacancy);
         var expectedRequest = new GetVacancyReviewByFilterRequest([reviewStatus]);
@@ -190,7 +191,7 @@ public class VacancyReviewServiceTests
             );
     }
     
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetVacancyReviewsInProgressAsync_The_Request_Is_Made_And_List_Of_Vacancy_Reviews_Returned_By_ExpiredAssignationDateTime(
         DateTime expiredAssignationDateTime,
         VacancyReviewDto vacancyDto,
@@ -199,8 +200,8 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
-        vacancyDto2.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
+        vacancyDto2.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         UpdateToValidVacancyDto(vacancyDto2, vacancy);
         var expectedRequest = new GetVacancyReviewByFilterRequest([ReviewStatus.UnderReview]);
@@ -225,7 +226,7 @@ public class VacancyReviewServiceTests
             );
     }
     
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetCurrentReferredVacancyReviewAsync_The_Request_Is_Made_And_VacancyReview_Mapped_To_Entity(
         long vacancyReference,
         VacancyReviewDto vacancyDto,
@@ -233,7 +234,7 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         var expectedRequest = new GetVacancyReviewByVacancyReferenceAndReviewStatusRequest(vacancyReference,[ManualQaOutcome.Referred], false, nameof(ReviewStatus.Closed));
         outerApiClient
@@ -315,7 +316,7 @@ public class VacancyReviewServiceTests
         actual.Should().Be(apiResponse.Count);
     }
 
-    [Test, MoqAutoData]
+    [Test, RecursiveMoqAutoData]
     public async Task When_Calling_GetAssignedForUserAsync_The_ApiClient_Is_Called_And_Response_Returned(
         string userId,
         DateTime assignationExpiryDateTime,
@@ -325,8 +326,8 @@ public class VacancyReviewServiceTests
         [Frozen] Mock<IRecruitQaOuterApiClient> outerApiClient,
         VacancyReviewService service)
     {
-        vacancyDto.Status = ReviewStatus.PendingReview.ToString();
-        vacancyDto2.Status = ReviewStatus.PendingReview.ToString();
+        vacancyDto.Status = nameof(ReviewStatus.PendingReview);
+        vacancyDto2.Status = nameof(ReviewStatus.PendingReview);
         UpdateToValidVacancyDto(vacancyDto, vacancy);
         UpdateToValidVacancyDto(vacancyDto2, vacancy);   
         var expectedRequest = new GetVacancyReviewsAssignedToUserRequest(userId, assignationExpiryDateTime, nameof(ReviewStatus.UnderReview));
@@ -384,6 +385,8 @@ public class VacancyReviewServiceTests
     private Recruit.Vacancies.Client.Domain.Entities.VacancyReview BuildVacancyReviewEntity()
     {
         var fixture = new Fixture();
+        fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList().ForEach(b => fixture.Behaviors.Remove(b));
+        fixture.Behaviors.Add(new OmitOnRecursionBehavior());
         return fixture
             .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
             .Create();
