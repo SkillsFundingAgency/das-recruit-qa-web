@@ -378,7 +378,7 @@ public class VacancyReviewServiceTests
     {
         vacancyDto.VacancySnapshot = JsonConvert.SerializeObject(vacancy);
         vacancyDto.ManualOutcome = "Referred";
-        vacancyDto.AutomatedQaOutcome = "Approve";
+        vacancyDto.AutomatedQaOutcome = RuleSetDecision.Approve;
     }
 
     private Recruit.Vacancies.Client.Domain.Entities.VacancyReview BuildVacancyReviewEntity()
@@ -386,7 +386,6 @@ public class VacancyReviewServiceTests
         var fixture = new Fixture();
         return fixture
             .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
-            .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
             .Create();
     }
 }

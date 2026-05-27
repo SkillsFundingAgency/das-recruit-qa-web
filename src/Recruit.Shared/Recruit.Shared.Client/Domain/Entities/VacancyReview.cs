@@ -61,8 +61,8 @@ public class VacancyReview
 
     public bool IsPending => Status == ReviewStatus.New || Status == ReviewStatus.PendingReview;
 
-    public RuleSetOutcome AutomatedQaOutcome { get; set; }
-    public IEnumerable<RuleOutcomeIndicator> AutomatedQaOutcomeIndicators { get; set; } = new List<RuleOutcomeIndicator>();
+    public RuleSetDecision? AutomatedQaOutcome { get; set; }
+    public List<RuleOutcome> AutomatedQaOutcomeIndicators { get; set; } = [];
 
     public IEnumerable<ManualQaFieldEditIndicator> ManualQaFieldEditIndicators { get; set; } =
         new List<ManualQaFieldEditIndicator>();

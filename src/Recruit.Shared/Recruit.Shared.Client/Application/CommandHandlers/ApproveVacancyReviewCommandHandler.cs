@@ -1,3 +1,4 @@
+using System.Linq;
 using Recruit.Vacancies.Client.Application.Commands;
 using Recruit.Vacancies.Client.Domain.Repositories;
 using MediatR;
@@ -9,7 +10,6 @@ using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Events;
 using FluentValidation;
 using Microsoft.Extensions.Logging;
-using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
@@ -43,11 +43,14 @@ public class ApproveVacancyReviewCommandHandler(
         review.ManualQaComment = message.ManualQaComment;
         review.ManualQaFieldIndicators = message.ManualQaFieldIndicators;
         review.ManualQaFieldEditIndicators = message.ManualQaFieldEditIndicators;
-        foreach (var automatedQaOutcomeIndicator in review.AutomatedQaOutcomeIndicators)
-        {
-            automatedQaOutcomeIndicator.IsReferred = message.SelectedAutomatedQaRuleOutcomeIds
-                .Contains(automatedQaOutcomeIndicator.RuleOutcomeId);
-        }
+        var dismissedFields = review
+            .AutomatedQaOutcomeIndicators
+            .Where(x => !message.SelectedAutomatedQaRuleOutcomeIds.Contains(x.Id))
+            .Select(x => x.Target)
+            .Distinct()
+            .ToList();
+            
+        review.DismissedAutomatedQaOutcomeIndicators = dismissedFields;
 
         Validate(review);
 

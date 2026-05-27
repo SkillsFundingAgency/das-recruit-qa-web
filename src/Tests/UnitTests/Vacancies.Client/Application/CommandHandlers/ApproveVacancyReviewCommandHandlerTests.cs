@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using NUnit.Framework;
@@ -10,7 +11,6 @@ using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Events;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 
 namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Application.CommandHandlers;
 
@@ -58,5 +58,42 @@ public class ApproveVacancyReviewCommandHandlerTests
 
         _mockVacancyReviewRepository.Verify(x => x.UpdateAsync(It.IsAny<VacancyReview>()), Times.Never);
         _mockMessaging.Verify(x => x.PublishEvent(It.IsAny<VacancyReviewApprovedEvent>()), Times.Never);
+    }
+    
+    [Test]
+    public async Task GivenApprovedVacancyReviewCommand_ThenDismissedAutomatedQaOutcomeIndicatorsAreSet()
+    {
+        // arrange
+        var review = new VacancyReview
+        {
+            Id = _existingReviewId,
+            Status = ReviewStatus.UnderReview,
+            VacancyReference = 1234567890,
+            VacancySnapshot = new Vacancy(),
+            AutomatedQaOutcomeIndicators =
+            [
+                new RuleOutcome { Id = Guid.NewGuid(), Target = "Title" },
+                new RuleOutcome { Id = Guid.NewGuid(), Target = "Description" },
+                new RuleOutcome { Id = Guid.NewGuid(), Target = "Description" } // check for de-dupes
+            ]
+        };
+
+        _mockVacancyReviewQuery
+            .Setup(x => x.GetAsync(_existingReviewId))
+            .ReturnsAsync(review);
+
+        _mockVacancyRepository
+            .Setup(x => x.GetVacancyAsync(review.VacancyReference))
+            .ReturnsAsync(new Vacancy());
+
+        var command = new ApproveVacancyReviewCommand(_existingReviewId, "comment", [], [review.AutomatedQaOutcomeIndicators.First().Id], []);
+        
+        // act
+        await _sut.Handle(command, CancellationToken.None);
+
+        // assert
+        _mockVacancyReviewRepository.Verify(x => x.UpdateAsync(It.Is<VacancyReview>(vacancyReview =>
+            vacancyReview.DismissedAutomatedQaOutcomeIndicators.Count == 1 &&
+            vacancyReview.DismissedAutomatedQaOutcomeIndicators.Contains("Description"))), Times.Once);
     }
 }

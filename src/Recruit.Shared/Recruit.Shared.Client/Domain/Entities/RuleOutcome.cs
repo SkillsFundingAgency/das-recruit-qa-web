@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json.Serialization;
 using Recruit.Vacancies.Client.Application.Rules;
 
 namespace Recruit.Vacancies.Client.Domain.Entities;
@@ -8,6 +9,9 @@ namespace Recruit.Vacancies.Client.Domain.Entities;
 public class RuleOutcome
 {
     public const string NoSpecificTarget = "";
+
+    public RuleOutcome()
+    { }
 
     public RuleOutcome(RuleId ruleId, int score, string narrative, string target = NoSpecificTarget, IEnumerable<RuleOutcome> details = null, string data = null)
     {
@@ -23,8 +27,10 @@ public class RuleOutcome
     }
 
     public Guid Id { get; set; }
-    public IEnumerable<RuleOutcome> Details { get; set; }
-    public bool HasDetails => Details.Any();
+    public IEnumerable<RuleOutcome>? Details { get; set; }
+
+    [JsonIgnore]
+    public bool HasDetails => Details?.Any() ?? false;
     public RuleId RuleId { get; set; }
     public int Score { get; set;  }
     public string Narrative { get; set;  }

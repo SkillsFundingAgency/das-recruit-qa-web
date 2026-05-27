@@ -1,5 +1,4 @@
 using AutoFixture.NUnit4;
-using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview.Requests;
 using NUnit.Framework;
@@ -9,20 +8,19 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 
 public class WhenBuildingPostUpdateVacancyReviewRequest
 {
-    [Test, AutoData]
+    [Test, RecursiveMoqAutoData]
     public void Then_The_Request_Is_Correctly_Built_And_Data_Sent(
+        Recruit.Vacancies.Client.Domain.Entities.VacancyReview vacancyReview,
         [Frozen]Mock<IEncodingService> encodingService)
     {
+        // arrange
         encodingService.Setup(x => x.Decode(It.IsAny<string>(), It.IsAny<EncodingType>())).Returns(123456);
-        var fixture = new Fixture();
-        var vReview = fixture
-            .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
-            .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
-            .Create();
         
-        var actual = new PostUpdateVacancyReviewRequest(VacancyReviewDto.MapVacancyReviewDto(vReview, encodingService.Object));
+        // act
+        var actual = new PostUpdateVacancyReviewRequest(VacancyReviewDto.MapVacancyReviewDto(vacancyReview, encodingService.Object));
 
-        actual.PostUrl.Should().Be($"VacancyReviews/{vReview.Id}/update");
-        ((VacancyReviewDto)actual.Data).Should().BeEquivalentTo(VacancyReviewDto.MapVacancyReviewDto(vReview, encodingService.Object));
+        // assert
+        actual.PostUrl.Should().Be($"VacancyReviews/{vacancyReview.Id}/update");
+        ((VacancyReviewDto)actual.Data).Should().BeEquivalentTo(VacancyReviewDto.MapVacancyReviewDto(vacancyReview, encodingService.Object));
     }
 }
