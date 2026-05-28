@@ -124,6 +124,6 @@ public class Vacancy
         
     public string AdditionalQuestion1 { get; set; }
     public string AdditionalQuestion2 { get; set; }
-    public bool HasSubmittedAdditionalQuestions { get; set; }
+    public bool? HasSubmittedAdditionalQuestions { get; set; }
     public bool? HasChosenProviderContactDetails { get; set; }
 }

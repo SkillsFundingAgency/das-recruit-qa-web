@@ -272,7 +272,9 @@ public class ReviewMapper(
             {
                 vm.AdditionalQuestion1 = vacancy.AdditionalQuestion1;
                 vm.AdditionalQuestion2 = vacancy.AdditionalQuestion2;
-                vm.HasAdditionalQuestions = vacancy.HasSubmittedAdditionalQuestions;
+                vm.HasAdditionalQuestions = vacancy.HasSubmittedAdditionalQuestions ??
+                                            (!string.IsNullOrWhiteSpace(vacancy.AdditionalQuestion1) ||
+                                            !string.IsNullOrWhiteSpace(vacancy.AdditionalQuestion2));
             }
             else
             {
