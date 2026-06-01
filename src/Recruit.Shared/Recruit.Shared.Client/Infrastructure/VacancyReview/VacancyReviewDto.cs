@@ -63,10 +63,14 @@ public class VacancyReviewDto
             UpdatedFieldIdentifiers = source.UpdatedFieldIdentifiers,
             VacancySnapshot = JsonConvert.SerializeObject(source.VacancySnapshot),
             OwnerType = source.VacancySnapshot.OwnerType.ToString(),
-            AccountId = encodingService.Decode(source.VacancySnapshot.EmployerAccountId, EncodingType.AccountId),
+            AccountId = source.VacancySnapshot.AccountId ?? encodingService.Decode(source.VacancySnapshot.EmployerAccountId, EncodingType.AccountId),
             Ukprn = source.VacancySnapshot.TrainingProvider.Ukprn!.Value,
-            AccountLegalEntityId = !string.IsNullOrWhiteSpace(source.VacancySnapshot.AccountLegalEntityPublicHashedId) ? encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId) : 0,
-            HashedAccountId = source.VacancySnapshot.EmployerAccountId,
+            AccountLegalEntityId = source.VacancySnapshot.AccountLegalEntityId ?? (!string.IsNullOrWhiteSpace(source.VacancySnapshot.AccountLegalEntityPublicHashedId) 
+                ? encodingService.Decode(source.VacancySnapshot.AccountLegalEntityPublicHashedId, EncodingType.PublicAccountLegalEntityId) 
+                : 0),
+            HashedAccountId = string.IsNullOrEmpty(source.VacancySnapshot.EmployerAccountId) 
+                ? (source.VacancySnapshot.AccountId.HasValue ? encodingService.Encode(source.VacancySnapshot.AccountId.Value, EncodingType.AccountId) : "") 
+                : source.VacancySnapshot.EmployerAccountId,
             EmployerName =  source.VacancySnapshot.EmployerName,
             EmployerLocations = source.VacancySnapshot.EmployerLocationOption == null ? [ source.VacancySnapshot.EmployerLocation ] : (source.VacancySnapshot.EmployerLocationOption == AvailableWhere.AcrossEngland ? [] : source.VacancySnapshot.EmployerLocations),
             EmployerLocationOption = source.VacancySnapshot.EmployerLocationOption ?? AvailableWhere.OneLocation,
