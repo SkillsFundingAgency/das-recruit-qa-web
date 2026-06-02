@@ -181,8 +181,8 @@ public class ReviewMapper(
         try
         {
             vm.ApprenticeshipType = vacancy.ApprenticeshipType ?? ApprenticeshipTypes.Standard;
-            vm.SubmittedByName = vacancy.SubmittedByUser.Name;
-            vm.SubmittedByEmail = vacancy.SubmittedByUser.Email;
+            vm.SubmittedByName = vacancy.SubmittedByUser?.Name;
+            vm.SubmittedByEmail = vacancy.SubmittedByUser?.Email;
             vm.ApplicationInstructions = vacancy.ApplicationInstructions;
             vm.ApplicationMethod = vacancy.ApplicationMethod.Value;
             vm.ApplicationUrl = vacancy.ApplicationUrl;
