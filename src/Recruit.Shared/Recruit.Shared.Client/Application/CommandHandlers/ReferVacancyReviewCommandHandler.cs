@@ -1,17 +1,14 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using FluentValidation;
+using MediatR;
+using Microsoft.Extensions.Logging;
 using Recruit.Vacancies.Client.Application.Commands;
 using Recruit.Vacancies.Client.Application.Providers;
 using Recruit.Vacancies.Client.Domain.Entities;
-using Recruit.Vacancies.Client.Domain.Events;
-using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
-using FluentValidation;
-using MediatR;
-using Microsoft.Extensions.Logging;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Recruit.Vacancies.Client.Application.CommandHandlers;
 
@@ -19,7 +16,6 @@ public class ReferVacancyReviewCommandHandler(
     ILogger<ReferVacancyReviewCommandHandler> logger,
     IVacancyReviewRepository vacancyReviewRepositoryRunner,
     IVacancyReviewQuery vacancyReviewQuery,
-    IMessaging messaging,
     IValidator<VacancyReview> vacancyReviewValidator,
     ITimeProvider timeProvider)
     : IRequestHandler<ReferVacancyReviewCommand, Unit>
@@ -59,19 +55,12 @@ public class ReferVacancyReviewCommandHandler(
                 .Where(d => referredOutcomes.Contains(d.Id))
                 .Select(d => d.Target).ToList());
         }
-            
-                
         review.DismissedAutomatedQaOutcomeIndicators = fields.Distinct().ToList();
 
         Validate(review);
 
         await vacancyReviewRepositoryRunner.UpdateAsync(review);
 
-        await messaging.PublishEvent(new VacancyReviewReferredEvent
-        {
-            VacancyReference = review.VacancyReference,
-            ReviewId = review.Id
-        });
         return Unit.Value;
     }
 

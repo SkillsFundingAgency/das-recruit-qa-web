@@ -18,7 +18,6 @@ public class RePublishEventToEventStoreEventHandler(
         INotificationHandler<VacancyReferredEvent>,
         INotificationHandler<VacancyRejectedEvent>,
         INotificationHandler<VacancyReviewApprovedEvent>,
-        INotificationHandler<VacancyReviewReferredEvent>,
         INotificationHandler<SetupEmployerEvent>,
         INotificationHandler<SetupProviderEvent>,
         INotificationHandler<VacancyReviewCreatedEvent>,
@@ -46,9 +45,6 @@ public class RePublishEventToEventStoreEventHandler(
         => HandleUsingEventStore(notification);
 
     public Task Handle(VacancyReviewApprovedEvent notification, CancellationToken cancellationToken)
-        => HandleUsingEventStore(notification);
-
-    public Task Handle(VacancyReviewReferredEvent notification, CancellationToken cancellationToken)
         => HandleUsingEventStore(notification);
 
     public Task Handle(SetupEmployerEvent notification, CancellationToken cancellationToken)
