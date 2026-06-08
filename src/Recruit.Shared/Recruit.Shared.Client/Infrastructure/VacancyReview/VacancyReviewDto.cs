@@ -23,8 +23,8 @@ public class VacancyReviewDto
     public string ManualOutcome { get; set; }
     public string ManualQaComment { get; init; }
     public required List<string> ManualQaFieldIndicators { get; init; }
-    public string AutomatedQaOutcome { get; set; }
-    public string AutomatedQaOutcomeIndicators { get; init; }
+    public RuleSetDecision? AutomatedQaOutcome { get; set; }
+    public List<RuleOutcome> AutomatedQaOutcomeIndicators { get; init; } = [];
     public required List<string> DismissedAutomatedQaOutcomeIndicators { get; init; }
     public required List<string> UpdatedFieldIdentifiers { get; init; }
     public string OwnerType { get; set; }
@@ -57,8 +57,8 @@ public class VacancyReviewDto
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators =source.ManualQaFieldIndicators!=null ? source.ManualQaFieldIndicators.Where(c=>c.IsChangeRequested)
                 .Select(c=>c.FieldIdentifier.ToString()).ToList() : [],
-            AutomatedQaOutcome = source.AutomatedQaOutcome?.Decision.ToString(),
-            AutomatedQaOutcomeIndicators = source.AutomatedQaOutcomeIndicators?.FirstOrDefault()?.IsReferred.ToString(),
+            AutomatedQaOutcome = source.AutomatedQaOutcome,
+            AutomatedQaOutcomeIndicators = source.AutomatedQaOutcomeIndicators,
             DismissedAutomatedQaOutcomeIndicators = source.DismissedAutomatedQaOutcomeIndicators,
             UpdatedFieldIdentifiers = source.UpdatedFieldIdentifiers,
             VacancySnapshot = JsonConvert.SerializeObject(source.VacancySnapshot),
@@ -107,12 +107,8 @@ public class VacancyReviewDto
             ManualOutcome = source.ManualOutcome != null ? Enum.Parse<ManualQaOutcome>(source.ManualOutcome) : null,
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators = source.ManualQaFieldIndicators.Select(c=>new ManualQaFieldIndicator{IsChangeRequested = true, FieldIdentifier = c}).ToList(),
-            AutomatedQaOutcome = Enum.TryParse<RuleSetDecision>(source.AutomatedQaOutcome, out var value) ? new RuleSetOutcome{Decision =  value} : new RuleSetOutcome(),
-            AutomatedQaOutcomeIndicators = new List<RuleOutcomeIndicator>{new()
-            {
-                IsReferred = !string.IsNullOrEmpty(source.AutomatedQaOutcomeIndicators),
-                RuleOutcomeId = Guid.NewGuid()
-            }},
+            AutomatedQaOutcome = source.AutomatedQaOutcome,
+            AutomatedQaOutcomeIndicators = source.AutomatedQaOutcomeIndicators,
             DismissedAutomatedQaOutcomeIndicators = source.DismissedAutomatedQaOutcomeIndicators,
             UpdatedFieldIdentifiers = source.UpdatedFieldIdentifiers,
             VacancySnapshot = JsonConvert.DeserializeObject<Vacancy>(source.VacancySnapshot)

@@ -1,11 +1,9 @@
 using System;
-using System.Text.Json.Serialization;
 
 namespace Recruit.Vacancies.Client.Domain.Entities;
 
 public class VacancyQaFieldUpdate
 {
-    [JsonIgnore]
     public required Guid Id { get; set; } 
     public string Status { get; set; }
     public string OutcomeDescription { get; set; }

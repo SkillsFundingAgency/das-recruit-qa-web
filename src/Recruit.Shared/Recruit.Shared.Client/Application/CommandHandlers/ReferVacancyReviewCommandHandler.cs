@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Recruit.Vacancies.Client.Application.Commands;
@@ -8,7 +7,6 @@ using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Domain.Events;
 using Recruit.Vacancies.Client.Domain.Messaging;
 using Recruit.Vacancies.Client.Domain.Repositories;
-using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
 using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -42,31 +40,18 @@ public class ReferVacancyReviewCommandHandler(
         review.ManualQaComment = message.ManualQaComment;
         review.ManualQaFieldIndicators = message.ManualQaFieldIndicators;
 
-        foreach (var automatedQaOutcomeIndicator in review.AutomatedQaOutcomeIndicators)
-        {
-            automatedQaOutcomeIndicator.IsReferred = message.SelectedAutomatedQaRuleOutcomeIds
-                .Contains(automatedQaOutcomeIndicator.RuleOutcomeId);
-        }
-
-        var fields = new List<string>();
-        var referredOutcomes = review.AutomatedQaOutcomeIndicators
-            .Where(i => !i.IsReferred)
-            .Select(i => i.RuleOutcomeId)
+        var dismissedFields = review
+            .AutomatedQaOutcomeIndicators
+            .Where(x => !message.SelectedAutomatedQaRuleOutcomeIds.Contains(x.Id))
+            .Select(x => x.Target)
+            .Distinct()
             .ToList();
-        foreach (var ruleOutcome in review.AutomatedQaOutcome.RuleOutcomes)
-        {
-            fields.AddRange(ruleOutcome.Details
-                .Where(d => referredOutcomes.Contains(d.Id))
-                .Select(d => d.Target).ToList());
-        }
             
-                
-        review.DismissedAutomatedQaOutcomeIndicators = fields.Distinct().ToList();
-
+        review.DismissedAutomatedQaOutcomeIndicators = dismissedFields;
+        
         Validate(review);
 
         await vacancyReviewRepositoryRunner.UpdateAsync(review);
-
         await messaging.PublishEvent(new VacancyReviewReferredEvent
         {
             VacancyReference = review.VacancyReference,

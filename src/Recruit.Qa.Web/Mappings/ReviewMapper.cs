@@ -370,48 +370,23 @@ public class ReviewMapper(
         if (review.AutomatedQaOutcomeIndicators == null || review.AutomatedQaOutcome == null)
             return vm;
 
-        if (review.VacancySnapshot?.ApplicationMethod == ApplicationMethod.ThroughExternalApplicationSite && review.AutomatedQaOutcome?.RuleOutcomes != null)
+        if (review.VacancySnapshot?.ApplicationMethod == ApplicationMethod.ThroughExternalApplicationSite && review.AutomatedQaOutcomeIndicators is { Count: >0 })
         {
-            var additionalQuestionOutcomeIds = review.AutomatedQaOutcome.RuleOutcomes
-                .SelectMany(ro => ro.Details
-                    .Where(d =>
-                        d.Target == FieldIdentifiers.AdditionalQuestion1 ||
-                        d.Target == FieldIdentifiers.AdditionalQuestion2)
-                    .Select(d => d.Id))
-                .ToHashSet();
-
-            review.AutomatedQaOutcomeIndicators = review.AutomatedQaOutcomeIndicators
-                .Where(i => !additionalQuestionOutcomeIds.Contains(i.RuleOutcomeId))
+            // given vacancy appears on external application site, we filter out any failures apart from the additional questions
+            review.AutomatedQaOutcomeIndicators = review
+                .AutomatedQaOutcomeIndicators
+                .Where(x => x.Target is FieldIdentifiers.AdditionalQuestion1 or FieldIdentifiers.AdditionalQuestion2)
                 .ToList();
-
-            review.AutomatedQaOutcome.RuleOutcomes.ForEach(ruleOutcome =>
-            {
-                ruleOutcome.Details = ruleOutcome.Details
-                    .Where(d => d.Target != FieldIdentifiers.AdditionalQuestion1 &&
-                                d.Target != FieldIdentifiers.AdditionalQuestion2)
-                    .ToList();
-            });
         }
 
-        var referredOutcomes = review.AutomatedQaOutcomeIndicators
-            .Where(i => i.IsReferred)
-            .Select(i => i.RuleOutcomeId)
-            .ToList();
-
-        foreach (var ruleOutcome in review.AutomatedQaOutcome.RuleOutcomes)
+        vm.AddRange(review.AutomatedQaOutcomeIndicators.Select(d => new AutomatedQaResultViewModel
         {
-            vm.AddRange(
-                ruleOutcome.Details
-                    .Where(d => referredOutcomes.Contains(d.Id))
-                    .Select(d => new AutomatedQaResultViewModel
-                    {
-                        OutcomeId = d.Id.ToString(),
-                        FieldId = d.Target,
-                        Checked = !review.DismissedAutomatedQaOutcomeIndicators?.Contains(d.Target.ToString()) ?? true,
-                        Text = ruleTemplateRunner.ToText(ruleOutcome.RuleId, d.Data, FieldDisplayNameResolver.Resolve(d.Target))
-                    }));
-        }
-
+            OutcomeId = d.Id.ToString(),
+            FieldId = d.Target,
+            Checked = !review.DismissedAutomatedQaOutcomeIndicators?.Contains(d.Target.ToString()) ?? true,
+            Text = ruleTemplateRunner.ToText(d.RuleId, d.Data, FieldDisplayNameResolver.Resolve(d.Target))
+        }));
+        
         //sort by the order of the fields on the review page
         return vm.OrderBy(v => ReviewFields.Keys.ToList().FindIndex(k => k == v.FieldId)).ToList();
     }

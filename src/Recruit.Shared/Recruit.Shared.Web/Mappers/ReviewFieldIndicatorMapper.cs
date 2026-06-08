@@ -1,7 +1,6 @@
 ﻿using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Shared.Web.RuleTemplates;
 using Recruit.Shared.Web.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -44,7 +43,6 @@ public sealed class ReviewFieldIndicatorMapper(IRuleMessageTemplateRunner ruleTe
         { FieldIdentifiers.AdditionalQuestion2, "Additional question 2 requires edit" },
     };
         
-        
     public IEnumerable<ReviewFieldIndicatorViewModel> MapFromFieldIndicators(ReviewFieldMappingLookupsForPage pageMappings, VacancyReview review)
     {
         var manualQaFieldIdentifierNames = review.ManualQaFieldIndicators
@@ -52,19 +50,9 @@ public sealed class ReviewFieldIndicatorMapper(IRuleMessageTemplateRunner ruleTe
             .Select(r => r.FieldIdentifier)
             .ToList() ?? new List<string>();
 
-        var autoQaReferredOutcomeIds = review.AutomatedQaOutcomeIndicators
-            ?.Where(i => i.IsReferred)
-            .Select(i => i.RuleOutcomeId)
-            .ToList() ?? new List<Guid>();
-
-        var autoQaReferredOutcomes = review.AutomatedQaOutcome?.RuleOutcomes
-            .SelectMany(d => d.Details)
-            .Where(x => autoQaReferredOutcomeIds.Contains(x.Id))
-            .ToList() ?? new List<RuleOutcome>();
-
         var uniqueFieldIdentifierNames =
             manualQaFieldIdentifierNames.Union(
-                autoQaReferredOutcomes.SelectMany(x => pageMappings.VacancyPropertyMappingsLookup.TryGetValue(x.Target, out var value) ? value : Enumerable.Empty<string>()));
+                review.AutomatedQaOutcomeIndicators.SelectMany(x => pageMappings.VacancyPropertyMappingsLookup.TryGetValue(x.Target, out var value) ? value : Enumerable.Empty<string>()));
 
         var indicatorsToDisplayLookup = pageMappings.FieldIdentifiersForPage
             .Where(r => uniqueFieldIdentifierNames.Contains(r.ReviewFieldIdentifier))
@@ -77,7 +65,7 @@ public sealed class ReviewFieldIndicatorMapper(IRuleMessageTemplateRunner ruleTe
                 indicator.Value.ManualQaText = ManualQaMessagesForApprenticeship[indicator.Key];
             }
 
-            var autoQaOutcomes = autoQaReferredOutcomes.Where(x => pageMappings.VacancyPropertyMappingsLookup.TryGetValue(x.Target, out var value) && value.Contains(indicator.Key))
+            var autoQaOutcomes = review.AutomatedQaOutcomeIndicators.Where(x => pageMappings.VacancyPropertyMappingsLookup.TryGetValue(x.Target, out var value) && value.Contains(indicator.Key))
                 .Select(x => ruleTemplateRunner.ToText(x.RuleId, x.Data, FieldDisplayNameResolver.Resolve(x.Target)));
 
             indicator.Value.AutoQaTexts.AddRange(autoQaOutcomes);

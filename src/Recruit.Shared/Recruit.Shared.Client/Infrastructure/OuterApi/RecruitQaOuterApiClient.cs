@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Configurations;
 using Recruit.Vacancies.Client.Infrastructure.OuterApi.Interfaces;
+using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Recruit.Vacancies.Client.Infrastructure.OuterApi;
 
@@ -49,7 +50,7 @@ public class RecruitQaOuterApiClient : IRecruitQaOuterApiClient
 
     public async Task Post(IPostApiRequest request, bool ensureSuccessStatusCode = true)
     {
-        var stringContent = new StringContent(JsonConvert.SerializeObject(request.Data), Encoding.UTF8, "application/json");
+        var stringContent = new StringContent(JsonSerializer.Serialize(request.Data), Encoding.UTF8, "application/json");
         var requestMessage = new HttpRequestMessage(HttpMethod.Post, request.PostUrl)
         {
             Content = stringContent,

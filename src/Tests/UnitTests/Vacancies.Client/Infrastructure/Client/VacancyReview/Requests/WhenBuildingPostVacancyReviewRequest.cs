@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using AutoFixture.NUnit4;
 using Recruit.Vacancies.Client.Domain.Entities;
 using Recruit.Vacancies.Client.Infrastructure.VacancyReview;
@@ -10,21 +11,30 @@ namespace Recruit.Qa.Vacancies.Client.UnitTests.Vacancies.Client.Infrastructure.
 
 public class WhenBuildingPostVacancyReviewRequest
 {
-    [Test, MoqAutoData]
+    private Fixture _fixture;
+    
+    [SetUp]
+    public void Setup()
+    {
+        _fixture = new Fixture();
+        _fixture.Behaviors.OfType<ThrowingRecursionBehavior>().ToList().ForEach(b => _fixture.Behaviors.Remove(b));
+        _fixture.Behaviors.Add(new OmitOnRecursionBehavior());
+    }
+
+    [Test, RecursiveMoqAutoData]
     public void Then_The_Request_Is_Correctly_Built_And_Data_Populated(
+        Recruit.Vacancies.Client.Domain.Entities.VacancyReview vacancyReview,
         [Frozen]Mock<IEncodingService> encodingService)
     {
+        // arrange
         encodingService.Setup(x => x.Decode(It.IsAny<string>(), It.IsAny<EncodingType>())).Returns(123456);
-        var fixture = new Fixture();
-        var vReview = fixture
-            .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
-            .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
-            .Create();
         
-        var actual = new PostVacancyReviewRequest(vReview.Id, VacancyReviewDto.MapVacancyReviewDto(vReview, encodingService.Object));
+        // act
+        var actual = new PostVacancyReviewRequest(vacancyReview.Id, VacancyReviewDto.MapVacancyReviewDto(vacancyReview, encodingService.Object));
 
-        actual.PostUrl.Should().Be($"VacancyReviews/{vReview.Id}");
-        ((VacancyReviewDto)actual.Data).Should().BeEquivalentTo(VacancyReviewDto.MapVacancyReviewDto(vReview, encodingService.Object));
+        // assert
+        actual.PostUrl.Should().Be($"VacancyReviews/{vacancyReview.Id}");
+        ((VacancyReviewDto)actual.Data).Should().BeEquivalentTo(VacancyReviewDto.MapVacancyReviewDto(vacancyReview, encodingService.Object));
     }
     
     [Test, MoqAutoData]
@@ -34,14 +44,13 @@ public class WhenBuildingPostVacancyReviewRequest
         [Frozen]Mock<IEncodingService> encodingService)
     {
         encodingService.Setup(x => x.Decode(It.IsAny<string>(), It.IsAny<EncodingType>())).Returns(123456);
-        var fixture = new Fixture();
-        var vacancySnapshot = fixture.Build<Vacancy>()
+        var vacancySnapshot = _fixture.Build<Vacancy>()
             .With(c => c.EmployerLocation, (Address)null)
             .With(c => c.EmployerLocationOption, (AvailableWhere?)null)
             .Create();
-        var vReview = fixture
+        var vReview = _fixture
             .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
-            .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
+            .With(c=>c.AutomatedQaOutcome, (RuleSetDecision?)null)
             .With(c=>c.VacancySnapshot, vacancySnapshot)
             .With(c=>c.ManualQaFieldIndicators,
                 [
@@ -70,15 +79,14 @@ public class WhenBuildingPostVacancyReviewRequest
         [Frozen]Mock<IEncodingService> encodingService)
     {
         encodingService.Setup(x => x.Decode(It.IsAny<string>(), It.IsAny<EncodingType>())).Returns(123456);
-        var fixture = new Fixture();
-        var vacancySnapshot = fixture.Build<Vacancy>()
+        var vacancySnapshot = _fixture.Build<Vacancy>()
             .With(c => c.EmployerLocation, (Address)null)
             .With(c=>c.EmployerLocations, (List<Address> )null)
             .With(c => c.EmployerLocationOption, AvailableWhere.AcrossEngland)
             .Create();
-        var vReview = fixture
+        var vReview = _fixture
             .Build<Recruit.Vacancies.Client.Domain.Entities.VacancyReview>()
-            .With(c=>c.AutomatedQaOutcome, new RuleSetOutcome())
+            .With(c=>c.AutomatedQaOutcome, (RuleSetDecision?)null)
             .With(c=>c.VacancySnapshot, vacancySnapshot)
             .With(c=>c.ManualQaFieldIndicators,
             [
