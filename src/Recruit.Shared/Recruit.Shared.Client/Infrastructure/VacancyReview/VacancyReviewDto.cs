@@ -23,6 +23,7 @@ public class VacancyReviewDto
     public string ManualOutcome { get; set; }
     public string ManualQaComment { get; init; }
     public required List<string> ManualQaFieldIndicators { get; init; }
+    public required List<ManualQaFieldEditIndicator> ManualQaEditFieldIndicators { get; init; }
     public RuleSetDecision? AutomatedQaOutcome { get; set; }
     public List<RuleOutcome> AutomatedQaOutcomeIndicators { get; init; } = [];
     public required List<string> DismissedAutomatedQaOutcomeIndicators { get; init; }
@@ -57,6 +58,9 @@ public class VacancyReviewDto
             ManualQaComment = source.ManualQaComment,
             ManualQaFieldIndicators =source.ManualQaFieldIndicators!=null ? source.ManualQaFieldIndicators.Where(c=>c.IsChangeRequested)
                 .Select(c=>c.FieldIdentifier.ToString()).ToList() : [],
+            ManualQaEditFieldIndicators = source.ManualQaFieldEditIndicators?.ToList() is not { Count: > 0 } 
+                ? []
+                : source.ManualQaFieldEditIndicators?.ToList(),
             AutomatedQaOutcome = source.AutomatedQaOutcome,
             AutomatedQaOutcomeIndicators = source.AutomatedQaOutcomeIndicators,
             DismissedAutomatedQaOutcomeIndicators = source.DismissedAutomatedQaOutcomeIndicators,
