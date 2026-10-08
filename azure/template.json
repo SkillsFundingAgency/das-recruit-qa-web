@@ -195,6 +195,9 @@
           },
           "ipSecurityRestrictions": {
             "value": "[parameters('frontEndAccessRestrictions')]"
+          },
+          "vnetRouteAllEnabled": {
+            "value": "[parameters('vnetRouteAllEnabled')]"
           }
         }
       }
